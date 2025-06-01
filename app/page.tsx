@@ -21,14 +21,14 @@ export default function Home() {
             </Link>
             <Link
               href="/practice"
-              className="text-sm font-medium transition-colors hover:text-orange-700 relative group\" {/* Changed to orange-700 */}
-            >
+              className="text-sm font-medium transition-colors hover:text-orange-700 relative group"
+            > {/* Removed backslash */}
               Practice
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
             <Link
               href="/dashboard"
-              className="text-sm font-medium transition-colors hover:text-orange-700 relative group" {/* Changed to orange-700 */}
+              className="text-sm font-medium transition-colors hover:text-orange-700 relative group\" {/* Changed to orange-700 */}
             >
               Dashboard
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
