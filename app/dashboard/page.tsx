@@ -26,8 +26,8 @@ export default function DashboardPage() {
             <TabsContent value="dashboard">
               <Card className="bg-card shadow-lg border-2">
                 <CardHeader>
-                  <CardTitle className="text-gradient">Welcome to your Dashboard!</CardTitle>
-                  <CardDescription className="text-foreground">
+                  <CardTitle className="text-xl font-bold text-foreground">Welcome to your Dashboard!</CardTitle>
+                  <CardDescription className="text-muted-foreground">
                     Manage your vocabulary progress and settings here.
                   </CardDescription>
                 </CardHeader>
@@ -35,36 +35,36 @@ export default function DashboardPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Card className="bg-card border">
                       <CardHeader>
-                        <CardTitle className="text-foreground">Words Learned</CardTitle>
+                        <CardTitle className="text-lg font-semibold text-foreground">Words Learned</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <p className="text-4xl font-bold text-orange-600">1,234</p>
-                        <p className="text-sm text-gray-500 text-foreground">Total words mastered</p>
+                        <p className="text-sm text-muted-foreground">Total words mastered</p>
                       </CardContent>
                     </Card>
                     <Card className="bg-card border">
                       <CardHeader>
-                        <CardTitle className="text-foreground">Practice Streak</CardTitle>
+                        <CardTitle className="text-lg font-semibold text-foreground">Practice Streak</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <p className="text-4xl font-bold text-green-600">7 days</p>
-                        <p className="text-sm text-gray-500 text-foreground">Current consecutive practice days</p>
+                        <p className="text-sm text-muted-foreground">Current consecutive practice days</p>
                       </CardContent>
                     </Card>
                   </div>
                   <Card className="bg-card border">
                     <CardHeader>
-                      <CardTitle className="text-foreground">Recent Activity</CardTitle>
+                      <CardTitle className="text-lg font-semibold text-foreground">Recent Activity</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <ul className="space-y-2 text-gray-700 text-foreground">
+                      <ul className="space-y-2 text-foreground">
                         <li>Learned "Ephemeral" - 2 hours ago</li>
                         <li>Reviewed 15 words - yesterday</li>
                         <li>Completed "Advanced Verbs" lesson - 3 days ago</li>
                       </ul>
                     </CardContent>
                   </Card>
-                  <Button className="btn-orange">
+                  <Button className="bg-orange-500 hover:bg-orange-600 text-white font-medium transition-all duration-200 shadow-sm hover:shadow rounded-lg px-6 py-2">
                     Practice Now
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
