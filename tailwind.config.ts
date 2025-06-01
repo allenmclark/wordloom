@@ -57,18 +57,17 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom orange shades for deeper color
         orange: {
           50: "#fff7ed",
           100: "#ffedd5",
           200: "#fed7aa",
           300: "#fdba74",
           400: "#fb923c",
-          500: "#f97316", // Default Tailwind orange-500
-          600: "#ea580c", // Default Tailwind orange-600
-          700: "#c2410c", // Deeper shade for primary buttons/text
-          800: "#9a3412", // Even deeper shade for hover states
-          900: "#7c2d12", // Darkest shade for accents
+          500: "#fc4c02", // Strava orange
+          600: "#ea580c",
+          700: "#c2410c",
+          800: "#9a3412",
+          900: "#7c2d12",
           950: "#431407",
         },
         // Secondary palette for accents and gradients
