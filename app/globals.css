@@ -155,16 +155,8 @@
     @apply text-foreground;
   }
 
-  .page-content .text-muted-foreground {
-    @apply text-muted-foreground;
-  }
-
   .dashboard-content {
     @apply text-foreground bg-background;
-  }
-
-  .dashboard-content .card-content {
-    @apply text-foreground;
   }
 }
 
