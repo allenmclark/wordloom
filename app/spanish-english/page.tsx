@@ -90,12 +90,7 @@ export default function SpanishEnglishPage() {
               <Button variant="outline" size="sm" onClick={toggleSelectAll}>
                 {selectedRows.length === filteredData.length ? "Deselect All" : "Select All"}
               </Button>
-              <Button
-                variant="default"
-                size="sm"
-                className="bg-orange-500 hover:bg-orange-600 text-white"
-                disabled={selectedRows.length === 0}
-              >
+              <Button variant="default" size="sm" className="btn-orange" disabled={selectedRows.length === 0}>
                 Add Selected to Practice ({selectedRows.length})
               </Button>
             </div>
@@ -143,7 +138,7 @@ export default function SpanishEnglishPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-orange-500 hover:text-orange-700 hover:bg-orange-50"
+                          className="text-orange-500 hover:text-orange-600 hover:bg-orange-50"
                         >
                           View Details
                         </Button>

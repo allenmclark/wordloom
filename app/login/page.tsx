@@ -14,7 +14,7 @@ export default function LoginPage() {
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-bold">VocabMarket</span>
+            <span className="text-xl font-bold text-orange-500">VocabMarket</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500">
@@ -49,7 +49,7 @@ export default function LoginPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="/forgot-password" className="text-xs text-orange-600 hover:underline">
+                <Link href="/forgot-password" className="text-xs text-orange-500 hover:text-orange-600 hover:underline">
                   Forgot password?
                 </Link>
               </div>
@@ -61,7 +61,7 @@ export default function LoginPage() {
                 Remember me for 30 days
               </Label>
             </div>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white rounded-md shadow-sm" variant="default">
+            <Button className="btn-orange w-full">
               Log in
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
@@ -101,7 +101,7 @@ export default function LoginPage() {
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-center text-sm">
               Don't have an account?{" "}
-              <Link href="/signup" className="text-orange-600 hover:underline">
+              <Link href="/signup" className="text-orange-500 hover:text-orange-600 hover:underline">
                 Sign up
               </Link>
             </div>

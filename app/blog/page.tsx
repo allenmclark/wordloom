@@ -10,7 +10,7 @@ export default function BlogPage() {
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-display font-bold">VocabMaster</span>
+            <span className="text-xl font-display font-bold text-orange-500">VocabMaster</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
@@ -45,16 +45,12 @@ export default function BlogPage() {
           </nav>
           <div className="flex items-center gap-4">
             <Link href="/login">
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-full px-4 border-orange-200 hover:border-orange-500 hover:bg-orange-50"
-              >
+              <Button variant="outline" size="sm" className="rounded-full px-4 btn-orange-outline">
                 Log in
               </Button>
             </Link>
             <Link href="/signup">
-              <Button size="sm" className="rounded-full px-4 bg-orange-500 hover:bg-orange-600 shadow-sm hover:shadow">
+              <Button size="sm" className="rounded-full px-4 btn-orange">
                 Sign up
               </Button>
             </Link>
@@ -92,10 +88,7 @@ export default function BlogPage() {
               </CardContent>
               <div className="p-6 pt-0">
                 <Link href={`/blog/${post.slug}`}>
-                  <Button
-                    variant="outline"
-                    className="w-full rounded-lg border-orange-200 hover:border-orange-500 hover:bg-orange-50"
-                  >
+                  <Button variant="outline" className="w-full rounded-lg btn-orange-outline">
                     Read More
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>

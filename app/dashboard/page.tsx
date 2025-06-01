@@ -62,12 +62,7 @@ export default function DashboardPage() {
                       </ul>
                     </CardContent>
                   </Card>
-                  <Button
-                    className="bg-orange-500 hover:bg-orange-600 text-white rounded-md shadow-sm"
-                    variant="default"
-                  >
-                    {" "}
-                    {/* Explicit orange styling */}
+                  <Button className="btn-orange">
                     Practice Now
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>

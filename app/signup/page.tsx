@@ -14,7 +14,7 @@ export default function SignupPage() {
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-bold">VocabMarket</span>
+            <span className="text-xl font-bold text-orange-500">VocabMarket</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500">
@@ -58,12 +58,12 @@ export default function SignupPage() {
               <Checkbox id="terms" />
               <Label htmlFor="terms" className="text-sm font-normal">
                 I agree to the{" "}
-                <Link href="/terms" className="text-orange-600 hover:underline">
+                <Link href="/terms" className="text-orange-500 hover:text-orange-600 hover:underline">
                   Terms of Service
                 </Link>
               </Label>
             </div>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white rounded-md shadow-sm" variant="default">
+            <Button className="btn-orange w-full">
               Sign up
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
@@ -103,7 +103,7 @@ export default function SignupPage() {
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-center text-sm">
               Already have an account?{" "}
-              <Link href="/login" className="text-orange-600 hover:underline">
+              <Link href="/login" className="text-orange-500 hover:text-orange-600 hover:underline">
                 Log in
               </Link>
             </div>

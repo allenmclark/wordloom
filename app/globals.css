@@ -13,7 +13,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 25 95% 53%; /* Orange primary color */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -22,19 +22,19 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 25 95% 53%; /* Orange accent color */
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 25 95% 53%; /* Orange ring color */
 
     --radius: 0.5rem;
 
-    --pattern-opacity: .7; /* This now controls the overall pattern visibility, 1.0 means fully visible */
+    --pattern-opacity: 0.7;
   }
 
   .dark {
@@ -47,7 +47,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 25 95% 53%; /* Orange primary color */
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -56,7 +56,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 25 95% 53%; /* Orange accent color */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -64,9 +64,9 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 25 95% 53%; /* Orange ring color */
 
-    --pattern-opacity: 1.0; /* This now controls the overall pattern visibility, 1.0 means fully visible */
+    --pattern-opacity: 1.0;
   }
 }
 
@@ -106,21 +106,40 @@
 
   .dot-pattern {
     background-size: 20px 20px;
-    /* Increased alpha from 0.1 to 0.3 for darker dots */
     background-image: radial-gradient(circle, rgba(252, 76, 2, 0.3) 1px, transparent 1px);
     opacity: var(--pattern-opacity);
   }
 
   .mesh-pattern {
     background-size: 20px 20px;
-    /* Increased alpha from 0.05 to 0.15 for darker lines */
     background-image: linear-gradient(to right, rgba(252, 76, 2, 0.15) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(252, 76, 2, 0.15) 1px, transparent 1px);
     opacity: var(--pattern-opacity);
   }
+
+  /* Consistent orange button styles */
+  .btn-orange {
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium transition-all duration-200 shadow-sm hover:shadow rounded-lg;
+  }
+
+  .btn-orange-outline {
+    @apply border-orange-200 hover:border-orange-500 hover:bg-orange-50 text-orange-600 hover:text-orange-700 transition-all duration-200;
+  }
+
+  .text-orange-primary {
+    @apply text-orange-500;
+  }
+
+  .bg-orange-primary {
+    @apply bg-orange-500;
+  }
+
+  .border-orange-primary {
+    @apply border-orange-500;
+  }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar with orange theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -131,12 +150,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #94a3b8; /* Changed from #fc4c02 (orange) to a slate gray */
+  background: #fc4c02; /* Orange scrollbar */
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b; /* Changed from #ea580c (orange hover) to a darker slate gray */
+  background: #ea580c; /* Darker orange on hover */
 }
 
 /* Smooth scrolling */
@@ -144,7 +163,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Better focus styles */
+/* Better focus styles with orange */
 :focus-visible {
   outline: 2px solid #fc4c02;
   outline-offset: 2px;
