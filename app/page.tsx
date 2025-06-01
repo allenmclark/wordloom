@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, BookOpen, Brain, TrendingUp, ChevronRight } from "lucide-react"
+import { ArrowRight, BookOpen, TrendingUp, ChevronRight } from "lucide-react"
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer, Tooltip } from "recharts"
 
 import { Button } from "@/components/ui/button"
@@ -11,38 +11,38 @@ export default function Home() {
       <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-orange-500" />
+            <BookOpen className="h-6 w-6 text-orange-700" /> {/* Changed to orange-700 */}
             <span className="text-xl font-display font-bold">VocabMaster</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
+            <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-700 relative group"> {/* Changed to orange-700 */}
               Home
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
             <Link
               href="/practice"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
+              className="text-sm font-medium transition-colors hover:text-orange-700 relative group\" {/* Changed to orange-700 */}
             >
               Practice
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
             <Link
               href="/dashboard"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
+              className="text-sm font-medium transition-colors hover:text-orange-700 relative group" {/* Changed to orange-700 */}
             >
               Dashboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
             <Link
               href="/leaderboard"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
+              className="text-sm font-medium transition-colors hover:text-orange-700 relative group" {/* Changed to orange-700 */}
             >
               Leaderboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
-            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
+            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-700 relative group"> {/* Changed to orange-700 */}
               Blog
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
           </nav>
           <div className="flex items-center gap-4">
@@ -50,13 +50,13 @@ export default function Home() {
               <Button
                 variant="outline"
                 size="sm"
-                className="rounded-full px-4 border-orange-200 hover:border-orange-500 hover:bg-orange-50"
+                className="rounded-full px-4 border-orange-300 hover:border-orange-700 hover:bg-orange-100" {/* Changed to orange-300, orange-700, orange-100 */}
               >
                 Log in
               </Button>
             </Link>
             <Link href="/signup">
-              <Button size="sm" className="rounded-full px-4 bg-orange-500 hover:bg-orange-600 shadow-sm hover:shadow">
+              <Button size="sm" className="rounded-full px-4 bg-orange-700 hover:bg-orange-800 shadow-sm hover:shadow"> {/* Changed to orange-700, orange-800 */}
                 Sign up
               </Button>
             </Link>
@@ -65,9 +65,9 @@ export default function Home() {
       </header>
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 hero-gradient overflow-hidden relative">
-          <div className="absolute inset-0 dot-pattern opacity-70"></div>
+          <div className="absolute inset-0 dot-pattern"></div> {/* Removed opacity-70, handled in CSS */}
           <div className="container px-4 md:px-6 relative">
-            <div className="flex flex-col items-center justify-center space-y-12 text-center">
+            <div className="flex flex-col items-center justify-center space-y-12 text-center"> {/* Changed from grid to flex */}
               <div className="flex flex-col justify-center space-y-4 animate-in">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
@@ -82,7 +82,7 @@ export default function Home() {
                   <Link href="/practice">
                     <Button
                       size="lg"
-                      className="rounded-full px-6 bg-orange-500 hover:bg-orange-600 shadow-md hover:shadow-lg transition-all duration-300"
+                      className="rounded-full px-6 bg-orange-700 hover:bg-orange-800 shadow-md hover:shadow-lg transition-all duration-300" {/* Changed to orange-700, orange-800 */}
                     >
                       Start Learning
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -92,7 +92,7 @@ export default function Home() {
                     <Button
                       size="lg"
                       variant="outline"
-                      className="rounded-full px-6 border-orange-200 hover:border-orange-500 hover:bg-orange-50"
+                      className="rounded-full px-6 border-orange-300 hover:border-orange-700 hover:bg-orange-100" {/* Changed to orange-300, orange-700, orange-100 */}
                     >
                       How it works
                     </Button>
@@ -100,12 +100,12 @@ export default function Home() {
                 </div>
               </div>
               <div className="mx-auto relative animate-in" style={{ animationDelay: "0.2s" }}>
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-blue-500/20 rounded-2xl blur-3xl opacity-50"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-700/20 to-blue-500/20 rounded-2xl blur-3xl opacity-50"></div> {/* Changed to orange-700/20 */}
                 <div className="relative bg-white rounded-2xl border shadow-elevated p-6 transform transition-all duration-500 hover:scale-[1.02]">
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <h3 className="text-lg font-semibold">Today's Word</h3>
-                      <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full font-medium">
+                      <span className="text-xs bg-orange-200 text-orange-900 px-2 py-1 rounded-full font-medium"> {/* Changed to orange-200, orange-900 */}
                         +15 points
                       </span>
                     </div>
@@ -115,12 +115,12 @@ export default function Home() {
                     </div>
                     <div className="flex justify-between items-center text-sm">
                       <span className="bg-slate-100 px-2 py-1 rounded-full text-xs">Difficulty: Medium</span>
-                      <span className="flex items-center gap-1 text-orange-600">
+                      <span className="flex items-center gap-1 text-orange-700"> {/* Changed to orange-700 */}
                         <TrendingUp className="h-4 w-4" />
                         87% success rate
                       </span>
                     </div>
-                    <Button className="w-full bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm hover:shadow transition-all duration-300">
+                    <Button className="w-full bg-orange-700 hover:bg-orange-800 rounded-xl shadow-sm hover:shadow transition-all duration-300"> {/* Changed to orange-700, orange-800 */}
                       Practice Now
                     </Button>
                   </div>
@@ -130,7 +130,7 @@ export default function Home() {
           </div>
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32 bg-white relative">
-          <div className="absolute inset-0 mesh-pattern opacity-70"></div>
+          <div className="absolute inset-0 mesh-pattern"></div> {/* Removed opacity-70, handled in CSS */}
           <div className="container px-4 md:px-6 relative">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 animate-in">
               <div className="space-y-2">
@@ -163,15 +163,15 @@ export default function Home() {
                         <defs>
                           {/* Gradient definitions for each line - more sophisticated colors */}
                           <linearGradient id="colorSarah" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#d03801" stopOpacity={0.2} />
-                            <stop offset="95%" stopColor="#d03801" stopOpacity={0} />
+                            <stop offset="5%" stopColor="#c2410c" stopOpacity={0.2} /> {/* Using new orange-700 */}
+                            <stop offset="95%" stopColor="#c2410c" stopOpacity={0} />
                           </linearGradient>
                           <linearGradient id="colorJohn" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#1e40af" stopOpacity={0.2} />
                             <stop offset="95%" stopColor="#1e40af" stopOpacity={0} />
                           </linearGradient>
                           <linearGradient id="colorRobert" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#9a3412" stopOpacity={0.2} />
+                            <stop offset="5%" stopColor="#9a3412" stopOpacity={0.2} /> {/* Using new orange-800 */}
                             <stop offset="95%" stopColor="#9a3412" stopOpacity={0} />
                           </linearGradient>
                           <linearGradient id="colorEmily" x1="0" y1="0" x2="0" y2="1">
@@ -235,7 +235,7 @@ export default function Home() {
                         <Line
                           type="monotone"
                           dataKey="Sarah Lee"
-                          stroke="#d03801" // More sophisticated orange
+                          stroke="#c2410c" // Using new orange-700
                           strokeWidth={2.5}
                           dot={false}
                           activeDot={{ r: 6, strokeWidth: 0 }}
@@ -258,7 +258,7 @@ export default function Home() {
                         <Line
                           type="monotone"
                           dataKey="Robert Johnson"
-                          stroke="#9a3412" // More sophisticated brown
+                          stroke="#9a3412" // Using new orange-800
                           strokeWidth={2.5}
                           dot={false}
                           activeDot={{ r: 6, strokeWidth: 0 }}
@@ -307,8 +307,8 @@ export default function Home() {
                           <div className="text-sm font-medium">{name}</div>
                           <div className="text-lg font-bold">{data.current}</div>
                           <div className="flex items-center gap-2 mt-1">
-                            <div className={`text-${data.color}-600 text-sm font-medium`}>{data.change}</div>
-                            <div className={`text-xs text-${data.color}-600`}>{data.percentage}</div>
+                            <div className={`text-${data.color}-700 text-sm font-medium`}>{data.change}</div> {/* Changed to orange-700 */}
+                            <div className={`text-xs text-${data.color}-700`}>{data.percentage}</div> {/* Changed to orange-700 */}
                           </div>
                         </CardContent>
                       </Card>
@@ -338,7 +338,7 @@ export default function Home() {
                   style={{ animationDelay: `${0.1 * (index + 1)}s` }}
                 >
                   <CardHeader>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-200"> {/* Changed to orange-200 */}
                       {feature.icon}
                     </div>
                     <CardTitle className="mt-4">{feature.title}</CardTitle>
@@ -351,8 +351,8 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-orange-50 via-white to-slate-50 relative">
-          <div className="absolute inset-0 dot-pattern opacity-70"></div>
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-orange-100 via-white to-slate-100 relative"> {/* Changed to orange-100, slate-100 */}
+          <div className="absolute inset-0 dot-pattern"></div> {/* Removed opacity-70, handled in CSS */}
           <div className="container px-4 md:px-6 relative">
             <div className="flex flex-col items-center justify-center space-y-4 text-center animate-in">
               <div className="space-y-2">
@@ -367,7 +367,7 @@ export default function Home() {
                 <Link href="/signup">
                   <Button
                     size="lg"
-                    className="rounded-full px-6 bg-orange-500 hover:bg-orange-600 shadow-md hover:shadow-lg transition-all duration-300"
+                    className="rounded-full px-6 bg-orange-700 hover:bg-orange-800 shadow-md hover:shadow-lg transition-all duration-300" {/* Changed to orange-700, orange-800 */}
                   >
                     Sign up for free
                   </Button>
@@ -375,7 +375,7 @@ export default function Home() {
               </div>
               <div className="mt-8 flex items-center gap-2 text-sm text-muted-foreground">
                 <span>Already have an account?</span>
-                <Link href="/login" className="text-orange-600 hover:underline font-medium flex items-center">
+                <Link href="/login" className="text-orange-700 hover:underline font-medium flex items-center"> {/* Changed to orange-700 */}
                   Log in <ChevronRight className="h-3 w-3 ml-1" />
                 </Link>
               </div>
@@ -386,7 +386,7 @@ export default function Home() {
       <footer className="border-t py-6 md:py-0 bg-white">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-orange-500" />
+            <BookOpen className="h-5 w-5 text-orange-700" /> {/* Changed to orange-700 */}
             <p className="text-sm text-muted-foreground">© 2025 VocabMaster. All rights reserved.</p>
           </div>
           <div className="flex items-center gap-4">
@@ -410,17 +410,17 @@ const features = [
   {
     title: "Learn",
     description: "Discover new words daily with our curated vocabulary lists tailored to your level.",
-    icon: <BookOpen className="h-6 w-6 text-orange-500" />,
+    icon: <BookOpen className="h-6 w-6 text-orange-700" />, {/* Changed to orange-700 */}
   },
   {
     title: "Practice",
     description: "Test your knowledge with interactive exercises and spaced repetition techniques.",
-    icon: <Brain className="h-6 w-6 text-orange-500" />,
+    icon: <Brain className="h-6 w-6 text-orange-700" />, {/* Changed to orange-700 */}
   },
   {
     title: "Track",
     description: "Monitor your progress and see your vocabulary knowledge grow over time.",
-    icon: <TrendingUp className="h-6 w-6 text-orange-500" />,
+    icon: <TrendingUp className="h-6 w-6 text-orange-700" />, {/* Changed to orange-700 */}
   },
 ]
 
