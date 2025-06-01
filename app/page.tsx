@@ -50,7 +50,7 @@ export default function Home() {
               <Button
                 variant="outline"
                 size="sm"
-                className="rounded-full px-4 border-orange-300 hover:border-orange-700 hover:bg-orange-100\" {/* Changed to orange-300, orange-700, orange-100 */}
+                className="rounded-full px-4 border-orange-300 hover:border-orange-700 hover:bg-orange-100\" {/* Corrected: Removed backslash */}
               >
                 Log in
               </Button>
