@@ -101,6 +101,13 @@ export default function WordPage({ params }: { params: { id: string } }) {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
             </Link>
             <Link
+              href="/spanish-english"
+              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
+            >
+              Spanish-English
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+            </Link>
+            <Link
               href="/dashboard"
               className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
             >

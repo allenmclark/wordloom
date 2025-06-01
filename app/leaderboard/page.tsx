@@ -26,6 +26,12 @@ export default function LeaderboardPage() {
               Practice
             </Link>
             <Link
+              href="/spanish-english"
+              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
+            >
+              Spanish-English
+            </Link>
+            <Link
               href="/dashboard"
               className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
             >

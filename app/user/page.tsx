@@ -47,6 +47,9 @@ export default function UserProfilePage() {
             <Link href="/practice" className="text-sm font-medium transition-colors hover:text-orange-500">
               Practice
             </Link>
+            <Link href="/spanish-english" className="text-sm font-medium transition-colors hover:text-orange-500">
+              Spanish-English
+            </Link>
             <Link href="/dashboard" className="text-sm font-medium transition-colors hover:text-orange-500">
               Dashboard
             </Link>

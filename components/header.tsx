@@ -19,6 +19,10 @@ export function Header() {
             Practice
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
           </Link>
+          <Link href="/spanish-english" className="nav-link">
+            Spanish-English
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+          </Link>
           <Link href="/dashboard" className="nav-link">
             Dashboard
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
