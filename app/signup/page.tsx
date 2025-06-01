@@ -35,7 +35,7 @@ export default function SignupPage() {
           </nav>
         </div>
       </header>
-      <main className="flex-1 flex items-center justify-center p-4 md:p-8 hero-gradient dot-pattern">
+      <main className="flex-1 flex items-center justify-center p-4 md:p-8 hero-gradient dot-pattern page-content">
         <Card className="mx-auto max-w-md w-full border-2">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold">Create an account</CardTitle>

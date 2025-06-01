@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { BookOpen } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export function Header() {
   return (
@@ -39,21 +40,14 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-4">
           <Link href="/login">
-            <button
-              className="inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-orange-200 hover:border-orange-500 hover:bg-orange-50 h-9 px-4 py-2"
-              variant="outline"
-              size="sm"
-            >
+            <Button variant="outline" size="sm" className="rounded-full px-4 btn-orange-outline">
               Log in
-            </button>
+            </Button>
           </Link>
           <Link href="/signup">
-            <button
-              className="inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-orange-500 hover:bg-orange-600 text-white shadow-sm h-9 px-4 py-2"
-              size="sm"
-            >
+            <Button size="sm" className="rounded-full px-4 btn-orange">
               Sign up
-            </button>
+            </Button>
           </Link>
         </div>
       </div>

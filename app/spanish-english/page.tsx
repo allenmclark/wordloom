@@ -66,7 +66,7 @@ export default function SpanishEnglishPage() {
   }
 
   return (
-    <main className="flex flex-col min-h-screen hero-gradient">
+    <main className="flex flex-col min-h-screen hero-gradient page-content">
       <div className="dot-pattern absolute inset-0"></div>
       <div className="container mx-auto px-4 py-8 relative z-10">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">

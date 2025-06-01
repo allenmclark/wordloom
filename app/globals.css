@@ -14,7 +14,7 @@
     --popover-foreground: 222.2 84% 4.9%;
 
     --primary: 25 95% 53%; /* Orange primary color */
-    --primary-foreground: 210 40% 98%;
+    --primary-foreground: 0 0% 98%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -23,7 +23,7 @@
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --accent: 25 95% 53%; /* Orange accent color */
-    --accent-foreground: 210 40% 98%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -33,7 +33,6 @@
     --ring: 25 95% 53%; /* Orange ring color */
 
     --radius: 0.5rem;
-
     --pattern-opacity: 0.7;
   }
 
@@ -83,7 +82,7 @@
   h4,
   h5,
   h6 {
-    @apply font-display font-bold tracking-tight;
+    @apply font-display font-bold tracking-tight text-foreground;
   }
 }
 
@@ -97,7 +96,7 @@
   }
 
   .btn-primary {
-    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium transition-all duration-200 shadow-sm hover:shadow;
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium transition-all duration-200 shadow-sm hover:shadow rounded-lg;
   }
 
   .text-gradient {
@@ -123,7 +122,7 @@
   }
 
   .btn-orange-outline {
-    @apply border-orange-200 hover:border-orange-500 hover:bg-orange-50 text-orange-600 hover:text-orange-700 transition-all duration-200;
+    @apply border border-orange-200 hover:border-orange-500 hover:bg-orange-50 text-orange-600 hover:text-orange-700 transition-all duration-200 rounded-lg;
   }
 
   .text-orange-primary {
@@ -136,6 +135,24 @@
 
   .border-orange-primary {
     @apply border-orange-500;
+  }
+
+  /* Ensure consistent text colors */
+  .page-content {
+    @apply text-foreground;
+  }
+
+  .page-content h1,
+  .page-content h2,
+  .page-content h3,
+  .page-content h4,
+  .page-content h5,
+  .page-content h6 {
+    @apply text-foreground;
+  }
+
+  .page-content p {
+    @apply text-foreground;
   }
 }
 
