@@ -28,6 +28,9 @@ export default function LeaderboardPage() {
             <Link href="/leaderboard" className="text-sm font-medium text-orange-500">
               Leaderboard
             </Link>
+            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500">
+              Blog
+            </Link>
           </nav>
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon">
@@ -39,7 +42,7 @@ export default function LeaderboardPage() {
           </div>
         </div>
       </header>
-      <main className="flex-1 container py-8">
+      <main className="flex-1 container py-8 hero-gradient dot-pattern">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Leaderboard</h1>

@@ -114,6 +114,10 @@ export default function WordPage({ params }: { params: { id: string } }) {
               Leaderboard
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
             </Link>
+            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
+              Blog
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+            </Link>
           </nav>
           <div className="flex items-center gap-4">
             <DropdownMenu>
@@ -157,7 +161,7 @@ export default function WordPage({ params }: { params: { id: string } }) {
           </div>
         </div>
       </header>
-      <main className="flex-1 container py-8">
+      <main className="flex-1 container py-8 hero-gradient dot-pattern">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
           <div className="flex items-center gap-4">
             <Link href="/dashboard">
@@ -202,7 +206,11 @@ export default function WordPage({ params }: { params: { id: string } }) {
               Share
             </Button>
             <Link href={`/practice?word=${params.id}`}>
-              <Button size="sm" className="rounded-lg bg-orange-500 hover:bg-orange-600">
+              <Button
+                size="sm"
+                className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg shadow-sm"
+                variant="default"
+              >
                 Practice Now
               </Button>
             </Link>
@@ -495,7 +503,12 @@ export default function WordPage({ params }: { params: { id: string } }) {
                       ))}
                     </div>
                   </div>
-                  <Button className="w-full bg-orange-500 hover:bg-orange-600">Practice Again</Button>
+                  <Button
+                    className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-md shadow-sm"
+                    variant="default"
+                  >
+                    Practice Again
+                  </Button>
                 </div>
               </CardContent>
             </Card>

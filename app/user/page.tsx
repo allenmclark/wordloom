@@ -53,6 +53,9 @@ export default function UserProfilePage() {
             <Link href="/leaderboard" className="text-sm font-medium transition-colors hover:text-orange-500">
               Leaderboard
             </Link>
+            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500">
+              Blog
+            </Link>
           </nav>
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon">
@@ -64,7 +67,7 @@ export default function UserProfilePage() {
           </div>
         </div>
       </header>
-      <main className="flex-1 container py-8">
+      <main className="flex-1 container py-8 hero-gradient dot-pattern">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">User Settings</h1>
@@ -210,7 +213,7 @@ export default function UserProfilePage() {
                     </div>
                   </CardContent>
                   <CardFooter className="flex justify-end">
-                    <Button className="bg-orange-500 hover:bg-orange-600">
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
                       <Save className="h-4 w-4 mr-2" />
                       Save Changes
                     </Button>
@@ -316,7 +319,7 @@ export default function UserProfilePage() {
                     </div>
                   </CardContent>
                   <CardFooter className="flex justify-end">
-                    <Button className="bg-orange-500 hover:bg-orange-600">
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
                       <Save className="h-4 w-4 mr-2" />
                       Save Changes
                     </Button>
@@ -439,7 +442,7 @@ export default function UserProfilePage() {
                     </div>
                   </CardContent>
                   <CardFooter className="flex justify-end">
-                    <Button className="bg-orange-500 hover:bg-orange-600">
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
                       <Save className="h-4 w-4 mr-2" />
                       Save Preferences
                     </Button>
@@ -521,7 +524,7 @@ export default function UserProfilePage() {
                     </div>
                   </CardContent>
                   <CardFooter className="flex justify-end">
-                    <Button className="bg-orange-500 hover:bg-orange-600">
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
                       <Save className="h-4 w-4 mr-2" />
                       Save Notification Settings
                     </Button>
@@ -606,7 +609,7 @@ export default function UserProfilePage() {
                     </div>
                   </CardContent>
                   <CardFooter className="flex justify-end">
-                    <Button className="bg-orange-500 hover:bg-orange-600">
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
                       <Save className="h-4 w-4 mr-2" />
                       Save Privacy Settings
                     </Button>

@@ -12,7 +12,7 @@ export default function Home() {
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-display font-bold">VocabMarket</span>
+            <span className="text-xl font-display font-bold">VocabMaster</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
@@ -38,6 +38,10 @@ export default function Home() {
               className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
             >
               Leaderboard
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+            </Link>
+            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
+              Blog
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
             </Link>
           </nav>
@@ -319,7 +323,7 @@ export default function Home() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center animate-in">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">How VocabMarket Works</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">How VocabMaster Works</h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Learn vocabulary like you're trading on a prediction market. Invest time in words, earn points, and
                   watch your knowledge grow.
@@ -383,7 +387,7 @@ export default function Home() {
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-orange-500" />
-            <p className="text-sm text-muted-foreground">© 2025 VocabMarket. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© 2025 VocabMaster. All rights reserved.</p>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/terms" className="text-sm text-muted-foreground hover:underline">

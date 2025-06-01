@@ -29,10 +29,13 @@ export default function LoginPage() {
             <Link href="/leaderboard" className="text-sm font-medium transition-colors hover:text-orange-500">
               Leaderboard
             </Link>
+            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500">
+              Blog
+            </Link>
           </nav>
         </div>
       </header>
-      <main className="flex-1 flex items-center justify-center p-4 md:p-8">
+      <main className="flex-1 flex items-center justify-center p-4 md:p-8 hero-gradient dot-pattern">
         <Card className="mx-auto max-w-md w-full border-2">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold">Log in to your account</CardTitle>
@@ -58,7 +61,7 @@ export default function LoginPage() {
                 Remember me for 30 days
               </Label>
             </div>
-            <Button className="w-full bg-orange-500 hover:bg-orange-600">
+            <Button className="bg-orange-500 hover:bg-orange-600 text-white rounded-md shadow-sm" variant="default">
               Log in
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
