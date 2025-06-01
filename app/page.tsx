@@ -67,7 +67,7 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32 hero-gradient overflow-hidden relative">
           <div className="absolute inset-0 dot-pattern opacity-70"></div>
           <div className="container px-4 md:px-6 relative">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+            <div className="flex flex-col items-center justify-center space-y-12 text-center">
               <div className="flex flex-col justify-center space-y-4 animate-in">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
@@ -99,7 +99,7 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-              <div className="mx-auto lg:mx-0 relative animate-in" style={{ animationDelay: "0.2s" }}>
+              <div className="mx-auto relative animate-in" style={{ animationDelay: "0.2s" }}>
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-blue-500/20 rounded-2xl blur-3xl opacity-50"></div>
                 <div className="relative bg-white rounded-2xl border shadow-elevated p-6 transform transition-all duration-500 hover:scale-[1.02]">
                   <div className="space-y-4">
