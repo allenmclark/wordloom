@@ -22,23 +22,23 @@ export default function Home() {
             <Link
               href="/practice"
               className="text-sm font-medium transition-colors hover:text-orange-700 relative group"
-            > {/* Removed backslash */}
+            > {/* Corrected: Removed backslash */}
               Practice
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
             <Link
               href="/dashboard"
-              className="text-sm font-medium transition-colors hover:text-orange-700 relative group\" {/* Changed to orange-700 */}
-            >
+              className="text-sm font-medium transition-colors hover:text-orange-700 relative group"
+            > {/* Corrected: Removed backslash */}
               Dashboard
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
             <Link
               href="/leaderboard"
-              className="text-sm font-medium transition-colors hover:text-orange-700 relative group" {/* Changed to orange-700 */}
+              className="text-sm font-medium transition-colors hover:text-orange-700 relative group"
             >
               Leaderboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span>
             </Link>
             <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-700 relative group"> {/* Changed to orange-700 */}
               Blog
@@ -50,7 +50,7 @@ export default function Home() {
               <Button
                 variant="outline"
                 size="sm"
-                className="rounded-full px-4 border-orange-300 hover:border-orange-700 hover:bg-orange-100" {/* Changed to orange-300, orange-700, orange-100 */}
+                className="rounded-full px-4 border-orange-300 hover:border-orange-700 hover:bg-orange-100\" {/* Changed to orange-300, orange-700, orange-100 */}
               >
                 Log in
               </Button>
