@@ -148,10 +148,22 @@
   .page-content h4,
   .page-content h5,
   .page-content h6 {
-    @apply text-foreground;
+    @apply text-foreground font-bold;
   }
 
   .page-content p {
+    @apply text-foreground;
+  }
+
+  .page-content .text-muted-foreground {
+    @apply text-muted-foreground;
+  }
+
+  .dashboard-content {
+    @apply text-foreground bg-background;
+  }
+
+  .dashboard-content .card-content {
     @apply text-foreground;
   }
 }

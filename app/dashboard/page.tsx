@@ -13,7 +13,7 @@ export default function DashboardPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1 hero-gradient dot-pattern py-12 px-4 md:px-6">
+      <main className="flex-1 bg-background py-12 px-4 md:px-6">
         <div className="container mx-auto max-w-6xl">
           <Tabs defaultValue="dashboard" className="w-full">
             <TabsList className="grid w-full grid-cols-3 mb-8">
@@ -24,38 +24,40 @@ export default function DashboardPage() {
               <TabsTrigger value="knowledge">Word Knowledge</TabsTrigger> {/* New tab trigger */}
             </TabsList>
             <TabsContent value="dashboard">
-              <Card className="bg-white/80 backdrop-blur-sm shadow-lg">
+              <Card className="bg-card shadow-lg border-2">
                 <CardHeader>
                   <CardTitle className="text-gradient">Welcome to your Dashboard!</CardTitle>
-                  <CardDescription>Manage your vocabulary progress and settings here.</CardDescription>
+                  <CardDescription className="text-foreground">
+                    Manage your vocabulary progress and settings here.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Card className="bg-white/70">
+                    <Card className="bg-card border">
                       <CardHeader>
-                        <CardTitle>Words Learned</CardTitle>
+                        <CardTitle className="text-foreground">Words Learned</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <p className="text-4xl font-bold text-orange-600">1,234</p>
-                        <p className="text-sm text-gray-500">Total words mastered</p>
+                        <p className="text-sm text-gray-500 text-foreground">Total words mastered</p>
                       </CardContent>
                     </Card>
-                    <Card className="bg-white/70">
+                    <Card className="bg-card border">
                       <CardHeader>
-                        <CardTitle>Practice Streak</CardTitle>
+                        <CardTitle className="text-foreground">Practice Streak</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <p className="text-4xl font-bold text-green-600">7 days</p>
-                        <p className="text-sm text-gray-500">Current consecutive practice days</p>
+                        <p className="text-sm text-gray-500 text-foreground">Current consecutive practice days</p>
                       </CardContent>
                     </Card>
                   </div>
-                  <Card className="bg-white/70">
+                  <Card className="bg-card border">
                     <CardHeader>
-                      <CardTitle>Recent Activity</CardTitle>
+                      <CardTitle className="text-foreground">Recent Activity</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <ul className="space-y-2 text-gray-700">
+                      <ul className="space-y-2 text-gray-700 text-foreground">
                         <li>Learned "Ephemeral" - 2 hours ago</li>
                         <li>Reviewed 15 words - yesterday</li>
                         <li>Completed "Advanced Verbs" lesson - 3 days ago</li>
@@ -70,7 +72,7 @@ export default function DashboardPage() {
               </Card>
             </TabsContent>
             <TabsContent value="heatmap">
-              <Card className="bg-white/80 backdrop-blur-sm shadow-lg p-6">
+              <Card className="bg-card shadow-lg p-6">
                 <HeatmapVisualization />
               </Card>
             </TabsContent>
