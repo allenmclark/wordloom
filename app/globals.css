@@ -34,6 +34,18 @@
 
     --radius: 0.5rem;
     --pattern-opacity: 0.7;
+
+    /* Global text styling variables */
+    --text-primary: 222.2 84% 4.9%;
+    --text-secondary: 215.4 16.3% 46.9%;
+    --text-accent: 25 95% 53%;
+    --text-white: 0 0% 98%;
+
+    /* Font weight variables */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
   }
 
   .dark {
@@ -66,6 +78,12 @@
     --ring: 25 95% 53%; /* Orange ring color */
 
     --pattern-opacity: 1.0;
+
+    /* Dark mode text variables */
+    --text-primary: 210 40% 98%;
+    --text-secondary: 215 20.2% 65.1%;
+    --text-accent: 25 95% 53%;
+    --text-white: 0 0% 98%;
   }
 }
 
@@ -73,34 +91,234 @@
   * {
     @apply border-border;
   }
+
+  /* Global body and text styling */
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background;
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-normal);
+    line-height: 1.6;
   }
+
+  /* Global heading styles */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply font-display font-bold tracking-tight text-foreground;
+    @apply font-display tracking-tight;
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-bold);
+  }
+
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+    font-weight: var(--font-weight-bold);
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl;
+    font-weight: var(--font-weight-bold);
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  h4 {
+    @apply text-lg md:text-xl;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  h5 {
+    @apply text-base md:text-lg;
+    font-weight: var(--font-weight-medium);
+  }
+
+  h6 {
+    @apply text-sm md:text-base;
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* Global paragraph and text styles */
+  p {
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-normal);
+    @apply text-base leading-relaxed;
+  }
+
+  /* Global link styles */
+  a {
+    color: hsl(var(--text-accent));
+    font-weight: var(--font-weight-medium);
+    @apply transition-colors duration-200;
+  }
+
+  a:hover {
+    color: hsl(25 95% 45%); /* Darker orange on hover */
+  }
+
+  /* Global list styles */
+  ul,
+  ol {
+    color: hsl(var(--text-primary));
+  }
+
+  li {
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-normal);
+  }
+
+  /* Global label styles */
+  label {
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-medium);
+    @apply text-sm;
+  }
+
+  /* Global span styles */
+  span {
+    color: inherit;
+    font-weight: inherit;
+  }
+
+  /* Global small text styles */
+  small {
+    color: hsl(var(--text-secondary));
+    font-weight: var(--font-weight-normal);
+    @apply text-xs;
   }
 }
 
 @layer components {
-  .hero-gradient {
-    @apply bg-gradient-to-br from-orange-50 via-white to-slate-50;
-  }
-
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-card hover:-translate-y-1;
+  /* Global button system */
+  .btn-base {
+    @apply inline-flex items-center justify-center rounded-lg transition-all duration-200 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+    font-weight: var(--font-weight-medium);
   }
 
   .btn-primary {
-    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium transition-all duration-200 shadow-sm hover:shadow rounded-lg;
+    @apply btn-base bg-orange-500 hover:bg-orange-600 shadow-sm hover:shadow;
+    color: hsl(var(--text-white));
+    font-weight: var(--font-weight-medium);
   }
 
-  .text-gradient {
-    @apply bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent;
+  .btn-secondary {
+    @apply btn-base bg-secondary hover:bg-secondary/80;
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-medium);
+  }
+
+  .btn-outline {
+    @apply btn-base border border-orange-200 hover:border-orange-500 hover:bg-orange-50;
+    color: hsl(var(--text-accent));
+    font-weight: var(--font-weight-medium);
+  }
+
+  .btn-ghost {
+    @apply btn-base hover:bg-accent hover:text-accent-foreground;
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-medium);
+  }
+
+  .btn-destructive {
+    @apply btn-base bg-destructive hover:bg-destructive/90;
+    color: hsl(var(--text-white));
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* Button sizes */
+  .btn-sm {
+    @apply h-8 px-3 text-sm;
+  }
+
+  .btn-default {
+    @apply h-10 px-4 py-2;
+  }
+
+  .btn-lg {
+    @apply h-12 px-8 text-lg;
+  }
+
+  .btn-icon {
+    @apply h-10 w-10;
+  }
+
+  /* Legacy button classes for backward compatibility */
+  .btn-orange {
+    @apply btn-primary;
+  }
+
+  .btn-orange-outline {
+    @apply btn-outline;
+  }
+
+  /* Card system with consistent text styling */
+  .card-base {
+    @apply rounded-lg border bg-card shadow-sm;
+  }
+
+  .card-header {
+    @apply flex flex-col space-y-1.5 p-6;
+  }
+
+  .card-title {
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-semibold);
+    @apply text-lg leading-none tracking-tight;
+  }
+
+  .card-description {
+    color: hsl(var(--text-secondary));
+    font-weight: var(--font-weight-normal);
+    @apply text-sm;
+  }
+
+  .card-content {
+    @apply p-6 pt-0;
+    color: hsl(var(--text-primary));
+  }
+
+  .card-footer {
+    @apply flex items-center p-6 pt-0;
+  }
+
+  /* Navigation system */
+  .nav-link {
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-medium);
+    @apply text-sm transition-colors hover:text-orange-500 relative;
+  }
+
+  .nav-link-active {
+    color: hsl(var(--text-accent));
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* Form elements */
+  .form-label {
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-medium);
+    @apply text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+  }
+
+  .form-description {
+    color: hsl(var(--text-secondary));
+    font-weight: var(--font-weight-normal);
+    @apply text-sm;
+  }
+
+  .form-message {
+    color: hsl(var(--text-primary));
+    font-weight: var(--font-weight-normal);
+    @apply text-sm;
+  }
+
+  /* Background patterns */
+  .hero-gradient {
+    @apply bg-gradient-to-br from-orange-50 via-white to-slate-50;
   }
 
   .dot-pattern {
@@ -116,86 +334,115 @@
     opacity: var(--pattern-opacity);
   }
 
-  /* Consistent orange button styles */
-  .btn-orange {
-    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium transition-all duration-200 shadow-sm hover:shadow rounded-lg;
+  /* Text utility classes */
+  .text-primary {
+    color: hsl(var(--text-primary)) !important;
+    font-weight: var(--font-weight-normal);
   }
 
-  .btn-orange-outline {
-    @apply border border-orange-200 hover:border-orange-500 hover:bg-orange-50 text-orange-600 hover:text-orange-700 transition-all duration-200 rounded-lg;
+  .text-secondary {
+    color: hsl(var(--text-secondary)) !important;
+    font-weight: var(--font-weight-normal);
   }
 
-  .text-orange-primary {
-    @apply text-orange-500;
+  .text-accent {
+    color: hsl(var(--text-accent)) !important;
+    font-weight: var(--font-weight-medium);
   }
 
-  .bg-orange-primary {
-    @apply bg-orange-500;
+  .text-white {
+    color: hsl(var(--text-white)) !important;
   }
 
-  .border-orange-primary {
-    @apply border-orange-500;
+  .text-gradient {
+    @apply bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent;
+    font-weight: var(--font-weight-bold);
   }
 
-  /* Ensure consistent text colors */
+  /* Font weight utilities */
+  .font-normal {
+    font-weight: var(--font-weight-normal);
+  }
+
+  .font-medium {
+    font-weight: var(--font-weight-medium);
+  }
+
+  .font-semibold {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .font-bold {
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* Interactive elements */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  /* Ensure all shadcn components inherit proper styling */
+  .shadcn-override {
+    color: hsl(var(--text-primary));
+  }
+
+  /* Global overrides for common elements */
   .page-content {
-    @apply text-foreground;
+    color: hsl(var(--text-primary));
   }
 
-  .page-content h1,
-  .page-content h2,
-  .page-content h3,
-  .page-content h4,
-  .page-content h5,
-  .page-content h6 {
-    @apply text-foreground font-bold;
-  }
-
-  .page-content p {
-    @apply text-foreground;
-  }
-
-  .dashboard-content {
-    @apply text-foreground bg-background;
-  }
-
-  /* Enhanced button styling to match header elements */
-  .dashboard-btn-primary {
-    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium transition-all duration-200 shadow-sm hover:shadow rounded-lg px-6 py-2 text-base;
-  }
-
-  /* Ensure dashboard text consistency */
-  .dashboard-card {
-    @apply bg-card text-card-foreground border shadow-sm;
-  }
-
-  .dashboard-title {
-    @apply text-xl font-bold text-foreground tracking-tight;
-  }
-
-  .dashboard-subtitle {
-    @apply text-muted-foreground;
-  }
-
-  .dashboard-stat-number {
-    @apply text-4xl font-bold;
-  }
-
-  .dashboard-stat-label {
-    @apply text-sm text-muted-foreground;
-  }
-
-  /* Ensure proper text contrast in all dashboard elements */
-  .dashboard-content * {
+  .page-content * {
     color: inherit;
   }
 
-  .dashboard-content .text-foreground {
-    color: hsl(var(--foreground));
+  /* Specific overrides for muted text */
+  .muted {
+    color: hsl(var(--text-secondary)) !important;
   }
 
-  .dashboard-content .text-muted-foreground {
-    color: hsl(var(--muted-foreground));
+  .text-muted-foreground {
+    color: hsl(var(--text-secondary)) !important;
+  }
+
+  /* Statistics and numbers */
+  .stat-number {
+    color: hsl(var(--text-accent));
+    font-weight: var(--font-weight-bold);
+    @apply text-4xl;
+  }
+
+  .stat-label {
+    color: hsl(var(--text-secondary));
+    font-weight: var(--font-weight-normal);
+    @apply text-sm;
+  }
+}
+
+/* Global component overrides */
+@layer utilities {
+  /* Force consistent styling across all components */
+  .force-text-primary {
+    color: hsl(var(--text-primary)) !important;
+  }
+
+  .force-text-secondary {
+    color: hsl(var(--text-secondary)) !important;
+  }
+
+  .force-text-accent {
+    color: hsl(var(--text-accent)) !important;
+  }
+
+  .force-font-medium {
+    font-weight: var(--font-weight-medium) !important;
+  }
+
+  .force-font-semibold {
+    font-weight: var(--font-weight-semibold) !important;
+  }
+
+  .force-font-bold {
+    font-weight: var(--font-weight-bold) !important;
   }
 }
 
@@ -210,12 +457,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #fc4c02; /* Orange scrollbar */
+  background: #fc4c02;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ea580c; /* Darker orange on hover */
+  background: #ea580c;
 }
 
 /* Smooth scrolling */
@@ -249,20 +496,26 @@ html {
 .prose {
   max-width: 65ch;
   line-height: 1.6;
+  color: hsl(var(--text-primary));
 }
 
 .prose p {
   margin-bottom: 1.5em;
+  color: hsl(var(--text-primary));
 }
 
 .prose h2 {
   font-size: 1.5rem;
   margin-top: 2em;
   margin-bottom: 1em;
+  color: hsl(var(--text-primary));
+  font-weight: var(--font-weight-bold);
 }
 
 .prose h3 {
   font-size: 1.25rem;
   margin-top: 1.5em;
   margin-bottom: 0.75em;
+  color: hsl(var(--text-primary));
+  font-weight: var(--font-weight-semibold);
 }
