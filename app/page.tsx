@@ -22,14 +22,14 @@ export default function Home() {
             <Link
               href="/practice"
               className="text-sm font-medium transition-colors hover:text-orange-700 relative group"
-            > {/* Corrected: Removed backslash */}
+            >
               Practice
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
             <Link
               href="/dashboard"
               className="text-sm font-medium transition-colors hover:text-orange-700 relative group"
-            > {/* Corrected: Removed backslash */}
+            >
               Dashboard
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
@@ -38,7 +38,7 @@ export default function Home() {
               className="text-sm font-medium transition-colors hover:text-orange-700 relative group"
             >
               Leaderboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-700 transition-all group-hover:w-full"></span> {/* Changed to orange-700 */}
             </Link>
             <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-700 relative group"> {/* Changed to orange-700 */}
               Blog
@@ -67,7 +67,7 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32 hero-gradient overflow-hidden relative">
           <div className="absolute inset-0 dot-pattern"></div> {/* Removed opacity-70, handled in CSS */}
           <div className="container px-4 md:px-6 relative">
-            <div className="flex flex-col items-center justify-center space-y-12 text-center"> {/* Changed from grid to flex */}
+            <div className="flex flex-col items-center justify-center space-y-12 text-center">
               <div className="flex flex-col justify-center space-y-4 animate-in">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
@@ -129,8 +129,8 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-white relative">
-          <div className="absolute inset-0 mesh-pattern"></div> {/* Removed opacity-70, handled in CSS */}
+        <section className="w-full py-12 md:py-24 lg:py-32 hero-gradient relative"> {/* Changed bg-white to hero-gradient */}
+          <div className="absolute inset-0 dot-pattern"></div> {/* Changed mesh-pattern to dot-pattern, removed opacity-70 */}
           <div className="container px-4 md:px-6 relative">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 animate-in">
               <div className="space-y-2">
