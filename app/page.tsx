@@ -78,7 +78,7 @@ export default function Home() {
                     today.
                   </p>
                 </div>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
+                <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center items-center">
                   <Link href="/practice">
                     <Button
                       size="lg"
@@ -363,7 +363,7 @@ export default function Home() {
                   Join thousands of learners who are growing their vocabulary every day.
                 </p>
               </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
                 <Link href="/signup">
                   <Button
                     size="lg"
