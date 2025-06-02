@@ -91,7 +91,7 @@ export default function Home() {
                       size="lg"
                       className="rounded-full px-6 bg-orange-500 hover:bg-orange-600 shadow-md hover:shadow-lg transition-all duration-300"
                     >
-                      Start Learning
+                      Begin Learning
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
