@@ -19,6 +19,7 @@ const montserrat = Montserrat({
 export const metadata = {
   title: "VocabMarket - Invest in Your Vocabulary",
   description: "Learn new words, track your progress, and compete with friends. Grow your vocabulary portfolio today.",
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({

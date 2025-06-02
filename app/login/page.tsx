@@ -14,7 +14,7 @@ export default function LoginPage() {
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-bold">VocabMarket</span>
+            <span className="text-xl font-bold text-orange-500">VocabMarket</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500">
@@ -23,16 +23,22 @@ export default function LoginPage() {
             <Link href="/practice" className="text-sm font-medium transition-colors hover:text-orange-500">
               Practice
             </Link>
+            <Link href="/spanish-english" className="text-sm font-medium transition-colors hover:text-orange-500">
+              Spanish-English
+            </Link>
             <Link href="/dashboard" className="text-sm font-medium transition-colors hover:text-orange-500">
               Dashboard
             </Link>
             <Link href="/leaderboard" className="text-sm font-medium transition-colors hover:text-orange-500">
               Leaderboard
             </Link>
+            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500">
+              Blog
+            </Link>
           </nav>
         </div>
       </header>
-      <main className="flex-1 flex items-center justify-center p-4 md:p-8">
+      <main className="flex-1 flex items-center justify-center p-4 md:p-8 hero-gradient dot-pattern page-content">
         <Card className="mx-auto max-w-md w-full border-2">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold">Log in to your account</CardTitle>
@@ -46,7 +52,7 @@ export default function LoginPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="/forgot-password" className="text-xs text-orange-600 hover:underline">
+                <Link href="/forgot-password" className="text-xs text-orange-500 hover:text-orange-600 hover:underline">
                   Forgot password?
                 </Link>
               </div>
@@ -58,7 +64,7 @@ export default function LoginPage() {
                 Remember me for 30 days
               </Label>
             </div>
-            <Button className="w-full bg-orange-500 hover:bg-orange-600">
+            <Button className="btn-orange w-full">
               Log in
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
@@ -98,7 +104,7 @@ export default function LoginPage() {
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-center text-sm">
               Don't have an account?{" "}
-              <Link href="/signup" className="text-orange-600 hover:underline">
+              <Link href="/signup" className="text-orange-500 hover:text-orange-600 hover:underline">
                 Sign up
               </Link>
             </div>

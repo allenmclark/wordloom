@@ -175,6 +175,13 @@ export default function PracticePage() {
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-orange-500"></span>
             </Link>
             <Link
+              href="/spanish-english"
+              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
+            >
+              Spanish-English
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+            </Link>
+            <Link
               href="/dashboard"
               className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
             >
@@ -231,7 +238,7 @@ export default function PracticePage() {
           </div>
         </div>
       </header>
-      <main className="flex-1 container py-8">
+      <main className="flex-1 container py-8 hero-gradient dot-pattern">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Spanish Vocabulary Practice</h1>
@@ -332,7 +339,7 @@ export default function PracticePage() {
                   Hint
                 </Button>
                 <Button
-                  className="bg-orange-500 hover:bg-orange-600 rounded-lg shadow-sm hover:shadow transition-all duration-300"
+                  className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg shadow-sm hover:shadow transition-all duration-300" // Explicit orange styling
                   onClick={handleNextWord}
                   disabled={selectedOption === null}
                 >

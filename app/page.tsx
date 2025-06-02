@@ -12,7 +12,7 @@ export default function Home() {
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
             <BookOpen className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-display font-bold">VocabMarket</span>
+            <span className="text-xl font-display font-bold">VocabMaster</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
@@ -27,6 +27,13 @@ export default function Home() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
             </Link>
             <Link
+              href="/spanish-english"
+              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
+            >
+              Spanish-English
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+            </Link>
+            <Link
               href="/dashboard"
               className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
             >
@@ -38,6 +45,10 @@ export default function Home() {
               className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
             >
               Leaderboard
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+            </Link>
+            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
+              Blog
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
             </Link>
           </nav>
@@ -63,7 +74,7 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32 hero-gradient overflow-hidden relative">
           <div className="absolute inset-0 dot-pattern opacity-70"></div>
           <div className="container px-4 md:px-6 relative">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+            <div className="flex flex-col items-center justify-center space-y-12 text-center">
               <div className="flex flex-col justify-center space-y-4 animate-in">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
@@ -74,7 +85,7 @@ export default function Home() {
                     today.
                   </p>
                 </div>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
+                <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center items-center">
                   <Link href="/practice">
                     <Button
                       size="lg"
@@ -95,7 +106,7 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-              <div className="mx-auto lg:mx-0 relative animate-in" style={{ animationDelay: "0.2s" }}>
+              <div className="mx-auto relative animate-in" style={{ animationDelay: "0.2s" }}>
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-blue-500/20 rounded-2xl blur-3xl opacity-50"></div>
                 <div className="relative bg-white rounded-2xl border shadow-elevated p-6 transform transition-all duration-500 hover:scale-[1.02]">
                   <div className="space-y-4">
@@ -319,7 +330,7 @@ export default function Home() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center animate-in">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">How VocabMarket Works</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">How VocabMaster Works</h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Learn vocabulary like you're trading on a prediction market. Invest time in words, earn points, and
                   watch your knowledge grow.
@@ -359,7 +370,7 @@ export default function Home() {
                   Join thousands of learners who are growing their vocabulary every day.
                 </p>
               </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
                 <Link href="/signup">
                   <Button
                     size="lg"
@@ -383,7 +394,7 @@ export default function Home() {
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-orange-500" />
-            <p className="text-sm text-muted-foreground">© 2025 VocabMarket. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© 2025 VocabMaster. All rights reserved.</p>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/terms" className="text-sm text-muted-foreground hover:underline">
