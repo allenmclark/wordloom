@@ -19,7 +19,17 @@ import {
 
 // Enhanced Spanish-English vocabulary data with semantic tags
 const vocabularyData = [
-
+  {
+    id: 1,
+    spanish: "hola",
+    english: "hello",
+    category: "greetings",
+    difficulty: "beginner",
+    semanticTags: ["greeting", "salutation", "welcome", "introduction"],
+    definition: "A common greeting used when meeting someone",
+    example: "Hola, ¿cómo estás?",
+    pronunciation: "/ˈo.la/",
+  },
   {
     id: 2,
     spanish: "adiós",
