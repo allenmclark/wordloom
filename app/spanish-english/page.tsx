@@ -241,7 +241,7 @@ const vocabularyData = [
   },
 ]
 
-type SearchMode = "standard" | "vector" | "other"
+type SearchMode = "standard" | "vector"
 
 // Simulate vector search by calculating semantic similarity
 const calculateSemanticSimilarity = (query: string, word: any): number => {
