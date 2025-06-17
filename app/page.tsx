@@ -44,9 +44,26 @@ export default function Home() {
 
       const data = await response.json()
 
+      // Handle the array response format: ["query yields: worked"]
+      let word = "Ephemeral"
+      let definition = "Lasting for a very short time"
+
+      if (Array.isArray(data) && data.length > 0) {
+        const responseText = data[0]
+        // Extract word and definition from the response text
+        if (responseText.includes("query yields:")) {
+          word = "Success"
+          definition = responseText
+        } else {
+          // If it's a different format, use the response as the word
+          word = responseText
+          definition = "Data retrieved from backend"
+        }
+      }
+
       setTodayWord({
-        word: data.word || "Ephemeral",
-        definition: data.definition || "Lasting for a very short time",
+        word: word,
+        definition: definition,
         loading: false,
         error: null,
       })
