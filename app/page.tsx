@@ -1,3 +1,6 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowRight, BookOpen, Brain, TrendingUp, ChevronRight } from "lucide-react"
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer, Tooltip } from "recharts"
@@ -6,6 +9,52 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function Home() {
+  const [todayWord, setTodayWord] = useState({
+    word: "Ephemeral",
+    definition: "Lasting for a very short time",
+    loading: true,
+    error: null,
+  })
+
+  // Function to fetch word data from FastAPI backend
+  const fetchTodayWord = async () => {
+    try {
+      setTodayWord((prev) => ({ ...prev, loading: true, error: null }))
+
+      const response = await fetch("https://backendvocabtest-615369945513.europe-west1.run.app/word-of-the-day", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data = await response.json()
+
+      setTodayWord({
+        word: data.word || "Ephemeral",
+        definition: data.definition || "Lasting for a very short time",
+        loading: false,
+        error: null,
+      })
+    } catch (error) {
+      console.error("Error fetching word data:", error)
+      setTodayWord((prev) => ({
+        ...prev,
+        loading: false,
+        error: error.message || "Failed to fetch word data",
+      }))
+    }
+  }
+
+  // Fetch data on component mount
+  useEffect(() => {
+    fetchTodayWord()
+  }, [])
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
@@ -117,8 +166,30 @@ export default function Home() {
                       </span>
                     </div>
                     <div className="p-4 bg-slate-50 rounded-xl">
-                      <h4 className="text-2xl font-bold">Ephemeral</h4>
-                      <p className="text-muted-foreground mt-1">Lasting for a very short time</p>
+                      {todayWord.loading ? (
+                        <>
+                          <div className="animate-pulse">
+                            <div className="h-8 bg-slate-200 rounded w-32 mb-2"></div>
+                            <div className="h-4 bg-slate-200 rounded w-48"></div>
+                          </div>
+                        </>
+                      ) : todayWord.error ? (
+                        <>
+                          <h4 className="text-2xl font-bold text-red-600">Error</h4>
+                          <p className="text-muted-foreground mt-1">{todayWord.error}</p>
+                          <button
+                            onClick={fetchTodayWord}
+                            className="mt-2 text-sm text-orange-600 hover:text-orange-700 underline"
+                          >
+                            Try again
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <h4 className="text-2xl font-bold">{todayWord.word}</h4>
+                          <p className="text-muted-foreground mt-1">{todayWord.definition}</p>
+                        </>
+                      )}
                     </div>
                     <div className="flex justify-between items-center text-sm">
                       <span className="bg-slate-100 px-2 py-1 rounded-full text-xs">Difficulty: Medium</span>
@@ -127,8 +198,16 @@ export default function Home() {
                         87% success rate
                       </span>
                     </div>
-                    <Button className="w-full bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm hover:shadow transition-all duration-300">
-                      Practice Now
+                    <Button
+                      className="w-full bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm hover:shadow transition-all duration-300"
+                      disabled={todayWord.loading}
+                      onClick={() => {
+                        if (todayWord.error) {
+                          fetchTodayWord()
+                        }
+                      }}
+                    >
+                      {todayWord.loading ? "Loading..." : todayWord.error ? "Retry" : "Practice Now"}
                     </Button>
                   </div>
                 </div>
