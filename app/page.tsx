@@ -21,15 +21,25 @@ export default function Home() {
     try {
       setTodayWord((prev) => ({ ...prev, loading: true, error: null }))
 
-      const response = await fetch("https://backendvocabtest-615369945513.europe-west1.run.app/word-of-the-day", {
+      // Add timeout and better error handling
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+
+      const response = await fetch("https://backendvocabtest-615369945513.europe-west1.run.app/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
+        mode: "cors", // Explicitly set CORS mode
+        credentials: "omit", // Don't send credentials
+        signal: controller.signal,
       })
 
+      clearTimeout(timeoutId)
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`Backend returned ${response.status}: ${response.statusText}`)
       }
 
       const data = await response.json()
@@ -42,11 +52,43 @@ export default function Home() {
       })
     } catch (error) {
       console.error("Error fetching word data:", error)
+
+      let errorMessage = "Failed to fetch word data"
+
+      if (error.name === "AbortError") {
+        errorMessage = "Request timed out - please try again"
+      } else if (error.message.includes("CORS")) {
+        errorMessage = "CORS error - backend may need to allow cross-origin requests"
+      } else if (error.message.includes("Failed to fetch") || error.message.includes("Load failed")) {
+        errorMessage = "Network error - please check your connection or try again later"
+      } else if (error.message.includes("Backend returned")) {
+        errorMessage = error.message
+      }
+
       setTodayWord((prev) => ({
         ...prev,
         loading: false,
-        error: error.message || "Failed to fetch word data",
+        error: errorMessage,
       }))
+    }
+  }
+
+  // Alternative fetch method for testing
+  const testBackendConnection = async () => {
+    try {
+      console.log("Testing backend connection...")
+
+      // First, try a simple fetch without custom headers
+      const response = await fetch("https://backendvocabtest-615369945513.europe-west1.run.app/", {
+        method: "GET",
+        mode: "no-cors", // This will limit what we can read but might bypass CORS
+      })
+
+      console.log("Response received:", response)
+      return true
+    } catch (error) {
+      console.error("Backend connection test failed:", error)
+      return false
     }
   }
 
@@ -175,14 +217,30 @@ export default function Home() {
                         </>
                       ) : todayWord.error ? (
                         <>
-                          <h4 className="text-2xl font-bold text-red-600">Error</h4>
-                          <p className="text-muted-foreground mt-1">{todayWord.error}</p>
-                          <button
-                            onClick={fetchTodayWord}
-                            className="mt-2 text-sm text-orange-600 hover:text-orange-700 underline"
-                          >
-                            Try again
-                          </button>
+                          <h4 className="text-2xl font-bold text-red-600">Connection Error</h4>
+                          <p className="text-muted-foreground mt-1 text-sm">{todayWord.error}</p>
+                          <div className="mt-2 space-y-2">
+                            <button
+                              onClick={fetchTodayWord}
+                              className="block text-sm text-orange-600 hover:text-orange-700 underline"
+                            >
+                              Try again
+                            </button>
+                            <button
+                              onClick={testBackendConnection}
+                              className="block text-sm text-blue-600 hover:text-blue-700 underline"
+                            >
+                              Test connection
+                            </button>
+                          </div>
+                          <div className="mt-2 p-2 bg-yellow-50 rounded text-xs text-yellow-800">
+                            <p>
+                              <strong>Troubleshooting:</strong>
+                            </p>
+                            <p>• Check if the backend is running</p>
+                            <p>• Verify CORS is enabled on the backend</p>
+                            <p>• Check browser console for detailed errors</p>
+                          </div>
                         </>
                       ) : (
                         <>
