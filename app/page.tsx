@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowRight, BookOpen, Brain, TrendingUp, ChevronRight } from "lucide-react"
+import { ArrowRight, BookOpen, Brain, TrendingUp, ChevronRight, RefreshCw } from "lucide-react"
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer, Tooltip } from "recharts"
 
 import { Button } from "@/components/ui/button"
@@ -14,51 +14,38 @@ export default function Home() {
     definition: "Lasting for a very short time",
     loading: true,
     error: null,
+    rawResponse: null,
   })
 
-  // Function to fetch word data from FastAPI backend
+  // Function to fetch word data from FastAPI backend - matches Python implementation
   const fetchTodayWord = async () => {
     try {
       setTodayWord((prev) => ({ ...prev, loading: true, error: null }))
 
-      // Add timeout and better error handling
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
-
       const response = await fetch("https://backendvocabtest-615369945513.europe-west1.run.app/", {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
           Accept: "application/json",
         },
-        mode: "cors", // Explicitly set CORS mode
-        credentials: "omit", // Don't send credentials
-        signal: controller.signal,
       })
 
-      clearTimeout(timeoutId)
-
+      // Check if response is ok (matches response.raise_for_status() in Python)
       if (!response.ok) {
-        throw new Error(`Backend returned ${response.status}: ${response.statusText}`)
+        throw new Error(`HTTP error occurred: ${response.status} ${response.statusText}`)
       }
 
+      // Parse JSON response (matches response.json() in Python)
       const data = await response.json()
+      console.log("Response:", data) // Expected: ["query yields: worked"]
 
       // Handle the array response format: ["query yields: worked"]
-      let word = "Ephemeral"
-      let definition = "Lasting for a very short time"
+      let word = "Backend Connected"
+      let definition = "Default definition"
 
       if (Array.isArray(data) && data.length > 0) {
         const responseText = data[0]
-        // Extract word and definition from the response text
-        if (responseText.includes("query yields:")) {
-          word = "Success"
-          definition = responseText
-        } else {
-          // If it's a different format, use the response as the word
-          word = responseText
-          definition = "Data retrieved from backend"
-        }
+        word = "Success"
+        definition = responseText
       }
 
       setTodayWord({
@@ -66,46 +53,27 @@ export default function Home() {
         definition: definition,
         loading: false,
         error: null,
+        rawResponse: JSON.stringify(data),
       })
     } catch (error) {
       console.error("Error fetching word data:", error)
 
-      let errorMessage = "Failed to fetch word data"
+      let errorMessage = "Request error occurred"
 
-      if (error.name === "AbortError") {
-        errorMessage = "Request timed out - please try again"
-      } else if (error.message.includes("CORS")) {
-        errorMessage = "CORS error - backend may need to allow cross-origin requests"
-      } else if (error.message.includes("Failed to fetch") || error.message.includes("Load failed")) {
-        errorMessage = "Network error - please check your connection or try again later"
-      } else if (error.message.includes("Backend returned")) {
+      if (error.message.includes("HTTP error occurred")) {
         errorMessage = error.message
+      } else if (error.message.includes("Failed to fetch") || error.message.includes("Load failed")) {
+        errorMessage = "Network error - please check your connection"
+      } else if (error.name === "SyntaxError") {
+        errorMessage = "JSON decode error - invalid response format"
       }
 
       setTodayWord((prev) => ({
         ...prev,
         loading: false,
         error: errorMessage,
+        rawResponse: null,
       }))
-    }
-  }
-
-  // Alternative fetch method for testing
-  const testBackendConnection = async () => {
-    try {
-      console.log("Testing backend connection...")
-
-      // First, try a simple fetch without custom headers
-      const response = await fetch("https://backendvocabtest-615369945513.europe-west1.run.app/", {
-        method: "GET",
-        mode: "no-cors", // This will limit what we can read but might bypass CORS
-      })
-
-      console.log("Response received:", response)
-      return true
-    } catch (error) {
-      console.error("Backend connection test failed:", error)
-      return false
     }
   }
 
@@ -219,10 +187,21 @@ export default function Home() {
                 <div className="relative bg-white rounded-2xl border shadow-elevated p-6 transform transition-all duration-500 hover:scale-[1.02]">
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-lg font-semibold">Today's Word</h3>
-                      <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full font-medium">
-                        +15 points
-                      </span>
+                      <h3 className="text-lg font-semibold">Backend Status</h3>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full font-medium">
+                          Live Data
+                        </span>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={fetchTodayWord}
+                          disabled={todayWord.loading}
+                          className="h-6 w-6 p-0"
+                        >
+                          <RefreshCw className={`h-3 w-3 ${todayWord.loading ? "animate-spin" : ""}`} />
+                        </Button>
+                      </div>
                     </div>
                     <div className="p-4 bg-slate-50 rounded-xl">
                       {todayWord.loading ? (
@@ -236,53 +215,47 @@ export default function Home() {
                         <>
                           <h4 className="text-2xl font-bold text-red-600">Connection Error</h4>
                           <p className="text-muted-foreground mt-1 text-sm">{todayWord.error}</p>
-                          <div className="mt-2 space-y-2">
-                            <button
-                              onClick={fetchTodayWord}
-                              className="block text-sm text-orange-600 hover:text-orange-700 underline"
-                            >
-                              Try again
-                            </button>
-                            <button
-                              onClick={testBackendConnection}
-                              className="block text-sm text-blue-600 hover:text-blue-700 underline"
-                            >
-                              Test connection
-                            </button>
-                          </div>
-                          <div className="mt-2 p-2 bg-yellow-50 rounded text-xs text-yellow-800">
-                            <p>
-                              <strong>Troubleshooting:</strong>
-                            </p>
-                            <p>• Check if the backend is running</p>
-                            <p>• Verify CORS is enabled on the backend</p>
-                            <p>• Check browser console for detailed errors</p>
-                          </div>
+                          <button
+                            onClick={fetchTodayWord}
+                            className="mt-2 text-sm text-orange-600 hover:text-orange-700 underline"
+                          >
+                            Try again
+                          </button>
                         </>
                       ) : (
                         <>
-                          <h4 className="text-2xl font-bold">{todayWord.word}</h4>
+                          <h4 className="text-2xl font-bold text-green-600">{todayWord.word}</h4>
                           <p className="text-muted-foreground mt-1">{todayWord.definition}</p>
+                          {todayWord.rawResponse && (
+                            <div className="mt-2 p-2 bg-green-50 rounded text-xs text-green-800">
+                              <p>
+                                <strong>Raw Response:</strong>
+                              </p>
+                              <code>{todayWord.rawResponse}</code>
+                            </div>
+                          )}
                         </>
                       )}
                     </div>
                     <div className="flex justify-between items-center text-sm">
-                      <span className="bg-slate-100 px-2 py-1 rounded-full text-xs">Difficulty: Medium</span>
+                      <span className="bg-slate-100 px-2 py-1 rounded-full text-xs">
+                        {todayWord.error
+                          ? "Status: Error"
+                          : todayWord.loading
+                            ? "Status: Loading"
+                            : "Status: Connected"}
+                      </span>
                       <span className="flex items-center gap-1 text-orange-600">
                         <TrendingUp className="h-4 w-4" />
-                        87% success rate
+                        Backend Integration
                       </span>
                     </div>
                     <Button
                       className="w-full bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm hover:shadow transition-all duration-300"
                       disabled={todayWord.loading}
-                      onClick={() => {
-                        if (todayWord.error) {
-                          fetchTodayWord()
-                        }
-                      }}
+                      onClick={fetchTodayWord}
                     >
-                      {todayWord.loading ? "Loading..." : todayWord.error ? "Retry" : "Practice Now"}
+                      {todayWord.loading ? "Fetching..." : "Refresh Data"}
                     </Button>
                   </div>
                 </div>
