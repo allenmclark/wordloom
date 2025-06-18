@@ -25,7 +25,7 @@ export default function Home() {
       // Strategy 1: Try with minimal headers first
       let response
       try {
-        response = await fetch("https://backendvocabtest-615369945513.europe-west1.run.app/", {
+        response = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/", {
           method: "GET",
           headers: {
             Accept: "application/json",
