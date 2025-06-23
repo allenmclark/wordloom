@@ -243,6 +243,17 @@ const vocabularyData = [
     definition: "To move at a speed faster than a walk",
     example: "Voy a correr en el maratón.",
     pronunciation: "/ko.ˈrer/",
+  },
+  {
+    id: 21,
+    spanish: "correr",
+    english: "to run",
+    category: "verbs",
+    difficulty: "beginner",
+    semanticTags: ["movement", "speed", "exercise", "fast", "athletics"],
+    definition: "To move at a speed faster than a walk",
+    example: "Voy a correr en el maratón.",
+    pronunciation: "/ko.ˈrer/",
   }
   
 ]
