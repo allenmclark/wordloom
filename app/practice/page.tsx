@@ -198,6 +198,7 @@ const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean
     { attempt: 9, correct: true, cumulativeRate: 67 },
     { attempt: 10, correct: false, cumulativeRate: 60 },
     { attempt: 11, correct: true, cumulativeRate: 64 },
+    { attempt: 12, correct: true, cumulativeRate: 67 },
   ],
   10: [
     { attempt: 1, correct: false, cumulativeRate: 0 },
@@ -853,4 +854,3 @@ const wordSets = [
   { name: "Everyday Conversation", count: 40 },
   { name: "Advanced Spanish", count: 15 },
 ]
-</merged_code>
