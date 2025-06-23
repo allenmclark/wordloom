@@ -406,7 +406,7 @@ export default function SpanishEnglishPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <main className="flex-1 container py-8 hero-gradient dot-pattern">
+      <main className="flex-1 container py-8 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold tracking-tight mb-2">Spanish-English Dictionary</h1>
