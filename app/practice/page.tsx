@@ -320,7 +320,7 @@ export default function PracticePage() {
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 hero-gradient overflow-hidden relative">
         <div className="container py-6">
-          {/* Redesigned Performance Overview Card */}
+          {/* Refactored Performance Overview Card */}
           <div className="mb-6">
             <Card className="border-2 border-orange-200 bg-gradient-to-br from-white via-orange-50/30 to-amber-50/50 shadow-xl overflow-hidden no-fade">
               <CardHeader className="pb-4">
@@ -349,91 +349,82 @@ export default function PracticePage() {
               </CardHeader>
 
               <CardContent className="pt-0">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  {/* Predicted Chance of Correctness */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2">
-                      <Target className="w-5 h-5 text-orange-600" />
-                      <h3 className="font-semibold text-gray-900">Predicted Chance</h3>
-                    </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                  {/* Compact Metrics Section - Left Side */}
+                  <div className="lg:col-span-4 space-y-4">
+                    {/* Predicted Chance */}
                     <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
-                      <div className="text-center">
-                        <div className="text-4xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-1">
-                          {predictedChance}%
+                      <div className="flex items-center gap-3">
+                        <div className="flex-shrink-0">
+                          <Target className="w-5 h-5 text-orange-600" />
                         </div>
-                        <div className="text-sm text-gray-600">Estimated correctness</div>
-                        <div className="mt-3">
-                          <Progress
-                            value={predictedChance}
-                            className="h-2"
-                            style={{
-                              background: "linear-gradient(to right, #fed7aa, #fdba74, #fb923c)",
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Historical Accuracy Rate */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2">
-                      <BarChart3 className="w-5 h-5 text-orange-600" />
-                      <h3 className="font-semibold text-gray-900">Historical Accuracy</h3>
-                    </div>
-                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
-                      <div className="text-center">
-                        <div className="text-4xl font-bold text-gray-900 mb-1">{historicalAccuracy}%</div>
-                        <div className="text-sm text-gray-600">This word ({performanceData.length} attempts)</div>
-                        <div className="mt-2 text-xs text-gray-500">Overall: {overallAccuracy}% across all words</div>
-                        <div className="mt-3">
-                          <Progress
-                            value={historicalAccuracy}
-                            className="h-2"
-                            style={{
-                              background:
-                                historicalAccuracy >= 70
-                                  ? "linear-gradient(to right, #dcfce7, #bbf7d0, #86efac)"
-                                  : historicalAccuracy >= 50
-                                    ? "linear-gradient(to right, #fef3c7, #fde68a, #fcd34d)"
-                                    : "linear-gradient(to right, #fee2e2, #fecaca, #fca5a5)",
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Cumulative Performance Chart */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2">
-                      <TrendingUp className="w-5 h-5 text-orange-600" />
-                      <h3 className="font-semibold text-gray-900">Performance Trend</h3>
-                    </div>
-                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
-                      {performanceData.length > 0 ? (
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600">Cumulative Rate</span>
-                            <div
-                              className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                                performanceData.length >= 2
-                                  ? performanceData[performanceData.length - 1].cumulativeRate >=
-                                    performanceData[performanceData.length - 2].cumulativeRate
-                                    ? "bg-emerald-100 text-emerald-700"
-                                    : "bg-red-100 text-red-700"
-                                  : "bg-gray-100 text-gray-700"
-                              }`}
-                            >
-                              {performanceData.length >= 2
-                                ? performanceData[performanceData.length - 1].cumulativeRate >=
-                                  performanceData[performanceData.length - 2].cumulativeRate
-                                  ? "↗ Improving"
-                                  : "↘ Declining"
-                                : "— Tracking"}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-baseline gap-2">
+                            <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                              {predictedChance}%
                             </div>
+                            <div className="text-sm text-gray-600">predicted</div>
                           </div>
+                          <div className="text-xs text-gray-500 mt-1">Estimated correctness</div>
+                        </div>
+                      </div>
+                    </div>
 
+                    {/* Historical Accuracy */}
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
+                      <div className="flex items-center gap-3">
+                        <div className="flex-shrink-0">
+                          <BarChart3 className="w-5 h-5 text-orange-600" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-baseline gap-2">
+                            <div className="text-2xl font-bold text-gray-900">{historicalAccuracy}%</div>
+                            <div className="text-sm text-gray-600">historical</div>
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">
+                            This word ({performanceData.length} attempts)
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Overall Stats */}
+                    <div className="bg-white/50 backdrop-blur-sm rounded-xl p-3 border border-orange-200/30">
+                      <div className="text-center">
+                        <div className="text-sm text-gray-600 mb-1">Overall Accuracy</div>
+                        <div className="text-lg font-semibold text-gray-800">{overallAccuracy}%</div>
+                        <div className="text-xs text-gray-500">across all words</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Expanded Chart Section - Right Side */}
+                  <div className="lg:col-span-8">
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm h-full">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="w-5 h-5 text-orange-600" />
+                          <h3 className="font-semibold text-gray-900">Cumulative Performance Trend</h3>
+                        </div>
+                        {performanceData.length >= 2 && (
+                          <div
+                            className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${
+                              performanceData[performanceData.length - 1].cumulativeRate >=
+                              performanceData[performanceData.length - 2].cumulativeRate
+                                ? "bg-emerald-100 text-emerald-700"
+                                : "bg-red-100 text-red-700"
+                            }`}
+                          >
+                            {performanceData[performanceData.length - 1].cumulativeRate >=
+                            performanceData[performanceData.length - 2].cumulativeRate
+                              ? "↗ Improving"
+                              : "↘ Declining"}
+                          </div>
+                        )}
+                      </div>
+
+                      {performanceData.length > 0 ? (
+                        <div className="space-y-4">
                           <ChartContainer
                             config={{
                               cumulativeRate: {
@@ -441,23 +432,35 @@ export default function PracticePage() {
                                 color: "#f97316",
                               },
                             }}
-                            className="h-[120px] w-full"
+                            className="h-[200px] w-full"
                           >
                             <ResponsiveContainer width="100%" height="100%">
-                              <LineChart data={performanceData} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+                              <LineChart data={performanceData} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#f97316" strokeOpacity={0.2} />
                                 <XAxis
                                   dataKey="attempt"
                                   axisLine={false}
                                   tickLine={false}
-                                  tick={{ fontSize: 10, fill: "#6b7280" }}
+                                  tick={{ fontSize: 12, fill: "#6b7280" }}
+                                  label={{
+                                    value: "Attempt",
+                                    position: "insideBottom",
+                                    offset: -10,
+                                    style: { textAnchor: "middle", fontSize: "12px", fill: "#6b7280" },
+                                  }}
                                 />
                                 <YAxis
                                   domain={[0, 100]}
                                   axisLine={false}
                                   tickLine={false}
-                                  tick={{ fontSize: 10, fill: "#6b7280" }}
+                                  tick={{ fontSize: 12, fill: "#6b7280" }}
                                   tickFormatter={(value) => `${value}%`}
+                                  label={{
+                                    value: "Success Rate (%)",
+                                    angle: -90,
+                                    position: "insideLeft",
+                                    style: { textAnchor: "middle", fontSize: "12px", fill: "#6b7280" },
+                                  }}
                                 />
                                 <ChartTooltip
                                   content={<ChartTooltipContent />}
@@ -472,15 +475,15 @@ export default function PracticePage() {
                                   dot={{
                                     fill: "#f97316",
                                     strokeWidth: 2,
-                                    r: 4,
+                                    r: 5,
                                   }}
                                   activeDot={{
-                                    r: 6,
+                                    r: 8,
                                     stroke: "#f97316",
-                                    strokeWidth: 2,
+                                    strokeWidth: 3,
                                     fill: "white",
                                     style: {
-                                      filter: "drop-shadow(0 2px 4px rgba(249,115,22,0.3))",
+                                      filter: "drop-shadow(0 2px 6px rgba(249,115,22,0.4))",
                                     },
                                   }}
                                 />
@@ -488,19 +491,27 @@ export default function PracticePage() {
                             </ResponsiveContainer>
                           </ChartContainer>
 
-                          <div className="flex justify-between text-xs text-gray-500">
-                            <span>Start: {performanceData[0]?.cumulativeRate}%</span>
-                            <span className="font-semibold">
-                              Latest: {performanceData[performanceData.length - 1]?.cumulativeRate}%
-                            </span>
+                          <div className="flex justify-between items-center text-sm border-t pt-3">
+                            <div className="text-gray-600">
+                              <span className="font-medium">Start:</span> {performanceData[0]?.cumulativeRate}%
+                            </div>
+                            <div className="text-center text-gray-600">
+                              <span className="font-medium">{performanceData.length}</span> total attempts
+                            </div>
+                            <div className="text-gray-600">
+                              <span className="font-medium">Latest:</span>{" "}
+                              <span className="font-bold text-orange-600">
+                                {performanceData[performanceData.length - 1]?.cumulativeRate}%
+                              </span>
+                            </div>
                           </div>
                         </div>
                       ) : (
-                        <div className="h-[120px] flex items-center justify-center text-center">
+                        <div className="h-[200px] flex items-center justify-center text-center">
                           <div className="text-gray-400">
-                            <TrendingUp className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                            <p className="text-sm">No data yet</p>
-                            <p className="text-xs">Start practicing to see your trend</p>
+                            <TrendingUp className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                            <p className="text-lg font-medium">No performance data yet</p>
+                            <p className="text-sm">Start practicing to see your cumulative trend</p>
                           </div>
                         </div>
                       )}
@@ -754,5 +765,4 @@ const wordSets = [
   { name: "Business Spanish", count: 25 },
   { name: "Everyday Conversation", count: 40 },
   { name: "Advanced Spanish", count: 15 },
-  { name: "Word Sets", count: 0 },
 ]
