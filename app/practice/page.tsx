@@ -548,12 +548,6 @@ export default function PracticePage() {
                         <p className="text-lg italic text-muted-foreground">"{currentWord.exampleSentence}"</p>
                       </div>
 
-                      {showHint && (
-                        <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center text-amber-800 text-sm animate-fade-in">
-                          <p>Think about the context of the example sentence.</p>
-                        </div>
-                      )}
-
                       <div className="mt-8">
                         <h3 className="text-lg font-medium mb-4 text-center">
                           Select the correct English translation:
