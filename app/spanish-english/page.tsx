@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react"
 import Link from "next/link"
-import { Search, BookOpen, Sparkles, List, ArrowRight, Plus, Users, Edit, Grid, ListIcon } from "lucide-react"
+import { Search, BookOpen, Sparkles, List, ArrowRight, Plus, Users, Edit, Grid } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -549,7 +549,7 @@ export default function SpanishEnglishPage() {
                   onClick={() => setViewMode("table")}
                   className={viewMode === "table" ? "bg-orange-500 hover:bg-orange-600" : ""}
                 >
-                  <ListIcon className="h-4 w-4 mr-1" />
+                  <List className="h-4 w-4 mr-1" />
                   Table
                 </Button>
               </div>
@@ -860,4 +860,3 @@ export default function SpanishEnglishPage() {
     </div>
   )
 }
-</merged_code>
