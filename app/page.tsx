@@ -585,7 +585,7 @@ app.add_middleware(
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-100 relative overflow-hidden">
           {/* Educational themed background elements */}
           <div className="absolute inset-0">
             {/* Floating book icons */}
@@ -603,9 +603,9 @@ app.add_middleware(
             </div>
 
             {/* Gradient orbs */}
-            <div className="absolute top-16 right-16 w-40 h-40 bg-gradient-to-br from-orange-200/20 to-amber-200/20 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-16 left-16 w-32 h-32 bg-gradient-to-br from-yellow-200/25 to-orange-200/25 rounded-full blur-xl"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-br from-amber-100/15 to-orange-100/15 rounded-full blur-3xl"></div>
+            <div className="absolute top-16 right-16 w-40 h-40 bg-gradient-to-br from-orange-200/30 to-amber-200/30 rounded-full blur-2xl"></div>
+            <div className="absolute bottom-16 left-16 w-32 h-32 bg-gradient-to-br from-yellow-200/35 to-orange-200/35 rounded-full blur-xl"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-br from-amber-100/25 to-orange-100/25 rounded-full blur-3xl"></div>
           </div>
 
           <div className="container px-4 md:px-6 relative z-10">
