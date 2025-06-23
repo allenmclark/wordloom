@@ -595,15 +595,7 @@ export default function PracticePage() {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between p-4 bg-slate-50 border-t">
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowHint(true)}
-                    disabled={showHint || selectedOption !== null}
-                    className="rounded-lg vibrant-button-outline"
-                  >
-                    <HelpCircle className="mr-2 h-4 w-4" />
-                    Hint
-                  </Button>
+              
                   <Button
                     className="vibrant-button-primary rounded-lg shadow-sm hover:shadow transition-all duration-300"
                     onClick={handleNextWord}
