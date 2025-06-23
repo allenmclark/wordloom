@@ -357,7 +357,7 @@ app.add_middleware(
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-200 relative overflow-hidden">
           {/* Subtle geometric background elements */}
           <div className="absolute inset-0">
             <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-orange-200/30 to-blue-200/30 rounded-full blur-xl"></div>
