@@ -26,7 +26,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex items-center gap-2">
           <BookOpen className="h-6 w-6 text-orange-500 no-fade" />
-          <span className="text-xl font-display font-bold text-orange-500 no-fade">VocabMarket</span>
+          <span className="text-xl font-display font-bold text-orange-500 no-fade">VocabMaster</span>
         </div>
 
         {/* Desktop Navigation */}
