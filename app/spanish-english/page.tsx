@@ -2,34 +2,13 @@
 
 import { useState, useMemo } from "react"
 import Link from "next/link"
-import {
-  Search,
-  BookOpen,
-  User,
-  Settings,
-  LogOut,
-  Sparkles,
-  List,
-  ArrowRight,
-  Plus,
-  Users,
-  Edit,
-  Grid,
-  ListIcon,
-} from "lucide-react"
+import { Search, BookOpen, Sparkles, List, ArrowRight, Plus, Users, Edit, Grid, ListIcon } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import {
@@ -427,81 +406,6 @@ export default function SpanishEnglishPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
-        <div className="container flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-accent" />
-            <span className="text-xl font-display font-bold text-accent">VocabMarket</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="nav-link">
-              Home
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link href="/practice" className="nav-link">
-              Practice
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link href="/spanish-english" className="nav-link-active">
-              Spanish-English
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-orange-500"></span>
-            </Link>
-            <Link href="/dashboard" className="nav-link">
-              Dashboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link href="/leaderboard" className="nav-link">
-              Leaderboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link href="/blog" className="nav-link">
-              Blog
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <span className="sr-only">User menu</span>
-                  <div className="rounded-full bg-orange-100 h-8 w-8 flex items-center justify-center">
-                    <span className="text-sm font-medium text-orange-800">JD</span>
-                  </div>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 overflow-hidden rounded-xl p-1 shadow-elevated">
-                <div className="flex items-center gap-2 p-2 border-b mb-1">
-                  <div className="rounded-full bg-orange-100 h-10 w-10 flex items-center justify-center">
-                    <span className="text-sm font-medium text-orange-800">JD</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">John Doe</p>
-                    <p className="text-xs text-muted-foreground">john.doe@example.com</p>
-                  </div>
-                </div>
-                <DropdownMenuItem asChild className="cursor-pointer rounded-lg h-10 my-1">
-                  <Link href="/user" className="flex items-center">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild className="cursor-pointer rounded-lg h-10 my-1">
-                  <Link href="/user" className="flex items-center">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="flex items-center cursor-pointer rounded-lg h-10 my-1 text-red-500 hover:text-red-600 hover:bg-red-50">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </header>
-
       <main className="flex-1 container py-8 hero-gradient dot-pattern">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
@@ -956,3 +860,4 @@ export default function SpanishEnglishPage() {
     </div>
   )
 }
+</merged_code>
