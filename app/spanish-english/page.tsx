@@ -245,226 +245,225 @@ const vocabularyData = [
     pronunciation: "/ko.ˈrer/",
   },
   {
-  id: 21,
-  spanish: "libertad",
-  english: "freedom",
-  category: "concepts",
-  difficulty: "intermediate",
-  semanticTags: ["rights", "independence", "choice", "expression"],
-  definition: "The power or right to act, speak, or think freely",
-  example: "La libertad es esencial para la democracia.",
-  pronunciation: "/li.βeɾˈtað/",
-},
-{
-  id: 22,
-  spanish: "justicia",
-  english: "justice",
-  category: "concepts",
-  difficulty: "advanced",
-  semanticTags: ["fairness", "law", "equity", "ethics"],
-  definition: "The quality of being fair and reasonable",
-  example: "La justicia debe ser igual para todos.",
-  pronunciation: "/xusˈti.θja/",
-},
-{
-  id: 23,
-  spanish: "cariño",
-  english: "affection",
-  category: "relationships",
-  difficulty: "intermediate",
-  semanticTags: ["love", "emotion", "warmth", "connection"],
-  definition: "A gentle feeling of fondness or liking",
-  example: "Le dio un abrazo lleno de cariño.",
-  pronunciation: "/kaˈɾi.ɲo/",
-},
-{
-  id: 24,
-  spanish: "sabiduría",
-  english: "wisdom",
-  category: "concepts",
-  difficulty: "advanced",
-  semanticTags: ["intelligence", "experience", "judgment", "philosophy"],
-  definition: "The ability to use knowledge and experience to make good decisions",
-  example: "La sabiduría viene con la experiencia.",
-  pronunciation: "/sa.βi.ðuˈɾi.a/",
-},
-{
-  id: 25,
-  spanish: "esperanza",
-  english: "hope",
-  category: "emotions",
-  difficulty: "intermediate",
-  semanticTags: ["optimism", "future", "faith", "desire"],
-  definition: "A feeling of expectation and desire for a certain thing to happen",
-  example: "Nunca pierdas la esperanza.",
-  pronunciation: "/es.peˈɾan.θa/",
-},
-{
-  id: 26,
-  spanish: "fuerza",
-  english: "strength",
-  category: "concepts",
-  difficulty: "basic",
-  semanticTags: ["power", "resilience", "muscle", "stamina"],
-  definition: "The quality or state of being physically strong",
-  example: "Necesitas fuerza para levantar eso.",
-  pronunciation: "/ˈfweɾ.θa/",
-},
-{
-  id: 27,
-  spanish: "belleza",
-  english: "beauty",
-  category: "aesthetics",
-  difficulty: "basic",
-  semanticTags: ["appearance", "art", "nature", "admiration"],
-  definition: "A combination of qualities that pleases the aesthetic senses",
-  example: "La belleza del atardecer era impresionante.",
-  pronunciation: "/beˈʎe.θa/",
-},
-{
-  id: 28,
-  spanish: "responsabilidad",
-  english: "responsibility",
-  category: "concepts",
-  difficulty: "advanced",
-  semanticTags: ["duty", "obligation", "accountability", "maturity"],
-  definition: "The state or fact of having a duty to deal with something",
-  example: "Es tu responsabilidad cuidar el perro.",
-  pronunciation: "/res.pon.sa.βi.liˈðað/",
-},
-{
-  id: 29,
-  spanish: "confianza",
-  english: "trust",
-  category: "relationships",
-  difficulty: "intermediate",
-  semanticTags: ["belief", "security", "honesty", "loyalty"],
-  definition: "Firm belief in the reliability or ability of someone",
-  example: "La confianza se gana con el tiempo.",
-  pronunciation: "/konˈfjan.θa/",
-},
-{
-  id: 30,
-  spanish: "valentía",
-  english: "bravery",
-  category: "traits",
-  difficulty: "intermediate",
-  semanticTags: ["courage", "fearless", "heroism", "action"],
-  definition: "Courageous behavior or character",
-  example: "Mostró gran valentía al hablar.",
-  pronunciation: "/ba.lenˈti.a/",
-},
-{
-  id: 31,
-  spanish: "alegría",
-  english: "joy",
-  category: "emotions",
-  difficulty: "basic",
-  semanticTags: ["happiness", "emotion", "pleasure", "positivity"],
-  definition: "A feeling of great pleasure and happiness",
-  example: "Su sonrisa mostraba alegría pura.",
-  pronunciation: "/a.leˈɣɾi.a/",
-},
-{
-  id: 32,
-  spanish: "paz",
-  english: "peace",
-  category: "concepts",
-  difficulty: "basic",
-  semanticTags: ["calm", "harmony", "nonviolence", "stability"],
-  definition: "Freedom from disturbance; tranquility",
-  example: "Todos deseamos vivir en paz.",
-  pronunciation: "/paθ/",
-},
-{
-  id: 33,
-  spanish: "respeto",
-  english: "respect",
-  category: "relationships",
-  difficulty: "basic",
-  semanticTags: ["esteem", "honor", "manners", "boundaries"],
-  definition: "A feeling of deep admiration for someone or something",
-  example: "El respeto es la base de toda relación.",
-  pronunciation: "/resˈpe.to/",
-},
-{
-  id: 34,
-  spanish: "humildad",
-  english: "humility",
-  category: "traits",
-  difficulty: "advanced",
-  semanticTags: ["modesty", "character", "virtue", "attitude"],
-  definition: "The quality of having a modest view of one's importance",
-  example: "La humildad es una gran virtud.",
-  pronunciation: "/u.milˈðað/",
-},
-{
-  id: 35,
-  spanish: "gratitud",
-  english: "gratitude",
-  category: "emotions",
-  difficulty: "intermediate",
-  semanticTags: ["thankfulness", "appreciation", "grace", "mindfulness"],
-  definition: "The quality of being thankful",
-  example: "Expresó su gratitud con una carta.",
-  pronunciation: "/ɡɾa.tiˈtud/",
-},
-{
-  id: 36,
-  spanish: "orgullo",
-  english: "pride",
-  category: "emotions",
-  difficulty: "intermediate",
-  semanticTags: ["ego", "accomplishment", "self-esteem", "confidence"],
-  definition: "A feeling of deep pleasure from one's own achievements",
-  example: "Sintió orgullo por su trabajo.",
-  pronunciation: "/oɾˈɣu.ʎo/",
-},
-{
-  id: 37,
-  spanish: "compasión",
-  english: "compassion",
-  category: "emotions",
-  difficulty: "advanced",
-  semanticTags: ["empathy", "care", "kindness", "altruism"],
-  definition: "Sympathetic pity and concern for the sufferings of others",
-  example: "La compasión mueve a la acción.",
-  pronunciation: "/kom.paˈsjon/",
-},
-{
-  id: 38,
-  spanish: "paciencia",
-  english: "patience",
-  category: "traits",
-  difficulty: "intermediate",
-  semanticTags: ["endurance", "calm", "waiting", "self-control"],
-  definition: "The capacity to accept delay or suffering without anger",
-  example: "Se necesita paciencia para enseñar.",
-  pronunciation: "/paˈθjen.θja/",
-},
-{
-  id: 39,
-  spanish: "lealtad",
-  english: "loyalty",
-  category: "relationships",
-  difficulty: "intermediate",
-  semanticTags: ["faithfulness", "support", "devotion", "trust"],
-  definition: "A strong feeling of support or allegiance",
-  example: "Su lealtad nunca fue cuestionada.",
-  pronunciation: "/le.alˈtad/",
-},
-{
-  id: 40,
-  spanish: "creatividad",
-  english: "creativity",
-  category: "concepts",
+    id: 21,
+    spanish: "libertad",
+    english: "freedom",
+    category: "concepts",
+    difficulty: "intermediate",
+    semanticTags: ["rights", "independence", "choice", "expression"],
+    definition: "The power or right to act, speak, or think freely",
+    example: "La libertad es esencial para la democracia.",
+    pronunciation: "/li.βeɾˈtað/",
+  },
+  {
+    id: 22,
+    spanish: "justicia",
+    english: "justice",
+    category: "concepts",
+    difficulty: "advanced",
+    semanticTags: ["fairness", "law", "equity", "ethics"],
+    definition: "The quality of being fair and reasonable",
+    example: "La justicia debe ser igual para todos.",
+    pronunciation: "/xusˈti.θja/",
+  },
+  {
+    id: 23,
+    spanish: "cariño",
+    english: "affection",
+    category: "relationships",
+    difficulty: "intermediate",
+    semanticTags: ["love", "emotion", "warmth", "connection"],
+    definition: "A gentle feeling of fondness or liking",
+    example: "Le dio un abrazo lleno de cariño.",
+    pronunciation: "/kaˈɾi.ɲo/",
+  },
+  {
+    id: 24,
+    spanish: "sabiduría",
+    english: "wisdom",
+    category: "concepts",
+    difficulty: "advanced",
+    semanticTags: ["intelligence", "experience", "judgment", "philosophy"],
+    definition: "The ability to use knowledge and experience to make good decisions",
+    example: "La sabiduría viene con la experiencia.",
+    pronunciation: "/sa.βi.ðuˈɾi.a/",
+  },
+  {
+    id: 25,
+    spanish: "esperanza",
+    english: "hope",
+    category: "emotions",
+    difficulty: "intermediate",
+    semanticTags: ["optimism", "future", "faith", "desire"],
+    definition: "A feeling of expectation and desire for a certain thing to happen",
+    example: "Nunca pierdas la esperanza.",
+    pronunciation: "/es.peˈɾan.θa/",
+  },
+  {
+    id: 26,
+    spanish: "fuerza",
+    english: "strength",
+    category: "concepts",
+    difficulty: "basic",
+    semanticTags: ["power", "resilience", "muscle", "stamina"],
+    definition: "The quality or state of being physically strong",
+    example: "Necesitas fuerza para levantar eso.",
+    pronunciation: "/ˈfweɾ.θa/",
+  },
+  {
+    id: 27,
+    spanish: "belleza",
+    english: "beauty",
+    category: "aesthetics",
+    difficulty: "basic",
+    semanticTags: ["appearance", "art", "nature", "admiration"],
+    definition: "A combination of qualities that pleases the aesthetic senses",
+    example: "La belleza del atardecer era impresionante.",
+    pronunciation: "/beˈʎe.θa/",
+  },
+  {
+    id: 28,
+    spanish: "responsabilidad",
+    english: "responsibility",
+    category: "concepts",
+    difficulty: "advanced",
+    semanticTags: ["duty", "obligation", "accountability", "maturity"],
+    definition: "The state or fact of having a duty to deal with something",
+    example: "Es tu responsabilidad cuidar el perro.",
+    pronunciation: "/res.pon.sa.βi.liˈðað/",
+  },
+  {
+    id: 29,
+    spanish: "confianza",
+    english: "trust",
+    category: "relationships",
+    difficulty: "intermediate",
+    semanticTags: ["belief", "security", "honesty", "loyalty"],
+    definition: "Firm belief in the reliability or ability of someone",
+    example: "La confianza se gana con el tiempo.",
+    pronunciation: "/konˈfjan.θa/",
+  },
+  {
+    id: 30,
+    spanish: "valentía",
+    english: "bravery",
+    category: "traits",
+    difficulty: "intermediate",
+    semanticTags: ["courage", "fearless", "heroism", "action"],
+    definition: "Courageous behavior or character",
+    example: "Mostró gran valentía al hablar.",
+    pronunciation: "/ba.lenˈti.a/",
+  },
+  {
+    id: 31,
+    spanish: "alegría",
+    english: "joy",
+    category: "emotions",
+    difficulty: "basic",
+    semanticTags: ["happiness", "emotion", "pleasure", "positivity"],
+    definition: "A feeling of great pleasure and happiness",
+    example: "Su sonrisa mostraba alegría pura.",
+    pronunciation: "/a.leˈɣɾi.a/",
+  },
+  {
+    id: 32,
+    spanish: "paz",
+    english: "peace",
+    category: "concepts",
+    difficulty: "basic",
+    semanticTags: ["calm", "harmony", "nonviolence", "stability"],
+    definition: "Freedom from disturbance; tranquility",
+    example: "Todos deseamos vivir en paz.",
+    pronunciation: "/paθ/",
+  },
+  {
+    id: 33,
+    spanish: "respeto",
+    english: "respect",
+    category: "relationships",
+    difficulty: "basic",
+    semanticTags: ["esteem", "honor", "manners", "boundaries"],
+    definition: "A feeling of deep admiration for someone or something",
+    example: "El respeto es la base de toda relación.",
+    pronunciation: "/resˈpe.to/",
+  },
+  {
+    id: 34,
+    spanish: "humildad",
+    english: "humility",
+    category: "traits",
+    difficulty: "advanced",
+    semanticTags: ["modesty", "character", "virtue", "attitude"],
+    definition: "The quality of having a modest view of one's importance",
+    example: "La humildad es una gran virtud.",
+    pronunciation: "/u.milˈðað/",
+  },
+  {
+    id: 35,
+    spanish: "gratitud",
+    english: "gratitude",
+    category: "emotions",
+    difficulty: "intermediate",
+    semanticTags: ["thankfulness", "appreciation", "grace", "mindfulness"],
+    definition: "The quality of being thankful",
+    example: "Expresó su gratitud con una carta.",
+    pronunciation: "/ɡɾa.tiˈtud/",
+  },
+  {
+    id: 36,
+    spanish: "orgullo",
+    english: "pride",
+    category: "emotions",
+    difficulty: "intermediate",
+    semanticTags: ["ego", "accomplishment", "self-esteem", "confidence"],
+    definition: "A feeling of deep pleasure from one's own achievements",
+    example: "Sintió orgullo por su trabajo.",
+    pronunciation: "/oɾˈɣu.ʎo/",
+  },
+  {
+    id: 37,
+    spanish: "compasión",
+    english: "compassion",
+    category: "emotions",
+    difficulty: "advanced",
+    semanticTags: ["empathy", "care", "kindness", "altruism"],
+    definition: "Sympathetic pity and concern for the sufferings of others",
+    example: "La compasión mueve a la acción.",
+    pronunciation: "/kom.paˈsjon/",
+  },
+  {
+    id: 38,
+    spanish: "paciencia",
+    english: "patience",
+    category: "traits",
+    difficulty: "intermediate",
+    semanticTags: ["endurance", "calm", "waiting", "self-control"],
+    definition: "The capacity to accept delay or suffering without anger",
+    example: "Se necesita paciencia para enseñar.",
+    pronunciation: "/paˈθjen.θja/",
+  },
+  {
+    id: 39,
+    spanish: "lealtad",
+    english: "loyalty",
+    category: "relationships",
+    difficulty: "intermediate",
+    semanticTags: ["faithfulness", "support", "devotion", "trust"],
+    definition: "A strong feeling of support or allegiance",
+    example: "Su lealtad nunca fue cuestionada.",
+    pronunciation: "/le.alˈtad/",
+  },
+  {
+    id: 40,
+    spanish: "creatividad",
+    english: "creativity",
+    category: "concepts",
 
-  semanticTags: ["innovation", "imagination", "art", "expression"],
-  definition: "The use of imagination to create something",
-  example: "La creatividad es clave para resolver problemas.",
-  pronunciation: "/kɾe.a.ti.βiˈðað/",
-},
-  
+    semanticTags: ["innovation", "imagination", "art", "expression"],
+    definition: "The use of imagination to create something",
+    example: "La creatividad es clave para resolver problemas.",
+    pronunciation: "/kɾe.a.ti.βiˈðað/",
+  },
 ]
 
 const predefinedGroups = [
@@ -741,12 +740,12 @@ export default function SpanishEnglishPage() {
                 {filteredData.length} {filteredData.length === 1 ? "word" : "words"} found
               </h2>
               {searchTerm && (
-                <Badge variant="outline" className="text-orange-600 border-orange-200">
+                <Badge variant="outline" className="text-orange-600 border-orange-600">
                   {searchMode === "standard" ? "Standard" : "Semantic"} search for "{searchTerm}"
                 </Badge>
               )}
               {selectedWords.size > 0 && (
-                <Badge variant="default" className="bg-orange-500">
+                <Badge variant="default" className="bg-orange-600">
                   {selectedWords.size} selected
                 </Badge>
               )}
@@ -759,7 +758,7 @@ export default function SpanishEnglishPage() {
                   variant={viewMode === "cards" ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setViewMode("cards")}
-                  className={viewMode === "cards" ? "bg-orange-500 hover:bg-orange-600" : ""}
+                  className={viewMode === "cards" ? "bg-orange-600 hover:bg-orange-700 text-white" : ""}
                 >
                   <Grid className="h-4 w-4 mr-1" />
                   Cards
@@ -768,7 +767,7 @@ export default function SpanishEnglishPage() {
                   variant={viewMode === "table" ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setViewMode("table")}
-                  className={viewMode === "table" ? "bg-orange-500 hover:bg-orange-600" : ""}
+                  className={viewMode === "table" ? "bg-orange-600 hover:bg-orange-700 text-white" : ""}
                 >
                   <List className="h-4 w-4 mr-1" />
                   Table
@@ -779,7 +778,7 @@ export default function SpanishEnglishPage() {
               {selectedWords.size > 0 && (
                 <Dialog open={showGroupDialog} onOpenChange={setShowGroupDialog}>
                   <DialogTrigger asChild>
-                    <Button className="btn-primary btn-sm">
+                    <Button className="bg-orange-600 hover:bg-orange-700 text-white">
                       <Users className="mr-2 h-4 w-4" />
                       Assign to Group
                     </Button>
@@ -832,7 +831,7 @@ export default function SpanishEnglishPage() {
                       <Button
                         onClick={handleAssignToGroup}
                         disabled={!selectedGroup && !newGroupName.trim()}
-                        className="bg-orange-500 hover:bg-orange-600"
+                        className="bg-orange-600 hover:bg-orange-700 text-white"
                       >
                         Assign Words
                       </Button>
@@ -841,7 +840,7 @@ export default function SpanishEnglishPage() {
                 </Dialog>
               )}
 
-              <Button className="btn-primary btn-sm">
+              <Button className="bg-orange-600 hover:bg-orange-700 text-white">
                 Add All to Practice
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -854,17 +853,17 @@ export default function SpanishEnglishPage() {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {filteredData.length > 0 ? (
                 filteredData.map((word) => (
-                  <Card key={word.id} className="card-base card-hover">
-                    <CardHeader className="card-header">
+                  <Card key={word.id} className="card-base card-hover h-80 flex flex-col">
+                    <CardHeader className="card-header pb-3 flex-shrink-0">
                       <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <CardTitle className="card-title text-lg">{word.spanish}</CardTitle>
-                          <CardDescription className="card-description text-base font-medium">
+                        <div className="flex-1 min-w-0">
+                          <CardTitle className="card-title text-lg truncate">{word.spanish}</CardTitle>
+                          <CardDescription className="card-description text-base font-medium truncate">
                             {word.english}
                           </CardDescription>
-                          <p className="text-sm text-muted-foreground mt-1">{word.pronunciation}</p>
+                          <p className="text-sm text-muted-foreground mt-1 truncate">{word.pronunciation}</p>
                         </div>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1 flex-shrink-0 ml-2">
                           <Badge
                             variant="outline"
                             className={`text-xs ${
@@ -877,18 +876,18 @@ export default function SpanishEnglishPage() {
                           >
                             {word.difficulty}
                           </Badge>
-                          <Badge variant="outline" className="text-xs border-orange-200 text-orange-700">
+                          <Badge variant="outline" className="text-xs border-orange-600 text-orange-600">
                             {word.category}
                           </Badge>
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent className="card-content">
-                      <p className="text-sm mb-3">{word.definition}</p>
-                      <div className="bg-slate-50 rounded-lg p-3 mb-3">
-                        <p className="text-sm italic">"{word.example}"</p>
+                    <CardContent className="card-content flex-1 flex flex-col pt-0">
+                      <p className="text-sm mb-3 line-clamp-2 flex-shrink-0">{word.definition}</p>
+                      <div className="bg-slate-50 rounded-lg p-3 mb-3 flex-shrink-0 h-16 overflow-hidden">
+                        <p className="text-sm italic line-clamp-3">"{word.example}"</p>
                       </div>
-                      <div className="flex flex-wrap gap-1 mb-4">
+                      <div className="flex flex-wrap gap-1 mb-4 flex-shrink-0 h-8 overflow-hidden">
                         {word.semanticTags.slice(0, 3).map((tag, index) => (
                           <Badge key={index} variant="secondary" className="text-xs">
                             {tag}
@@ -900,9 +899,13 @@ export default function SpanishEnglishPage() {
                           </Badge>
                         )}
                       </div>
-                      <div className="flex gap-2">
-                        <Button className="btn-primary btn-sm flex-1">Add to Practice</Button>
-                        <Button className="btn-outline btn-sm">Details</Button>
+                      <div className="flex gap-2 mt-auto">
+                        <Button className="bg-orange-600 hover:bg-orange-700 text-white flex-1 text-sm py-2">
+                          Add to Practice
+                        </Button>
+                        <Button className="border-orange-600 text-orange-600 hover:bg-orange-50 text-sm py-2">
+                          Details
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -980,7 +983,7 @@ export default function SpanishEnglishPage() {
                               {word.pronunciation}
                             </TableCell>
                             <TableCell>
-                              <Badge variant="outline" className="text-xs border-orange-200 text-orange-700">
+                              <Badge variant="outline" className="text-xs border-orange-600 text-orange-600">
                                 {word.category}
                               </Badge>
                             </TableCell>
