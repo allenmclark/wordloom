@@ -1,4 +1,13 @@
 "use client"
+import { 
+  ResponsiveContainer, 
+  LineChart, 
+  CartesianGrid, 
+  XAxis, 
+  YAxis, 
+  Line 
+} from 'recharts';
+
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
