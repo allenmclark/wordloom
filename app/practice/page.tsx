@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, BookOpen, Check, HelpCircle, X, User, Settings, LogOut, TrendingUp } from "lucide-react"
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Area, AreaChart } from "recharts"
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Area, AreaChart, CartesianGrid } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 import { Button } from "@/components/ui/button"
@@ -571,155 +571,86 @@ export default function PracticePage() {
                 {/* Right Section - Interactive Chart */}
                 <div className="col-span-6">
                   {wordPerformanceHistory[currentWord.id] && wordPerformanceHistory[currentWord.id].length > 0 ? (
-                    <div className="relative bg-white rounded-xl p-3 border border-orange-200/50 shadow-sm overflow-hidden">
-                      {/* Stock-style background chart */}
-                      <div className="absolute inset-0 opacity-20">
-                        <ChartContainer
-                          config={{
-                            stockTrend: {
-                              label: "Stock Trend",
-                              color: "#ea580c",
-                            },
-                          }}
-                          className="h-full w-full"
-                        >
-                          <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={backgroundChartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
-                              <defs>
-                                <linearGradient id="miniStockGradient" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="0%" stopColor="#ea580c" stopOpacity={0.3} />
-                                  <stop offset="100%" stopColor="#ea580c" stopOpacity={0.05} />
-                                </linearGradient>
-                              </defs>
-                              <Area
-                                type="monotone"
-                                dataKey="y"
-                                stroke="#ea580c"
-                                strokeWidth={2}
-                                fill="url(#miniStockGradient)"
-                                dot={false}
-                              />
-                            </AreaChart>
-                          </ResponsiveContainer>
-                        </ChartContainer>
-                      </div>
-
-                      {/* Content overlay */}
-                      <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <TrendingUp className="w-4 h-4 text-orange-600" />
-                            <span className="text-sm font-semibold text-orange-800">Progress Trend</span>
-                          </div>
-                          <div
-                            className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium border ${
-                              wordPerformanceHistory[currentWord.id] &&
-                              wordPerformanceHistory[currentWord.id].length >= 2
-                                ? wordPerformanceHistory[currentWord.id][
-                                    wordPerformanceHistory[currentWord.id].length - 1
-                                  ].cumulativeRate >=
-                                  wordPerformanceHistory[currentWord.id][
-                                    wordPerformanceHistory[currentWord.id].length - 2
-                                  ].cumulativeRate
-                                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                                  : "bg-red-50 text-red-700 border-red-200"
-                                : "bg-orange-50 text-orange-700 border-orange-200"
-                            }`}
-                          >
-                            {wordPerformanceHistory[currentWord.id] &&
-                            wordPerformanceHistory[currentWord.id].length >= 2
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-3 border border-orange-200/50 shadow-sm">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="w-4 h-4 text-orange-600" />
+                          <span className="text-sm font-semibold text-orange-800">Progress Trend</span>
+                        </div>
+                        <div
+                          className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium border ${
+                            wordPerformanceHistory[currentWord.id] && wordPerformanceHistory[currentWord.id].length >= 2
                               ? wordPerformanceHistory[currentWord.id][
                                   wordPerformanceHistory[currentWord.id].length - 1
                                 ].cumulativeRate >=
                                 wordPerformanceHistory[currentWord.id][
                                   wordPerformanceHistory[currentWord.id].length - 2
                                 ].cumulativeRate
-                                ? "↗ Improving"
-                                : "↘ Declining"
-                              : "— Tracking"}
-                          </div>
-                        </div>
-                        <ChartContainer
-                          config={{
-                            cumulativeRate: {
-                              label: "Success Rate",
-                              color: "#f97316",
-                            },
-                          }}
-                          className="h-[60px]"
+                                ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                : "bg-red-50 text-red-700 border-red-200"
+                              : "bg-orange-50 text-orange-700 border-orange-200"
+                          }`}
                         >
-                          <ResponsiveContainer width="100%" height="100%">
-                            <LineChart
-                              data={wordPerformanceHistory[currentWord.id]}
-                              margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
-                            >
-                              <XAxis dataKey="attempt" hide />
-                              <YAxis domain={[0, 100]} hide />
-                              <ChartTooltip
-                                content={<ChartTooltipContent />}
-                                formatter={(value, name) => [`${value}%`, "Success Rate"]}
-                                labelFormatter={(label) => `Attempt ${label}`}
-                              />
-                              <Line
-                                type="monotone"
-                                dataKey="cumulativeRate"
-                                stroke="#f97316"
-                                strokeWidth={2.5}
-                                dot={false}
-                                activeDot={{
-                                  r: 4,
-                                  stroke: "#f97316",
-                                  strokeWidth: 2,
-                                  fill: "white",
-                                  style: {
-                                    filter: "drop-shadow(0 2px 4px rgba(249,115,22,0.3))",
-                                    cursor: "pointer",
-                                  },
-                                }}
-                              />
-                            </LineChart>
-                          </ResponsiveContainer>
-                        </ChartContainer>
-                        <div className="flex justify-between text-xs text-orange-700/70 font-medium mt-1">
-                          <span>Start</span>
-                          <span className="font-semibold">Latest: {getCurrentSuccessRate(currentWord.id)}%</span>
+                          {wordPerformanceHistory[currentWord.id] && wordPerformanceHistory[currentWord.id].length >= 2
+                            ? wordPerformanceHistory[currentWord.id][wordPerformanceHistory[currentWord.id].length - 1]
+                                .cumulativeRate >=
+                              wordPerformanceHistory[currentWord.id][wordPerformanceHistory[currentWord.id].length - 2]
+                                .cumulativeRate
+                              ? "↗ Improving"
+                              : "↘ Declining"
+                            : "— Tracking"}
                         </div>
+                      </div>
+                      <ChartContainer
+                        config={{
+                          cumulativeRate: {
+                            label: "Success Rate",
+                            color: "#f97316",
+                          },
+                        }}
+                        className="h-[60px]"
+                      >
+                        <ResponsiveContainer width="100%" height="100%">
+                          <LineChart
+                            data={wordPerformanceHistory[currentWord.id]}
+                            margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+                          >
+                            <XAxis dataKey="attempt" hide />
+                            <YAxis domain={[0, 100]} hide />
+                            <CartesianGrid strokeDasharray="3 3" stroke="#f97316" strokeOpacity={0.2} />
+                            <ChartTooltip
+                              content={<ChartTooltipContent />}
+                              formatter={(value, name) => [`${value}%`, "Success Rate"]}
+                              labelFormatter={(label) => `Attempt ${label}`}
+                            />
+                            <Line
+                              type="monotone"
+                              dataKey="cumulativeRate"
+                              stroke="#f97316"
+                              strokeWidth={2.5}
+                              dot={false}
+                              activeDot={{
+                                r: 4,
+                                stroke: "#f97316",
+                                strokeWidth: 2,
+                                fill: "white",
+                                style: {
+                                  filter: "drop-shadow(0 2px 4px rgba(249,115,22,0.3))",
+                                  cursor: "pointer",
+                                },
+                              }}
+                            />
+                          </LineChart>
+                        </ResponsiveContainer>
+                      </ChartContainer>
+                      <div className="flex justify-between text-xs text-orange-700/70 font-medium mt-1">
+                        <span>Start</span>
+                        <span className="font-semibold">Latest: {getCurrentSuccessRate(currentWord.id)}%</span>
                       </div>
                     </div>
                   ) : (
-                    <div className="relative h-[100px] flex items-center justify-center bg-white rounded-xl border border-orange-200/50 overflow-hidden">
-                      {/* Stock-style background for empty state */}
-                      <div className="absolute inset-0 opacity-15">
-                        <ChartContainer
-                          config={{
-                            stockTrend: {
-                              label: "Stock Trend",
-                              color: "#ea580c",
-                            },
-                          }}
-                          className="h-full w-full"
-                        >
-                          <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={backgroundChartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
-                              <defs>
-                                <linearGradient id="emptyStockGradient" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="0%" stopColor="#ea580c" stopOpacity={0.2} />
-                                  <stop offset="100%" stopColor="#ea580c" stopOpacity={0.05} />
-                                </linearGradient>
-                              </defs>
-                              <Area
-                                type="monotone"
-                                dataKey="y"
-                                stroke="#ea580c"
-                                strokeWidth={2}
-                                fill="url(#emptyStockGradient)"
-                                dot={false}
-                              />
-                            </AreaChart>
-                          </ResponsiveContainer>
-                        </ChartContainer>
-                      </div>
-                      <div className="relative z-10 text-center text-orange-600/60">
+                    <div className="h-[100px] flex items-center justify-center bg-white/50 backdrop-blur-sm rounded-xl border border-orange-200/50">
+                      <div className="text-center text-orange-600/60">
                         <TrendingUp className="w-8 h-8 mx-auto mb-2 opacity-60" />
                         <p className="text-sm font-medium">Building your trend...</p>
                       </div>
@@ -1012,4 +943,3 @@ const wordSets = [
   { name: "Everyday Conversation", count: 40 },
   { name: "Advanced Spanish", count: 15 },
 ]
-</merged_code>
