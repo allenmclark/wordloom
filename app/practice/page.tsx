@@ -279,7 +279,6 @@ export default function PracticePage() {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [score, setScore] = useState(0)
   const [options, setOptions] = useState<string[]>([])
-  const [showHint, setShowHint] = useState(false)
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
 
   const currentWord = spanishVocabulary[currentWordIndex]
