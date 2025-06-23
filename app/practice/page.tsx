@@ -448,16 +448,16 @@ export default function PracticePage() {
         <div className="mb-4">
           <Card className="relative border border-orange-200 bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100 shadow-lg overflow-hidden">
             {/* Dynamic Stock-Style Background Chart */}
-            <div className="absolute inset-0 opacity-15">
+            <div className="absolute inset-0 opacity-25">
               <ChartContainer
                 config={{
                   backgroundTrend: {
                     label: "Performance Trend",
-                    color: "#f97316",
+                    color: "#ea580c",
                   },
                   volume: {
                     label: "Volume",
-                    color: "#fb923c",
+                    color: "#ea580c",
                   },
                 }}
                 className="h-full w-full"
@@ -466,13 +466,13 @@ export default function PracticePage() {
                   <AreaChart data={backgroundChartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                     <defs>
                       <linearGradient id="stockGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#f97316" stopOpacity={0.4} />
+                        <stop offset="0%" stopColor="#ea580c" stopOpacity={0.4} />
                         <stop offset="50%" stopColor="#fb923c" stopOpacity={0.2} />
                         <stop offset="100%" stopColor="#fed7aa" stopOpacity={0.1} />
                       </linearGradient>
                       <linearGradient id="volumeGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#fb923c" stopOpacity={0.3} />
-                        <stop offset="100%" stopColor="#fb923c" stopOpacity={0.05} />
+                        <stop offset="0%" stopColor="#ea580c" stopOpacity={0.3} />
+                        <stop offset="100%" stopColor="#ea580c" stopOpacity={0.05} />
                       </linearGradient>
                     </defs>
 
@@ -490,8 +490,8 @@ export default function PracticePage() {
                     <Area
                       type="monotone"
                       dataKey="y"
-                      stroke="#f97316"
-                      strokeWidth={2}
+                      stroke="#ea580c"
+                      strokeWidth={3}
                       fill="url(#stockGradient)"
                       fillOpacity={1}
                       dot={false}
@@ -501,10 +501,10 @@ export default function PracticePage() {
                     <Line
                       type="monotone"
                       dataKey="y"
-                      stroke="#fb923c"
-                      strokeWidth={1}
+                      stroke="#ea580c"
+                      strokeWidth={2}
                       dot={false}
-                      strokeOpacity={0.6}
+                      strokeOpacity={0.8}
                       strokeDasharray="3,3"
                     />
                   </AreaChart>
