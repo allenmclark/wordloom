@@ -406,7 +406,7 @@ export default function SpanishEnglishPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <main className="flex-1 container py-8 content-background-subtle">
+      <main className="flex-1 container py-8 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold tracking-tight mb-2">Spanish-English Dictionary</h1>
@@ -416,10 +416,10 @@ export default function SpanishEnglishPage() {
           </div>
 
           {/* Enhanced Search Section */}
-          <Card className="card-base shadow-lg mb-8 full-vibrancy">
+          <Card className="card-base shadow-lg mb-8">
             <CardHeader className="card-header">
               <CardTitle className="card-title flex items-center gap-2">
-                <Search className="h-5 w-5 text-brand-orange-500" />
+                <Search className="h-5 w-5" />
                 Advanced Search
               </CardTitle>
               <CardDescription className="card-description">
@@ -497,12 +497,12 @@ export default function SpanishEnglishPage() {
               </div>
 
               {searchMode === "vector" && (
-                <div className="info-box-orange rounded-lg p-4">
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
                   <div className="flex items-start gap-2">
-                    <Sparkles className="h-5 w-5 text-brand-orange-600 mt-0.5" />
+                    <Sparkles className="h-5 w-5 text-orange-600 mt-0.5" />
                     <div>
-                      <h4 className="font-medium">Semantic Search Active</h4>
-                      <p className="text-sm mt-1">
+                      <h4 className="font-medium text-orange-800">Semantic Search Active</h4>
+                      <p className="text-sm text-orange-700 mt-1">
                         Search by concepts and meanings. Try terms like "emotion", "movement", "greeting", or
                         "beautiful" to find semantically related words.
                       </p>
@@ -520,11 +520,15 @@ export default function SpanishEnglishPage() {
                 {filteredData.length} {filteredData.length === 1 ? "word" : "words"} found
               </h2>
               {searchTerm && (
-                <Badge variant="outline" className="badge-orange">
+                <Badge variant="outline" className="text-orange-600 border-orange-200">
                   {searchMode === "standard" ? "Standard" : "Semantic"} search for "{searchTerm}"
                 </Badge>
               )}
-              {selectedWords.size > 0 && <Badge className="badge-orange-solid">{selectedWords.size} selected</Badge>}
+              {selectedWords.size > 0 && (
+                <Badge variant="default" className="bg-orange-500">
+                  {selectedWords.size} selected
+                </Badge>
+              )}
             </div>
 
             <div className="flex items-center gap-4">
@@ -534,7 +538,7 @@ export default function SpanishEnglishPage() {
                   variant={viewMode === "cards" ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setViewMode("cards")}
-                  className={viewMode === "cards" ? "btn-primary" : ""}
+                  className={viewMode === "cards" ? "bg-orange-500 hover:bg-orange-600" : ""}
                 >
                   <Grid className="h-4 w-4 mr-1" />
                   Cards
@@ -543,7 +547,7 @@ export default function SpanishEnglishPage() {
                   variant={viewMode === "table" ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setViewMode("table")}
-                  className={viewMode === "table" ? "btn-primary" : ""}
+                  className={viewMode === "table" ? "bg-orange-500 hover:bg-orange-600" : ""}
                 >
                   <List className="h-4 w-4 mr-1" />
                   Table
@@ -607,7 +611,7 @@ export default function SpanishEnglishPage() {
                       <Button
                         onClick={handleAssignToGroup}
                         disabled={!selectedGroup && !newGroupName.trim()}
-                        className="btn-primary"
+                        className="bg-orange-500 hover:bg-orange-600"
                       >
                         Assign Words
                       </Button>
@@ -629,7 +633,7 @@ export default function SpanishEnglishPage() {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {filteredData.length > 0 ? (
                 filteredData.map((word) => (
-                  <Card key={word.id} className="card-base card-hover full-vibrancy">
+                  <Card key={word.id} className="card-base card-hover">
                     <CardHeader className="card-header">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
@@ -652,7 +656,9 @@ export default function SpanishEnglishPage() {
                           >
                             {word.difficulty}
                           </Badge>
-                          <Badge className="badge-orange text-xs">{word.category}</Badge>
+                          <Badge variant="outline" className="text-xs border-orange-200 text-orange-700">
+                            {word.category}
+                          </Badge>
                         </div>
                       </div>
                     </CardHeader>
@@ -682,7 +688,7 @@ export default function SpanishEnglishPage() {
                 ))
               ) : (
                 <div className="col-span-full">
-                  <Card className="card-base full-vibrancy">
+                  <Card className="card-base">
                     <CardContent className="card-content text-center py-12">
                       <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                       <h3 className="text-lg font-semibold mb-2">No words found</h3>
@@ -708,13 +714,13 @@ export default function SpanishEnglishPage() {
             </div>
           ) : (
             /* Table View */
-            <Card className="card-base full-vibrancy">
+            <Card className="card-base">
               <CardContent className="card-content p-0">
                 {filteredData.length > 0 ? (
                   <div className="overflow-x-auto">
                     <Table>
                       <TableHeader>
-                        <TableRow className="border-b border-brand-orange-100">
+                        <TableRow className="border-b border-orange-100">
                           <TableHead className="w-12">
                             <Checkbox
                               checked={selectedWords.size === filteredData.length && filteredData.length > 0}
@@ -736,8 +742,8 @@ export default function SpanishEnglishPage() {
                         {filteredData.map((word) => (
                           <TableRow
                             key={word.id}
-                            className={`border-b border-gray-100 hover:bg-brand-orange-50/50 transition-colors ${
-                              selectedWords.has(word.id) ? "brand-orange-50" : ""
+                            className={`border-b border-gray-100 hover:bg-orange-50/50 transition-colors ${
+                              selectedWords.has(word.id) ? "bg-orange-50" : ""
                             }`}
                           >
                             <TableCell>
@@ -747,13 +753,15 @@ export default function SpanishEnglishPage() {
                                 aria-label={`Select ${word.spanish}`}
                               />
                             </TableCell>
-                            <TableCell className="font-medium text-brand-orange-700">{word.spanish}</TableCell>
+                            <TableCell className="font-medium text-orange-700">{word.spanish}</TableCell>
                             <TableCell className="font-medium">{word.english}</TableCell>
                             <TableCell className="text-sm text-muted-foreground font-mono">
                               {word.pronunciation}
                             </TableCell>
                             <TableCell>
-                              <Badge className="badge-orange text-xs">{word.category}</Badge>
+                              <Badge variant="outline" className="text-xs border-orange-200 text-orange-700">
+                                {word.category}
+                              </Badge>
                             </TableCell>
                             <TableCell>
                               <Badge
@@ -793,7 +801,7 @@ export default function SpanishEnglishPage() {
                                 <Button size="sm" className="btn-primary btn-sm h-8 px-2">
                                   <Plus className="h-3 w-3" />
                                 </Button>
-                                <Button size="sm" className="btn-outline btn-sm h-8 px-2">
+                                <Button size="sm" variant="outline" className="btn-outline btn-sm h-8 px-2">
                                   <Edit className="h-3 w-3" />
                                 </Button>
                               </div>
@@ -833,7 +841,7 @@ export default function SpanishEnglishPage() {
       <footer className="border-t py-6 md:py-0 bg-white">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-brand-orange-500" />
+            <BookOpen className="h-5 w-5 text-orange-500" />
             <p className="text-sm text-muted-foreground">© 2025 VocabMarket. All rights reserved.</p>
           </div>
           <div className="flex items-center gap-4">

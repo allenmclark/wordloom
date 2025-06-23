@@ -13,7 +13,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 25 95% 53%; /* Vibrant orange primary color */
+    --primary: 25 95% 53%; /* Orange primary color */
     --primary-foreground: 0 0% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -22,7 +22,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 25 95% 53%; /* Vibrant orange accent color */
+    --accent: 25 95% 53%; /* Orange accent color */
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -30,22 +30,9 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 25 95% 53%; /* Vibrant orange ring color */
+    --ring: 25 95% 53%; /* Orange ring color */
 
     --radius: 0.5rem;
-
-    /* Centralized brand colors - Full opacity, vibrant */
-    --brand-orange-50: 255 247 237;
-    --brand-orange-100: 255 237 213;
-    --brand-orange-200: 254 215 170;
-    --brand-orange-300: 253 186 116;
-    --brand-orange-400: 251 146 60;
-    --brand-orange-500: 252 76 2; /* Primary brand orange - full vibrancy */
-    --brand-orange-600: 234 88 12;
-    --brand-orange-700: 194 65 12;
-    --brand-orange-800: 154 52 18;
-    --brand-orange-900: 124 45 18;
-    --brand-orange-950: 67 20 7;
 
     /* Global text styling variables */
     --text-primary: 222.2 84% 4.9%;
@@ -70,7 +57,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 25 95% 53%; /* Vibrant orange primary color */
+    --primary: 25 95% 53%; /* Orange primary color */
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -79,7 +66,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 25 95% 53%; /* Vibrant orange accent color */
+    --accent: 25 95% 53%; /* Orange accent color */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -87,7 +74,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 25 95% 53%; /* Vibrant orange ring color */
+    --ring: 25 95% 53%; /* Orange ring color */
 
     /* Dark mode text variables */
     --text-primary: 210 40% 98%;
@@ -167,7 +154,7 @@
   }
 
   a:hover {
-    color: hsl(var(--brand-orange-600)); /* Darker orange on hover */
+    color: hsl(25 95% 45%); /* Darker orange on hover */
   }
 
   /* Global list styles */
@@ -203,115 +190,16 @@
 }
 
 @layer components {
-  /* Centralized brand color system */
-  .brand-orange-50 {
-    background-color: hsl(var(--brand-orange-50));
-  }
-  .brand-orange-100 {
-    background-color: hsl(var(--brand-orange-100));
-  }
-  .brand-orange-200 {
-    background-color: hsl(var(--brand-orange-200));
-  }
-  .brand-orange-300 {
-    background-color: hsl(var(--brand-orange-300));
-  }
-  .brand-orange-400 {
-    background-color: hsl(var(--brand-orange-400));
-  }
-  .brand-orange-500 {
-    background-color: hsl(var(--brand-orange-500));
-  }
-  .brand-orange-600 {
-    background-color: hsl(var(--brand-orange-600));
-  }
-  .brand-orange-700 {
-    background-color: hsl(var(--brand-orange-700));
-  }
-  .brand-orange-800 {
-    background-color: hsl(var(--brand-orange-800));
-  }
-  .brand-orange-900 {
-    background-color: hsl(var(--brand-orange-900));
-  }
-
-  .text-brand-orange-50 {
-    color: hsl(var(--brand-orange-50));
-  }
-  .text-brand-orange-100 {
-    color: hsl(var(--brand-orange-100));
-  }
-  .text-brand-orange-200 {
-    color: hsl(var(--brand-orange-200));
-  }
-  .text-brand-orange-300 {
-    color: hsl(var(--brand-orange-300));
-  }
-  .text-brand-orange-400 {
-    color: hsl(var(--brand-orange-400));
-  }
-  .text-brand-orange-500 {
-    color: hsl(var(--brand-orange-500));
-  }
-  .text-brand-orange-600 {
-    color: hsl(var(--brand-orange-600));
-  }
-  .text-brand-orange-700 {
-    color: hsl(var(--brand-orange-700));
-  }
-  .text-brand-orange-800 {
-    color: hsl(var(--brand-orange-800));
-  }
-  .text-brand-orange-900 {
-    color: hsl(var(--brand-orange-900));
-  }
-
-  .border-brand-orange-50 {
-    border-color: hsl(var(--brand-orange-50));
-  }
-  .border-brand-orange-100 {
-    border-color: hsl(var(--brand-orange-100));
-  }
-  .border-brand-orange-200 {
-    border-color: hsl(var(--brand-orange-200));
-  }
-  .border-brand-orange-300 {
-    border-color: hsl(var(--brand-orange-300));
-  }
-  .border-brand-orange-400 {
-    border-color: hsl(var(--brand-orange-400));
-  }
-  .border-brand-orange-500 {
-    border-color: hsl(var(--brand-orange-500));
-  }
-  .border-brand-orange-600 {
-    border-color: hsl(var(--brand-orange-600));
-  }
-  .border-brand-orange-700 {
-    border-color: hsl(var(--brand-orange-700));
-  }
-  .border-brand-orange-800 {
-    border-color: hsl(var(--brand-orange-800));
-  }
-  .border-brand-orange-900 {
-    border-color: hsl(var(--brand-orange-900));
-  }
-
-  /* Global button system - Full vibrancy */
+  /* Global button system */
   .btn-base {
     @apply inline-flex items-center justify-center rounded-lg transition-all duration-200 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
     font-weight: var(--font-weight-medium);
   }
 
   .btn-primary {
-    @apply btn-base shadow-sm hover:shadow;
-    background-color: hsl(var(--brand-orange-500));
+    @apply btn-base bg-orange-500 hover:bg-orange-600 shadow-sm hover:shadow;
     color: hsl(var(--text-white));
     font-weight: var(--font-weight-medium);
-  }
-
-  .btn-primary:hover {
-    background-color: hsl(var(--brand-orange-600));
   }
 
   .btn-secondary {
@@ -321,15 +209,9 @@
   }
 
   .btn-outline {
-    @apply btn-base border hover:shadow-sm;
-    border-color: hsl(var(--brand-orange-200));
-    color: hsl(var(--brand-orange-600));
+    @apply btn-base border border-orange-200 hover:border-orange-500 hover:bg-orange-50;
+    color: hsl(var(--text-accent));
     font-weight: var(--font-weight-medium);
-  }
-
-  .btn-outline:hover {
-    border-color: hsl(var(--brand-orange-500));
-    background-color: hsl(var(--brand-orange-50));
   }
 
   .btn-ghost {
@@ -404,15 +286,11 @@
   .nav-link {
     color: hsl(var(--text-primary));
     font-weight: var(--font-weight-medium);
-    @apply text-sm transition-colors relative;
-  }
-
-  .nav-link:hover {
-    color: hsl(var(--brand-orange-500));
+    @apply text-sm transition-colors hover:text-orange-500 relative;
   }
 
   .nav-link-active {
-    color: hsl(var(--brand-orange-500));
+    color: hsl(var(--text-accent));
     font-weight: var(--font-weight-medium);
   }
 
@@ -435,22 +313,43 @@
     @apply text-sm;
   }
 
-  /* Background patterns - REMOVED OPACITY ISSUES */
+  /* Background patterns - FIXED OPACITY ISSUES */
   .hero-gradient {
     @apply bg-gradient-to-br from-orange-50 via-white to-slate-50;
   }
 
   .hero-gradient-vibrant {
-    background: linear-gradient(135deg, hsl(var(--brand-orange-50)) 0%, #ffffff 50%, hsl(210 40% 98%) 100%);
+    background: linear-gradient(135deg, hsl(255 247 237) 0%, #ffffff 50%, hsl(248 250 252) 100%);
   }
 
-  /* Clean background for content areas */
+  .dot-pattern {
+    background-size: 20px 20px;
+    background-image: radial-gradient(circle, rgba(252, 76, 2, 0.15) 1px, transparent 1px);
+    /* Removed opacity property - no more fading */
+  }
+
+  .mesh-pattern {
+    background-size: 20px 20px;
+    background-image: linear-gradient(to right, rgba(252, 76, 2, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(252, 76, 2, 0.08) 1px, transparent 1px);
+    /* Removed opacity property - no more fading */
+  }
+
+  /* Clean background alternatives for content areas */
   .content-background {
     @apply bg-white;
   }
 
   .content-background-subtle {
-    @apply bg-slate-50/30;
+    @apply bg-slate-50/20;
+  }
+
+  .section-background {
+    @apply bg-white;
+  }
+
+  .section-background-alt {
+    @apply bg-gray-50/30;
   }
 
   /* Text utility classes */
@@ -474,10 +373,7 @@
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, hsl(var(--brand-orange-600)) 0%, hsl(var(--brand-orange-500)) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    @apply bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent;
     font-weight: var(--font-weight-bold);
   }
 
@@ -503,21 +399,32 @@
     @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
   }
 
-  /* Badge system with consistent colors */
-  .badge-orange {
-    background-color: hsl(var(--brand-orange-100));
-    color: hsl(var(--brand-orange-800));
-    border: 1px solid hsl(var(--brand-orange-200));
+  /* Ensure all shadcn components inherit proper styling */
+  .shadcn-override {
+    color: hsl(var(--text-primary));
   }
 
-  .badge-orange-solid {
-    background-color: hsl(var(--brand-orange-500));
-    color: hsl(var(--text-white));
+  /* Global overrides for common elements */
+  .page-content {
+    color: hsl(var(--text-primary));
+  }
+
+  .page-content * {
+    color: inherit;
+  }
+
+  /* Specific overrides for muted text */
+  .muted {
+    color: hsl(var(--text-secondary)) !important;
+  }
+
+  .text-muted-foreground {
+    color: hsl(var(--text-secondary)) !important;
   }
 
   /* Statistics and numbers */
   .stat-number {
-    color: hsl(var(--brand-orange-500));
+    color: hsl(var(--text-accent));
     font-weight: var(--font-weight-bold);
     @apply text-4xl;
   }
@@ -528,19 +435,37 @@
     @apply text-sm;
   }
 
-  /* Alert/Info boxes with vibrant colors */
-  .info-box-orange {
-    background-color: hsl(var(--brand-orange-50));
-    border: 1px solid hsl(var(--brand-orange-200));
-    color: hsl(var(--brand-orange-800));
+  /* Vibrant component utilities */
+  .vibrant-card {
+    @apply bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow;
   }
 
-  .info-box-orange h4 {
-    color: hsl(var(--brand-orange-800));
+  .vibrant-button-primary {
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-sm hover:shadow transition-all;
   }
 
-  .info-box-orange p {
-    color: hsl(var(--brand-orange-700));
+  .vibrant-button-outline {
+    @apply border border-orange-200 hover:border-orange-500 hover:bg-orange-50 text-orange-600 font-medium transition-all;
+  }
+
+  .vibrant-text-primary {
+    color: hsl(var(--text-primary));
+    opacity: 1;
+  }
+
+  .vibrant-text-accent {
+    color: hsl(var(--text-accent));
+    opacity: 1;
+  }
+
+  /* Remove any inherited opacity */
+  .no-fade {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .full-opacity {
+    opacity: 1 !important;
   }
 }
 
@@ -570,19 +495,9 @@
   .force-font-bold {
     font-weight: var(--font-weight-bold) !important;
   }
-
-  /* Remove any opacity issues */
-  .no-opacity {
-    opacity: 1 !important;
-  }
-
-  .full-vibrancy {
-    opacity: 1 !important;
-    filter: none !important;
-  }
 }
 
-/* Custom scrollbar with vibrant orange theme */
+/* Custom scrollbar with orange theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -593,12 +508,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--brand-orange-500));
+  background: #fc4c02;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--brand-orange-600));
+  background: #ea580c;
 }
 
 /* Smooth scrolling */
@@ -606,9 +521,9 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Better focus styles with vibrant orange */
+/* Better focus styles with orange */
 :focus-visible {
-  outline: 2px solid hsl(var(--brand-orange-500));
+  outline: 2px solid #fc4c02;
   outline-offset: 2px;
 }
 
