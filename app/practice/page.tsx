@@ -608,7 +608,7 @@ export default function PracticePage() {
                             color: "#f97316",
                           },
                         }}
-                        className="h-[120px]" // Updated height
+                        className="h-[60px]"
                       >
                         <ResponsiveContainer width="100%" height="100%">
                           <LineChart
@@ -617,8 +617,7 @@ export default function PracticePage() {
                           >
                             <XAxis dataKey="attempt" hide />
                             <YAxis domain={[0, 100]} hide />
-                            <CartesianGrid strokeDasharray="3 3" stroke="#f97316" strokeOpacity={0.5} />{" "}
-                            {/* Updated opacity */}
+                            <CartesianGrid strokeDasharray="3 3" stroke="#f97316" strokeOpacity={0.2} />
                             <ChartTooltip
                               content={<ChartTooltipContent />}
                               formatter={(value, name) => [`${value}%`, "Success Rate"]}
@@ -944,5 +943,3 @@ const wordSets = [
   { name: "Everyday Conversation", count: 40 },
   { name: "Advanced Spanish", count: 15 },
 ]
-
-</merged_code>
