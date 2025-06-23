@@ -479,21 +479,6 @@ export default function PracticePage() {
             </CardContent>
           </Card>
         </div>
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Spanish Vocabulary Practice</h1>
-            <p className="text-muted-foreground mt-1">Expand your Spanish vocabulary through interactive quizzes</p>
-          </div>
-          <Link href="/dashboard">
-            <Button
-              variant="outline"
-              className="rounded-lg border-orange-200 hover:border-orange-500 hover:bg-orange-50"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Dashboard
-            </Button>
-          </Link>
-        </div>
 
         <div className="grid gap-8 md:grid-cols-3">
           <div className="md:col-span-2">
@@ -628,6 +613,18 @@ export default function PracticePage() {
                 </div>
               </div>
             )}
+            {/* Back to Dashboard Button */}
+            <div className="mt-6 flex justify-center">
+              <Link href="/dashboard">
+                <Button
+                  variant="outline"
+                  className="rounded-lg border-orange-200 hover:border-orange-500 hover:bg-orange-50"
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back to Dashboard
+                </Button>
+              </Link>
+            </div>
           </div>
 
           <div className="space-y-6 animate-in" style={{ animationDelay: "0.2s" }}>
