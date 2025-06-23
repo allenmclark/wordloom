@@ -592,7 +592,7 @@ export default function PracticePage() {
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="flex justify-center p-4 bg-slate-50 border-t">
+                <CardFooter className="flex justify-between p-4 bg-slate-50 border-t">
               
                   <Button
                     className="vibrant-button-primary rounded-lg shadow-sm hover:shadow transition-all duration-300"
