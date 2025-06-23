@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, Check, HelpCircle, X, TrendingUp, Target, BarChart3 } from "lucide-react"
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -425,15 +425,7 @@ export default function PracticePage() {
 
                       {performanceData.length > 0 ? (
                         <div className="space-y-4">
-                          <ChartContainer
-                            config={{
-                              cumulativeRate: {
-                                label: "Success Rate",
-                                color: "#f97316",
-                              },
-                            }}
-                            className="h-[200px] w-full"
-                          >
+                          <div className="h-[200px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
                               <LineChart data={performanceData} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#f97316" strokeOpacity={0.2} />
@@ -489,7 +481,7 @@ export default function PracticePage() {
                                 />
                               </LineChart>
                             </ResponsiveContainer>
-                          </ChartContainer>
+                          </div>
 
                           <div className="flex justify-between items-center text-sm border-t pt-3">
                             <div className="text-gray-600">
