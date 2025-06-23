@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   Tooltip as RechartsTooltip,
 } from "recharts"
+import type { TooltipProps } from "recharts"
 import { cn } from "@/lib/utils"
 
 /* -------------------------------------------------------------------------- */
@@ -46,7 +47,7 @@ export const useChartConfig = () => {
 /* -------------------------------------------------------------------------- */
 
 export interface ChartContainerProps extends React.ComponentPropsWithoutRef<"div"> {
-  /** A map of dataKey �� series configuration */
+  /** A map of dataKey  series configuration */
   config: ChartConfig
   /** Your Recharts <LineChart>, <AreaChart>, … */
   children: React.ReactNode
@@ -122,6 +123,29 @@ export function ChartTooltip(props: React.ComponentProps<typeof RechartsTooltip>
       labelStyle={{ marginBottom: 4, fontWeight: 500 }}
       itemStyle={{ display: "flex", alignItems: "center", gap: 4 }}
     />
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Simple Tooltip Content UI                         */
+/* -------------------------------------------------------------------------- */
+
+export function ChartTooltipContent({ active, payload, label }: TooltipProps) {
+  if (!active || !payload?.length) return null
+
+  return (
+    <div className="rounded-lg border border-border/50 bg-background px-3 py-2 text-xs shadow-lg">
+      {label !== undefined && <div className="mb-1 font-medium text-foreground">{label}</div>}
+      <ul className="space-y-0.5">
+        {payload.map((item) => (
+          <li key={item.dataKey} className="flex items-center gap-2">
+            <span className="inline-block h-2 w-2 rounded-sm" style={{ background: item.color }} />
+            <span className="text-muted-foreground">{item.name}</span>
+            <span className="ml-auto font-mono tabular-nums">{item.value?.toLocaleString?.()}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
