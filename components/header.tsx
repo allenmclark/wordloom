@@ -1,67 +1,109 @@
+"use client"
+
 import Link from "next/link"
-import { BookOpen } from "lucide-react"
+import { usePathname } from "next/navigation"
+import { BookOpen, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
 
 export function Header() {
+  const pathname = usePathname()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const isActive = (path: string) => pathname === path
+
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/practice", label: "Practice" },
+    { href: "/spanish-english", label: "Spanish-English" },
+    { href: "/dashboard", label: "Dashboard" },
+    { href: "/leaderboard", label: "Leaderboard" },
+    { href: "/blog", label: "Blog" },
+  ]
+
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex items-center gap-2">
-          <BookOpen className="h-6 w-6 text-orange-500" />
-          <span className="text-xl font-display font-bold">VocabMaster</span>
+          <BookOpen className="h-6 w-6 text-brand-orange-500 no-opacity" />
+          <span className="text-xl font-display font-bold text-brand-orange-500">VocabMarket</span>
         </div>
+
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
-            Home
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link href="/practice" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
-            Practice
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link
-            href="/spanish-english"
-            className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-          >
-            Spanish-English
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link
-            href="/dashboard"
-            className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-          >
-            Dashboard
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link
-            href="/leaderboard"
-            className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-          >
-            Leaderboard
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
-            Blog
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-        </nav>
-        <div className="flex items-center gap-4">
-          <Link href="/login">
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full px-4 border-orange-200 hover:border-orange-500 hover:bg-orange-50"
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-sm font-medium transition-colors relative group ${
+                isActive(link.href)
+                  ? "text-brand-orange-500 font-semibold"
+                  : "text-foreground hover:text-brand-orange-500"
+              }`}
             >
+              {link.label}
+              <span
+                className={`absolute -bottom-1 left-0 h-0.5 bg-brand-orange-500 transition-all ${
+                  isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+              ></span>
+            </Link>
+          ))}
+        </nav>
+
+        {/* Desktop Auth Buttons */}
+        <div className="hidden md:flex items-center gap-4">
+          <Link href="/login">
+            <Button variant="outline" size="sm" className="rounded-full px-4 btn-outline">
               Log in
             </Button>
           </Link>
           <Link href="/signup">
-            <Button size="sm" className="rounded-full px-4 bg-orange-500 hover:bg-orange-600 shadow-sm hover:shadow">
+            <Button size="sm" className="rounded-full px-4 btn-primary">
               Sign up
             </Button>
           </Link>
         </div>
+
+        {/* Mobile Menu Button */}
+        <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </Button>
       </div>
+
+      {/* Mobile Navigation */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t bg-background/95 backdrop-blur">
+          <nav className="container py-4 space-y-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`block text-sm font-medium transition-colors ${
+                  isActive(link.href)
+                    ? "text-brand-orange-500 font-semibold"
+                    : "text-foreground hover:text-brand-orange-500"
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="flex flex-col gap-2 pt-4 border-t">
+              <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="outline" size="sm" className="w-full btn-outline">
+                  Log in
+                </Button>
+              </Link>
+              <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
+                <Button size="sm" className="w-full btn-primary">
+                  Sign up
+                </Button>
+              </Link>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   )
 }

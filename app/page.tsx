@@ -156,7 +156,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 hero-gradient overflow-hidden relative">
+        <section className="w-full py-12 md:py-24 lg:py-32 hero-gradient-vibrant overflow-hidden relative">
           <div className="container px-4 md:px-6 relative">
             <div className="flex flex-col items-center justify-center space-y-12 text-center">
               <div className="flex flex-col justify-center space-y-4 animate-in">
@@ -173,31 +173,27 @@ export default function Home() {
                   <Link href="/practice">
                     <Button
                       size="lg"
-                      className="rounded-full px-6 bg-orange-500 hover:bg-orange-600 shadow-md hover:shadow-lg transition-all duration-300"
+                      className="rounded-full px-6 btn-primary shadow-md hover:shadow-lg transition-all duration-300"
                     >
                       Start Learning
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
                   <Link href="/how-it-works">
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="rounded-full px-6 border-orange-200 hover:border-orange-500 hover:bg-orange-50"
-                    >
+                    <Button size="lg" className="rounded-full px-6 btn-outline">
                       How it works
                     </Button>
                   </Link>
                 </div>
               </div>
               <div className="mx-auto relative animate-in" style={{ animationDelay: "0.2s" }}>
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-blue-500/20 rounded-2xl blur-3xl opacity-50"></div>
-                <div className="relative bg-white rounded-2xl border shadow-elevated p-6 transform transition-all duration-500 hover:scale-[1.02]">
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-orange-500/20 to-blue-500/20 rounded-2xl blur-3xl opacity-50"></div>
+                <div className="relative bg-white rounded-2xl border shadow-elevated p-6 transform transition-all duration-500 hover:scale-[1.02] full-vibrancy">
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <h3 className="text-lg font-semibold">Backend Integration Test</h3>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full font-medium">
+                        <span className="text-xs badge-orange px-2 py-1 rounded-full font-medium">
                           {todayWord.error ? "Error" : todayWord.loading ? "Loading" : "Connected"}
                         </span>
                         <Button
@@ -226,7 +222,7 @@ export default function Home() {
                           <div className="mt-3 space-y-2">
                             <button
                               onClick={fetchTodayWord}
-                              className="block text-sm text-orange-600 hover:text-orange-700 underline"
+                              className="block text-sm text-brand-orange-600 hover:text-brand-orange-700 underline"
                             >
                               Retry Connection
                             </button>
@@ -277,13 +273,13 @@ app.add_middleware(
                       <span className="bg-slate-100 px-2 py-1 rounded-full text-xs">
                         Status: {todayWord.error ? "Disconnected" : todayWord.loading ? "Connecting" : "Connected"}
                       </span>
-                      <span className="flex items-center gap-1 text-orange-600">
+                      <span className="flex items-center gap-1 text-brand-orange-600">
                         <TrendingUp className="h-4 w-4" />
                         API Integration
                       </span>
                     </div>
                     <Button
-                      className="w-full bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm hover:shadow transition-all duration-300"
+                      className="w-full btn-primary rounded-xl shadow-sm hover:shadow transition-all duration-300"
                       disabled={todayWord.loading}
                       onClick={fetchTodayWord}
                     >
@@ -298,17 +294,17 @@ app.add_middleware(
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
           {/* Subtle geometric background elements */}
           <div className="absolute inset-0">
-            <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-orange-200/30 to-blue-200/30 rounded-full blur-xl"></div>
-            <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-indigo-200/40 to-orange-200/40 rounded-full blur-lg"></div>
+            <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-brand-orange-200/30 to-blue-200/30 rounded-full blur-xl"></div>
+            <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-indigo-200/40 to-brand-orange-200/40 rounded-full blur-lg"></div>
             <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-br from-blue-200/20 to-slate-200/30 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-10 right-10 w-28 h-28 bg-gradient-to-br from-orange-300/25 to-indigo-300/25 rounded-full blur-xl"></div>
+            <div className="absolute bottom-10 right-10 w-28 h-28 bg-gradient-to-br from-brand-orange-300/25 to-indigo-300/25 rounded-full blur-xl"></div>
           </div>
 
           <div className="container px-4 md:px-6 relative z-10">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 animate-in">
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-blue-200/50 shadow-sm mb-4">
-                  <div className="w-2 h-2 bg-gradient-to-r from-orange-500 to-blue-500 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-gradient-to-r from-brand-orange-500 to-blue-500 rounded-full animate-pulse"></div>
                   <span className="text-sm font-medium text-slate-600">Live Analytics</span>
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-slate-800 via-blue-800 to-indigo-800 bg-clip-text text-transparent">
@@ -322,8 +318,8 @@ app.add_middleware(
             <div className="mx-auto max-w-5xl animate-in" style={{ animationDelay: "0.2s" }}>
               <div className="relative">
                 {/* Enhanced card with better shadows and borders */}
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-blue-500/10 rounded-3xl blur-xl"></div>
-                <Card className="relative border-0 shadow-2xl overflow-hidden bg-white/95 backdrop-blur-sm rounded-3xl">
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-orange-500/10 to-blue-500/10 rounded-3xl blur-xl"></div>
+                <Card className="relative border-0 shadow-2xl overflow-hidden bg-white/95 backdrop-blur-sm rounded-3xl full-vibrancy">
                   <CardHeader className="bg-gradient-to-r from-slate-50/80 to-blue-50/80 border-b border-slate-200/50 p-8">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                       <div>
@@ -351,20 +347,19 @@ app.add_middleware(
                     <div className="h-[450px] relative">
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-50/30 to-transparent rounded-xl"></div>
                       <ResponsiveContainer width="100%" height="100%">
-                        {/* Chart content remains the same */}
                         <LineChart data={hourlyWordCountData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
                           <defs>
                             <linearGradient id="colorSarah" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#d03801" stopOpacity={0.2} />
-                              <stop offset="95%" stopColor="#d03801" stopOpacity={0} />
+                              <stop offset="5%" stopColor="#fc4c02" stopOpacity={0.2} />
+                              <stop offset="95%" stopColor="#fc4c02" stopOpacity={0} />
                             </linearGradient>
                             <linearGradient id="colorJohn" x1="0" y1="0" x2="0" y2="1">
                               <stop offset="5%" stopColor="#1e40af" stopOpacity={0.2} />
                               <stop offset="95%" stopColor="#1e40af" stopOpacity={0} />
                             </linearGradient>
                             <linearGradient id="colorRobert" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#9a3412" stopOpacity={0.2} />
-                              <stop offset="95%" stopColor="#9a3412" stopOpacity={0} />
+                              <stop offset="5%" stopColor="#c2410c" stopOpacity={0.2} />
+                              <stop offset="95%" stopColor="#c2410c" stopOpacity={0} />
                             </linearGradient>
                             <linearGradient id="colorEmily" x1="0" y1="0" x2="0" y2="1">
                               <stop offset="5%" stopColor="#5b21b6" stopOpacity={0.2} />
@@ -428,7 +423,7 @@ app.add_middleware(
                           <Line
                             type="monotone"
                             dataKey="Sarah Lee"
-                            stroke="#d03801"
+                            stroke="#fc4c02"
                             strokeWidth={2.5}
                             dot={false}
                             activeDot={{ r: 6, strokeWidth: 0 }}
@@ -451,7 +446,7 @@ app.add_middleware(
                           <Line
                             type="monotone"
                             dataKey="Robert Johnson"
-                            stroke="#9a3412"
+                            stroke="#c2410c"
                             strokeWidth={2.5}
                             dot={false}
                             activeDot={{ r: 6, strokeWidth: 0 }}
@@ -489,29 +484,43 @@ app.add_middleware(
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
                       {Object.entries({
-                        "Sarah Lee": { current: 520, change: "+40", percentage: "+8.3%", color: "orange" },
+                        "Sarah Lee": { current: 520, change: "+40", percentage: "+8.3%", color: "brand-orange" },
                         "John Doe": { current: 480, change: "+30", percentage: "+6.7%", color: "blue" },
-                        "Robert Johnson": { current: 450, change: "+30", percentage: "+7.1%", color: "orange" },
+                        "Robert Johnson": { current: 450, change: "+30", percentage: "+7.1%", color: "brand-orange" },
                         "Emily Chen": { current: 390, change: "+30", percentage: "+8.3%", color: "purple" },
                         "Michael Brown": { current: 420, change: "+30", percentage: "+7.7%", color: "rose" },
                       }).map(([name, data]) => (
                         <Card
                           key={name}
-                          className="relative overflow-hidden bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-xl"
+                          className="relative overflow-hidden bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-xl full-vibrancy"
                         >
                           <div
-                            className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-${data.color}-400 to-${data.color}-600`}
+                            className={`absolute top-0 left-0 w-full h-1 ${
+                              data.color === "brand-orange"
+                                ? "brand-orange-500"
+                                : `bg-gradient-to-r from-${data.color}-400 to-${data.color}-600`
+                            }`}
                           ></div>
                           <CardContent className="p-4">
                             <div className="text-sm font-medium text-slate-700">{name}</div>
                             <div className="text-2xl font-bold text-slate-900 mt-1">{data.current}</div>
                             <div className="flex items-center gap-2 mt-2">
                               <div
-                                className={`text-${data.color}-600 text-sm font-semibold bg-${data.color}-50 px-2 py-1 rounded-full`}
+                                className={`text-sm font-semibold px-2 py-1 rounded-full ${
+                                  data.color === "brand-orange"
+                                    ? "text-brand-orange-600 badge-orange"
+                                    : `text-${data.color}-600 bg-${data.color}-50`
+                                }`}
                               >
                                 {data.change}
                               </div>
-                              <div className={`text-xs text-${data.color}-600 font-medium`}>{data.percentage}</div>
+                              <div
+                                className={`text-xs font-medium ${
+                                  data.color === "brand-orange" ? "text-brand-orange-600" : `text-${data.color}-600`
+                                }`}
+                              >
+                                {data.percentage}
+                              </div>
                             </div>
                           </CardContent>
                         </Card>
@@ -523,35 +532,35 @@ app.add_middleware(
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-100 relative overflow-hidden">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-brand-orange-100 via-amber-100 to-yellow-100 relative overflow-hidden">
           {/* Educational themed background elements */}
           <div className="absolute inset-0">
             {/* Floating book icons */}
             <div className="absolute top-20 left-10 opacity-10">
-              <BookOpen className="h-16 w-16 text-orange-600 transform rotate-12" />
+              <BookOpen className="h-16 w-16 text-brand-orange-600 transform rotate-12" />
             </div>
             <div className="absolute top-40 right-20 opacity-10">
               <Brain className="h-12 w-12 text-amber-600 transform -rotate-12" />
             </div>
             <div className="absolute bottom-32 left-1/4 opacity-10">
-              <TrendingUp className="h-14 w-14 text-orange-500 transform rotate-45" />
+              <TrendingUp className="h-14 w-14 text-brand-orange-500 transform rotate-45" />
             </div>
             <div className="absolute bottom-20 right-1/3 opacity-10">
               <BookOpen className="h-10 w-10 text-yellow-600 transform -rotate-45" />
             </div>
 
             {/* Gradient orbs */}
-            <div className="absolute top-16 right-16 w-40 h-40 bg-gradient-to-br from-orange-200/30 to-amber-200/30 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-16 left-16 w-32 h-32 bg-gradient-to-br from-yellow-200/35 to-orange-200/35 rounded-full blur-xl"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-br from-amber-100/25 to-orange-100/25 rounded-full blur-3xl"></div>
+            <div className="absolute top-16 right-16 w-40 h-40 bg-gradient-to-br from-brand-orange-200/30 to-amber-200/30 rounded-full blur-2xl"></div>
+            <div className="absolute bottom-16 left-16 w-32 h-32 bg-gradient-to-br from-yellow-200/35 to-brand-orange-200/35 rounded-full blur-xl"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-br from-amber-100/25 to-brand-orange-100/25 rounded-full blur-3xl"></div>
           </div>
 
           <div className="container px-4 md:px-6 relative z-10">
             <div className="flex flex-col items-center justify-center space-y-4 text-center animate-in">
               <div className="space-y-2">
-                <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full border border-orange-200/50 shadow-lg mb-6">
+                <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full border border-brand-orange-200/50 shadow-lg mb-6">
                   <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 brand-orange-500 rounded-full animate-bounce"></div>
                     <div
                       className="w-2 h-2 bg-amber-500 rounded-full animate-bounce"
                       style={{ animationDelay: "0.1s" }}
@@ -561,9 +570,9 @@ app.add_middleware(
                       style={{ animationDelay: "0.2s" }}
                     ></div>
                   </div>
-                  <span className="text-sm font-semibold text-orange-800">How It Works</span>
+                  <span className="text-sm font-semibold text-brand-orange-800">How It Works</span>
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-orange-800 via-amber-700 to-yellow-700 bg-clip-text text-transparent">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-brand-orange-800 via-amber-700 to-yellow-700 bg-clip-text text-transparent">
                   How VocabMaster Works
                 </h2>
                 <p className="max-w-[900px] text-slate-700 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -580,21 +589,21 @@ app.add_middleware(
                   style={{ animationDelay: `${0.1 * (index + 1)}s` }}
                 >
                   {/* Card background with enhanced design */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-orange-50/80 rounded-2xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                  <Card className="relative border-0 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-brand-orange-50/80 rounded-2xl blur-sm group-hover:blur-none transition-all duration-300"></div>
+                  <Card className="relative border-0 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden group full-vibrancy">
                     {/* Gradient top border */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400"></div>
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-orange-400 via-amber-400 to-yellow-400"></div>
 
                     {/* Step number indicator */}
-                    <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-brand-orange-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <span className="text-white font-bold text-lg">{index + 1}</span>
                     </div>
 
                     <CardHeader className="p-8 pb-4">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-amber-100 shadow-inner group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-orange-100 to-amber-100 shadow-inner group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">
                         {feature.icon}
                       </div>
-                      <CardTitle className="mt-6 text-xl font-bold bg-gradient-to-r from-orange-800 to-amber-800 bg-clip-text text-transparent">
+                      <CardTitle className="mt-6 text-xl font-bold bg-gradient-to-r from-brand-orange-800 to-amber-800 bg-clip-text text-transparent">
                         {feature.title}
                       </CardTitle>
                     </CardHeader>
@@ -604,14 +613,14 @@ app.add_middleware(
                       </CardDescription>
 
                       {/* Interactive element */}
-                      <div className="mt-6 flex items-center text-orange-600 font-medium text-sm group-hover:text-orange-700 transition-colors duration-300">
+                      <div className="mt-6 flex items-center text-brand-orange-600 font-medium text-sm group-hover:text-brand-orange-700 transition-colors duration-300">
                         <span>Get started</span>
                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                       </div>
                     </CardContent>
 
                     {/* Hover effect overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-brand-orange-500/5 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
                   </Card>
                 </div>
               ))}
@@ -620,13 +629,13 @@ app.add_middleware(
             {/* Connection lines between cards (visible on larger screens) */}
             <div className="hidden lg:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl">
               <div className="relative h-1">
-                <div className="absolute top-0 left-1/6 w-1/3 h-0.5 bg-gradient-to-r from-orange-300 to-amber-300 opacity-30"></div>
+                <div className="absolute top-0 left-1/6 w-1/3 h-0.5 bg-gradient-to-r from-brand-orange-300 to-amber-300 opacity-30"></div>
                 <div className="absolute top-0 right-1/6 w-1/3 h-0.5 bg-gradient-to-r from-amber-300 to-yellow-300 opacity-30"></div>
               </div>
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-orange-50 via-white to-slate-50">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-brand-orange-50 via-white to-slate-50">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center animate-in">
               <div className="space-y-2">
@@ -641,7 +650,7 @@ app.add_middleware(
                 <Link href="/signup">
                   <Button
                     size="lg"
-                    className="rounded-full px-6 bg-orange-500 hover:bg-orange-600 shadow-md hover:shadow-lg transition-all duration-300"
+                    className="rounded-full px-6 btn-primary shadow-md hover:shadow-lg transition-all duration-300"
                   >
                     Sign up for free
                   </Button>
@@ -649,7 +658,7 @@ app.add_middleware(
               </div>
               <div className="mt-8 flex items-center gap-2 text-sm text-muted-foreground">
                 <span>Already have an account?</span>
-                <Link href="/login" className="text-orange-600 hover:underline font-medium flex items-center">
+                <Link href="/login" className="text-brand-orange-600 hover:underline font-medium flex items-center">
                   Log in <ChevronRight className="h-3 w-3 ml-1" />
                 </Link>
               </div>
@@ -660,7 +669,7 @@ app.add_middleware(
       <footer className="border-t py-6 md:py-0 bg-white">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-orange-500" />
+            <BookOpen className="h-5 w-5 text-brand-orange-500" />
             <p className="text-sm text-muted-foreground">© 2025 VocabMaster. All rights reserved.</p>
           </div>
           <div className="flex items-center gap-4">
@@ -684,17 +693,17 @@ const features = [
   {
     title: "Learn",
     description: "Discover new words daily with our curated vocabulary lists tailored to your level.",
-    icon: <BookOpen className="h-6 w-6 text-orange-500" />,
+    icon: <BookOpen className="h-6 w-6 text-brand-orange-500" />,
   },
   {
     title: "Practice",
     description: "Test your knowledge with interactive exercises and spaced repetition techniques.",
-    icon: <Brain className="h-6 w-6 text-orange-500" />,
+    icon: <Brain className="h-6 w-6 text-brand-orange-500" />,
   },
   {
     title: "Track",
     description: "Monitor your progress and see your vocabulary knowledge grow over time.",
-    icon: <TrendingUp className="h-6 w-6 text-orange-500" />,
+    icon: <TrendingUp className="h-6 w-6 text-brand-orange-500" />,
   },
 ]
 
