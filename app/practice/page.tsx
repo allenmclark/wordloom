@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, BookOpen, Check, HelpCircle, X, User, Settings, LogOut, TrendingUp } from "lucide-react"
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts"
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Area, AreaChart } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 import { Button } from "@/components/ui/button"
@@ -258,6 +258,58 @@ const getPredictedSuccessRate = (wordId: number, difficulty: string): number => 
   return Math.round(currentRate * 0.7 + recentRate * 0.3)
 }
 
+// Generate dynamic background chart data based on current word performance
+const generateBackgroundChartData = (wordId: number, currentIndex: number) => {
+  const history = wordPerformanceHistory[wordId] || []
+  const baseData = []
+
+  // Create a smooth trending line based on actual performance data
+  if (history.length > 0) {
+    // Use actual performance data as foundation
+    const performancePoints = history.map((h, index) => ({
+      x: (index / Math.max(history.length - 1, 1)) * 100,
+      y: h.cumulativeRate,
+      volume: Math.random() * 0.3 + 0.1, // Simulated volume for visual effect
+    }))
+
+    // Interpolate additional points for smoother curve
+    for (let i = 0; i <= 100; i += 5) {
+      const nearestPoint = performancePoints.reduce((prev, curr) =>
+        Math.abs(curr.x - i) < Math.abs(prev.x - i) ? curr : prev,
+      )
+
+      // Add some realistic market-like volatility
+      const volatility = Math.sin(i * 0.1 + currentIndex) * 3 + Math.random() * 2 - 1
+      const trendAdjustment = (i / 100) * 10 // Slight upward trend
+
+      baseData.push({
+        x: i,
+        y: Math.max(0, Math.min(100, nearestPoint.y + volatility + trendAdjustment)),
+        volume: Math.random() * 0.4 + 0.1,
+      })
+    }
+  } else {
+    // Generate realistic trending data for words without history
+    const startValue = Math.random() * 30 + 20
+    const endValue = Math.random() * 40 + 50
+
+    for (let i = 0; i <= 100; i += 5) {
+      const progress = i / 100
+      const baseValue = startValue + (endValue - startValue) * progress
+      const marketNoise = Math.sin(i * 0.15 + currentIndex * 0.5) * 8 + Math.random() * 6 - 3
+      const momentum = Math.sin(i * 0.05) * 5
+
+      baseData.push({
+        x: i,
+        y: Math.max(0, Math.min(100, baseValue + marketNoise + momentum)),
+        volume: Math.random() * 0.5 + 0.1,
+      })
+    }
+  }
+
+  return baseData
+}
+
 export default function PracticePage() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
@@ -266,6 +318,7 @@ export default function PracticePage() {
   const [options, setOptions] = useState<string[]>([])
   const [showHint, setShowHint] = useState(false)
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
+  const [backgroundChartData, setBackgroundChartData] = useState<any[]>([])
 
   const currentWord = spanishVocabulary[currentWordIndex]
 
@@ -275,7 +328,10 @@ export default function PracticePage() {
     setSelectedOption(null)
     setIsCorrect(null)
     setShowHint(false)
-  }, [currentWordIndex])
+
+    // Update background chart data dynamically
+    setBackgroundChartData(generateBackgroundChartData(currentWord, currentWordIndex))
+  }, [currentWordIndex, currentWord.id])
 
   const handleOptionSelect = (option: string) => {
     if (selectedOption !== null) return // Prevent changing answer after selection
@@ -388,61 +444,88 @@ export default function PracticePage() {
         </div>
       </header>
       <main className="flex-1 container py-6 hero-gradient dot-pattern">
-        {/* Kalshi-Inspired Performance Analytics */}
+        {/* Kalshi-Inspired Performance Analytics with Dynamic Stock Chart */}
         <div className="mb-4">
           <Card className="relative border border-orange-200 bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100 shadow-lg overflow-hidden">
-            {/* Background Chart Pattern */}
-            <div className="absolute inset-0 opacity-20">
+            {/* Dynamic Stock-Style Background Chart */}
+            <div className="absolute inset-0 opacity-15">
               <ChartContainer
                 config={{
                   backgroundTrend: {
-                    label: "Background Trend",
+                    label: "Performance Trend",
                     color: "#f97316",
+                  },
+                  volume: {
+                    label: "Volume",
+                    color: "#fb923c",
                   },
                 }}
                 className="h-full w-full"
               >
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={[
-                      { x: 0, y: 45 },
-                      { x: 10, y: 52 },
-                      { x: 20, y: 48 },
-                      { x: 30, y: 65 },
-                      { x: 40, y: 58 },
-                      { x: 50, y: 72 },
-                      { x: 60, y: 68 },
-                      { x: 70, y: 75 },
-                      { x: 80, y: 82 },
-                      { x: 90, y: 78 },
-                      { x: 100, y: 85 },
-                    ]}
-                    margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-                  >
-                    <Line
+                  <AreaChart data={backgroundChartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="stockGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#f97316" stopOpacity={0.4} />
+                        <stop offset="50%" stopColor="#fb923c" stopOpacity={0.2} />
+                        <stop offset="100%" stopColor="#fed7aa" stopOpacity={0.1} />
+                      </linearGradient>
+                      <linearGradient id="volumeGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#fb923c" stopOpacity={0.3} />
+                        <stop offset="100%" stopColor="#fb923c" stopOpacity={0.05} />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Volume bars at bottom */}
+                    <Area
+                      type="monotone"
+                      dataKey="volume"
+                      stroke="none"
+                      fill="url(#volumeGradient)"
+                      fillOpacity={1}
+                      stackId="volume"
+                    />
+
+                    {/* Main trend line with area fill */}
+                    <Area
                       type="monotone"
                       dataKey="y"
                       stroke="#f97316"
-                      strokeWidth={3}
+                      strokeWidth={2}
+                      fill="url(#stockGradient)"
+                      fillOpacity={1}
                       dot={false}
-                      strokeOpacity={0.6}
                     />
+
+                    {/* Secondary trend line for depth */}
                     <Line
                       type="monotone"
                       dataKey="y"
                       stroke="#fb923c"
-                      strokeWidth={1.5}
+                      strokeWidth={1}
                       dot={false}
-                      strokeOpacity={0.4}
-                      strokeDasharray="5,5"
+                      strokeOpacity={0.6}
+                      strokeDasharray="3,3"
                     />
-                  </LineChart>
+                  </AreaChart>
                 </ResponsiveContainer>
               </ChartContainer>
             </div>
 
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-50/90 via-transparent to-amber-50/90"></div>
+            {/* Market-style grid overlay */}
+            <div className="absolute inset-0 opacity-5">
+              <svg className="w-full h-full">
+                <defs>
+                  <pattern id="grid" width="40" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 20" fill="none" stroke="#f97316" strokeWidth="0.5" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+              </svg>
+            </div>
+
+            {/* Gradient Overlay for readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-50/95 via-orange-50/80 to-amber-50/95"></div>
 
             <CardContent className="relative z-10 p-4">
               <div className="grid grid-cols-12 gap-4 items-center">
@@ -488,7 +571,7 @@ export default function PracticePage() {
                 {/* Right Section - Interactive Chart */}
                 <div className="col-span-6">
                   {wordPerformanceHistory[currentWord.id] && wordPerformanceHistory[currentWord.id].length > 0 ? (
-                    <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-orange-200/50 shadow-sm">
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-3 border border-orange-200/50 shadow-sm">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
                           <TrendingUp className="w-4 h-4 text-orange-600" />
@@ -556,13 +639,6 @@ export default function PracticePage() {
                                 },
                               }}
                             />
-                            {/* Add a subtle fill area */}
-                            <defs>
-                              <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#f97316" stopOpacity={0.1} />
-                                <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
-                              </linearGradient>
-                            </defs>
                           </LineChart>
                         </ResponsiveContainer>
                       </ChartContainer>
@@ -572,7 +648,7 @@ export default function PracticePage() {
                       </div>
                     </div>
                   ) : (
-                    <div className="h-[100px] flex items-center justify-center bg-white/40 backdrop-blur-sm rounded-xl border border-orange-200/50">
+                    <div className="h-[100px] flex items-center justify-center bg-white/50 backdrop-blur-sm rounded-xl border border-orange-200/50">
                       <div className="text-center text-orange-600/60">
                         <TrendingUp className="w-8 h-8 mx-auto mb-2 opacity-60" />
                         <p className="text-sm font-medium">Building your trend...</p>
@@ -583,10 +659,22 @@ export default function PracticePage() {
               </div>
             </CardContent>
 
-            {/* Decorative Elements */}
-            <div className="absolute top-2 right-2 w-2 h-2 bg-orange-400 rounded-full opacity-60"></div>
-            <div className="absolute bottom-2 left-2 w-1.5 h-1.5 bg-amber-400 rounded-full opacity-40"></div>
-            <div className="absolute top-1/2 right-8 w-1 h-1 bg-orange-500 rounded-full opacity-50"></div>
+            {/* Kalshi-style decorative elements */}
+            <div className="absolute top-3 right-3 flex items-center gap-1">
+              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+              <div className="w-1 h-1 bg-orange-400 rounded-full opacity-60"></div>
+            </div>
+            <div className="absolute bottom-3 left-3 flex items-center gap-1">
+              <div className="w-1 h-1 bg-amber-400 rounded-full opacity-40"></div>
+              <div className="w-1.5 h-1.5 bg-orange-500 rounded-full opacity-50"></div>
+            </div>
+
+            {/* Market ticker style element */}
+            <div className="absolute top-1 left-1/2 transform -translate-x-1/2">
+              <div className="text-xs text-orange-600/40 font-mono">
+                VOCAB:{currentWord.id.toString().padStart(3, "0")}
+              </div>
+            </div>
           </Card>
         </div>
 
@@ -854,3 +942,4 @@ const wordSets = [
   { name: "Everyday Conversation", count: 40 },
   { name: "Advanced Spanish", count: 15 },
 ]
+</merged_code>
