@@ -463,7 +463,7 @@ const vocabularyData = [
   definition: "The use of imagination to create something",
   example: "La creatividad es clave para resolver problemas.",
   pronunciation: "/kɾe.a.ti.βiˈðað/",
-},
+}
 ]
 
 const predefinedGroups = [
