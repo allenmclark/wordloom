@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, BookOpen, Check, HelpCircle, X, User, Settings, LogOut } from "lucide-react"
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -98,6 +100,79 @@ const spanishVocabulary: SpanishWord[] = [
   },
 ]
 
+// Mock historical performance data for each word
+const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean; cumulativeRate: number }[]> = {
+  1: [
+    { attempt: 1, correct: true, cumulativeRate: 100 },
+    { attempt: 2, correct: true, cumulativeRate: 100 },
+    { attempt: 3, correct: false, cumulativeRate: 67 },
+    { attempt: 4, correct: true, cumulativeRate: 75 },
+    { attempt: 5, correct: true, cumulativeRate: 80 },
+  ],
+  2: [
+    { attempt: 1, correct: false, cumulativeRate: 0 },
+    { attempt: 2, correct: true, cumulativeRate: 50 },
+    { attempt: 3, correct: true, cumulativeRate: 67 },
+    { attempt: 4, correct: false, cumulativeRate: 50 },
+    { attempt: 5, correct: true, cumulativeRate: 60 },
+    { attempt: 6, correct: true, cumulativeRate: 67 },
+  ],
+  3: [
+    { attempt: 1, correct: true, cumulativeRate: 100 },
+    { attempt: 2, correct: false, cumulativeRate: 50 },
+    { attempt: 3, correct: true, cumulativeRate: 67 },
+  ],
+  4: [
+    { attempt: 1, correct: false, cumulativeRate: 0 },
+    { attempt: 2, correct: false, cumulativeRate: 0 },
+    { attempt: 3, correct: true, cumulativeRate: 33 },
+    { attempt: 4, correct: true, cumulativeRate: 50 },
+    { attempt: 5, correct: false, cumulativeRate: 40 },
+    { attempt: 6, correct: true, cumulativeRate: 50 },
+    { attempt: 7, correct: true, cumulativeRate: 57 },
+  ],
+  5: [
+    { attempt: 1, correct: false, cumulativeRate: 0 },
+    { attempt: 2, correct: false, cumulativeRate: 0 },
+    { attempt: 3, correct: false, cumulativeRate: 0 },
+    { attempt: 4, correct: true, cumulativeRate: 25 },
+    { attempt: 5, correct: false, cumulativeRate: 20 },
+    { attempt: 6, correct: true, cumulativeRate: 33 },
+  ],
+  6: [
+    { attempt: 1, correct: true, cumulativeRate: 100 },
+    { attempt: 2, correct: true, cumulativeRate: 100 },
+  ],
+  7: [
+    { attempt: 1, correct: true, cumulativeRate: 100 },
+    { attempt: 2, correct: true, cumulativeRate: 100 },
+    { attempt: 3, correct: false, cumulativeRate: 67 },
+    { attempt: 4, correct: true, cumulativeRate: 75 },
+  ],
+  8: [
+    { attempt: 1, correct: false, cumulativeRate: 0 },
+    { attempt: 2, correct: true, cumulativeRate: 50 },
+    { attempt: 3, correct: true, cumulativeRate: 67 },
+    { attempt: 4, correct: true, cumulativeRate: 75 },
+    { attempt: 5, correct: false, cumulativeRate: 60 },
+  ],
+  9: [
+    { attempt: 1, correct: true, cumulativeRate: 100 },
+    { attempt: 2, correct: false, cumulativeRate: 50 },
+    { attempt: 3, correct: false, cumulativeRate: 33 },
+    { attempt: 4, correct: true, cumulativeRate: 50 },
+    { attempt: 5, correct: true, cumulativeRate: 60 },
+    { attempt: 6, correct: true, cumulativeRate: 67 },
+    { attempt: 7, correct: false, cumulativeRate: 57 },
+  ],
+  10: [
+    { attempt: 1, correct: false, cumulativeRate: 0 },
+    { attempt: 2, correct: false, cumulativeRate: 0 },
+    { attempt: 3, correct: true, cumulativeRate: 33 },
+    { attempt: 4, correct: false, cumulativeRate: 25 },
+  ],
+}
+
 // Generate incorrect options for a given word
 const generateOptions = (correctWord: SpanishWord): string[] => {
   const otherWords = spanishVocabulary.filter((word) => word.id !== correctWord.id)
@@ -107,6 +182,41 @@ const generateOptions = (correctWord: SpanishWord): string[] => {
   // Add the correct answer and shuffle again
   const allOptions = [...incorrectOptions, correctWord.english]
   return allOptions.sort(() => 0.5 - Math.random())
+}
+
+// Get current success rate for a word
+const getCurrentSuccessRate = (wordId: number): number => {
+  const history = wordPerformanceHistory[wordId] || []
+  if (history.length === 0) return 0
+  return history[history.length - 1].cumulativeRate
+}
+
+// Get predicted success rate based on recent performance and difficulty
+const getPredictedSuccessRate = (wordId: number, difficulty: string): number => {
+  const currentRate = getCurrentSuccessRate(wordId)
+  const history = wordPerformanceHistory[wordId] || []
+
+  if (history.length === 0) {
+    // Base prediction on difficulty for new words
+    switch (difficulty) {
+      case "Beginner":
+        return 75
+      case "Intermediate":
+        return 50
+      case "Advanced":
+        return 30
+      default:
+        return 50
+    }
+  }
+
+  // Weight recent performance more heavily
+  const recentAttempts = history.slice(-3)
+  const recentCorrect = recentAttempts.filter((a) => a.correct).length
+  const recentRate = (recentCorrect / recentAttempts.length) * 100
+
+  // Blend current rate with recent performance
+  return Math.round(currentRate * 0.7 + recentRate * 0.3)
 }
 
 export default function PracticePage() {
@@ -257,6 +367,118 @@ export default function PracticePage() {
 
         <div className="grid gap-8 md:grid-cols-3">
           <div className="md:col-span-2">
+            {/* Word Performance Section */}
+            <Card className="border-2 shadow-card overflow-hidden animate-in mb-6">
+              <CardHeader className="bg-gradient-to-r from-orange-50 to-amber-50 border-b">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle className="text-lg">Word Performance</CardTitle>
+                    <CardDescription>Your historical success rate with "{currentWord.spanish}"</CardDescription>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-orange-600">
+                      {getPredictedSuccessRate(currentWord.id, currentWord.difficulty)}%
+                    </div>
+                    <div className="text-xs text-muted-foreground">Predicted Success</div>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div>
+                    <h4 className="font-medium mb-3">Historical Success Rate</h4>
+                    {wordPerformanceHistory[currentWord.id] && wordPerformanceHistory[currentWord.id].length > 0 ? (
+                      <ChartContainer
+                        config={{
+                          cumulativeRate: {
+                            label: "Success Rate",
+                            color: "hsl(var(--chart-1))",
+                          },
+                        }}
+                        className="h-[200px]"
+                      >
+                        <ResponsiveContainer width="100%" height="100%">
+                          <LineChart data={wordPerformanceHistory[currentWord.id]}>
+                            <XAxis dataKey="attempt" axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
+                            <YAxis domain={[0, 100]} axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
+                            <ChartTooltip
+                              content={<ChartTooltipContent />}
+                              formatter={(value) => [`${value}%`, "Success Rate"]}
+                              labelFormatter={(label) => `Attempt ${label}`}
+                            />
+                            <Line
+                              type="monotone"
+                              dataKey="cumulativeRate"
+                              stroke="rgb(249 115 22)"
+                              strokeWidth={3}
+                              dot={{ fill: "rgb(249 115 22)", strokeWidth: 2, r: 4 }}
+                              activeDot={{ r: 6, stroke: "rgb(249 115 22)", strokeWidth: 2 }}
+                            />
+                          </LineChart>
+                        </ResponsiveContainer>
+                      </ChartContainer>
+                    ) : (
+                      <div className="h-[200px] flex items-center justify-center bg-slate-50 rounded-lg">
+                        <div className="text-center text-muted-foreground">
+                          <p className="text-sm">No practice history yet</p>
+                          <p className="text-xs mt-1">Start practicing to see your progress!</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-medium mb-3">Performance Stats</h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                          <span className="text-sm">Current Success Rate</span>
+                          <span className="font-medium text-orange-600">{getCurrentSuccessRate(currentWord.id)}%</span>
+                        </div>
+                        <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                          <span className="text-sm">Total Attempts</span>
+                          <span className="font-medium">{wordPerformanceHistory[currentWord.id]?.length || 0}</span>
+                        </div>
+                        <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                          <span className="text-sm">Correct Answers</span>
+                          <span className="font-medium text-green-600">
+                            {wordPerformanceHistory[currentWord.id]?.filter((a) => a.correct).length || 0}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                          <span className="text-sm">Word Difficulty</span>
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              currentWord.difficulty === "Beginner"
+                                ? "bg-green-100 text-green-800"
+                                : currentWord.difficulty === "Intermediate"
+                                  ? "bg-yellow-100 text-yellow-800"
+                                  : "bg-red-100 text-red-800"
+                            }`}
+                          >
+                            {currentWord.difficulty}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg border border-orange-100">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+                        <span className="text-sm font-medium text-orange-800">AI Prediction</span>
+                      </div>
+                      <p className="text-xs text-orange-700">
+                        Based on your history and word difficulty, you have a{" "}
+                        <span className="font-medium">
+                          {getPredictedSuccessRate(currentWord.id, currentWord.difficulty)}%
+                        </span>{" "}
+                        chance of getting this word correct.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
             <Card className="border-2 shadow-card overflow-hidden animate-in">
               <CardHeader className="bg-slate-50 border-b">
                 <div className="flex justify-between items-center">
