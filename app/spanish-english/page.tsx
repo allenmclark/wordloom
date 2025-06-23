@@ -458,7 +458,7 @@ const vocabularyData = [
   spanish: "creatividad",
   english: "creativity",
   category: "concepts",
-  difficulty: "advanced",
+
   semanticTags: ["innovation", "imagination", "art", "expression"],
   definition: "The use of imagination to create something",
   example: "La creatividad es clave para resolver problemas.",
