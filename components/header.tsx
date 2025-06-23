@@ -97,7 +97,7 @@ export function Header() {
                 </Button>
               </Link>
               <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
-                <Button size="sm" className="w-full text-orange-500 no-fade">
+                <Button size="sm" className="w-full vibrant-button-primary no-fade">
                   Sign up
                 </Button>
               </Link>
