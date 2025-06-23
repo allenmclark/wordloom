@@ -108,6 +108,9 @@ const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean
     { attempt: 3, correct: false, cumulativeRate: 67 },
     { attempt: 4, correct: true, cumulativeRate: 75 },
     { attempt: 5, correct: true, cumulativeRate: 80 },
+    { attempt: 6, correct: false, cumulativeRate: 67 },
+    { attempt: 7, correct: true, cumulativeRate: 71 },
+    { attempt: 8, correct: true, cumulativeRate: 75 },
   ],
   2: [
     { attempt: 1, correct: false, cumulativeRate: 0 },
@@ -116,11 +119,18 @@ const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean
     { attempt: 4, correct: false, cumulativeRate: 50 },
     { attempt: 5, correct: true, cumulativeRate: 60 },
     { attempt: 6, correct: true, cumulativeRate: 67 },
+    { attempt: 7, correct: true, cumulativeRate: 71 },
+    { attempt: 8, correct: false, cumulativeRate: 63 },
+    { attempt: 9, correct: true, cumulativeRate: 67 },
+    { attempt: 10, correct: true, cumulativeRate: 70 },
   ],
   3: [
     { attempt: 1, correct: true, cumulativeRate: 100 },
     { attempt: 2, correct: false, cumulativeRate: 50 },
     { attempt: 3, correct: true, cumulativeRate: 67 },
+    { attempt: 4, correct: true, cumulativeRate: 75 },
+    { attempt: 5, correct: false, cumulativeRate: 60 },
+    { attempt: 6, correct: true, cumulativeRate: 67 },
   ],
   4: [
     { attempt: 1, correct: false, cumulativeRate: 0 },
@@ -130,6 +140,11 @@ const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean
     { attempt: 5, correct: false, cumulativeRate: 40 },
     { attempt: 6, correct: true, cumulativeRate: 50 },
     { attempt: 7, correct: true, cumulativeRate: 57 },
+    { attempt: 8, correct: true, cumulativeRate: 63 },
+    { attempt: 9, correct: false, cumulativeRate: 56 },
+    { attempt: 10, correct: true, cumulativeRate: 60 },
+    { attempt: 11, correct: true, cumulativeRate: 64 },
+    { attempt: 12, correct: true, cumulativeRate: 67 },
   ],
   5: [
     { attempt: 1, correct: false, cumulativeRate: 0 },
@@ -138,16 +153,28 @@ const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean
     { attempt: 4, correct: true, cumulativeRate: 25 },
     { attempt: 5, correct: false, cumulativeRate: 20 },
     { attempt: 6, correct: true, cumulativeRate: 33 },
+    { attempt: 7, correct: true, cumulativeRate: 43 },
+    { attempt: 8, correct: false, cumulativeRate: 38 },
+    { attempt: 9, correct: true, cumulativeRate: 44 },
+    { attempt: 10, correct: true, cumulativeRate: 50 },
   ],
   6: [
     { attempt: 1, correct: true, cumulativeRate: 100 },
     { attempt: 2, correct: true, cumulativeRate: 100 },
+    { attempt: 3, correct: false, cumulativeRate: 67 },
+    { attempt: 4, correct: true, cumulativeRate: 75 },
+    { attempt: 5, correct: true, cumulativeRate: 80 },
   ],
   7: [
     { attempt: 1, correct: true, cumulativeRate: 100 },
     { attempt: 2, correct: true, cumulativeRate: 100 },
     { attempt: 3, correct: false, cumulativeRate: 67 },
     { attempt: 4, correct: true, cumulativeRate: 75 },
+    { attempt: 5, correct: true, cumulativeRate: 80 },
+    { attempt: 6, correct: false, cumulativeRate: 67 },
+    { attempt: 7, correct: true, cumulativeRate: 71 },
+    { attempt: 8, correct: true, cumulativeRate: 75 },
+    { attempt: 9, correct: true, cumulativeRate: 78 },
   ],
   8: [
     { attempt: 1, correct: false, cumulativeRate: 0 },
@@ -155,6 +182,9 @@ const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean
     { attempt: 3, correct: true, cumulativeRate: 67 },
     { attempt: 4, correct: true, cumulativeRate: 75 },
     { attempt: 5, correct: false, cumulativeRate: 60 },
+    { attempt: 6, correct: true, cumulativeRate: 67 },
+    { attempt: 7, correct: true, cumulativeRate: 71 },
+    { attempt: 8, correct: false, cumulativeRate: 63 },
   ],
   9: [
     { attempt: 1, correct: true, cumulativeRate: 100 },
@@ -164,12 +194,20 @@ const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean
     { attempt: 5, correct: true, cumulativeRate: 60 },
     { attempt: 6, correct: true, cumulativeRate: 67 },
     { attempt: 7, correct: false, cumulativeRate: 57 },
+    { attempt: 8, correct: true, cumulativeRate: 63 },
+    { attempt: 9, correct: true, cumulativeRate: 67 },
+    { attempt: 10, correct: false, cumulativeRate: 60 },
+    { attempt: 11, correct: true, cumulativeRate: 64 },
   ],
   10: [
     { attempt: 1, correct: false, cumulativeRate: 0 },
     { attempt: 2, correct: false, cumulativeRate: 0 },
     { attempt: 3, correct: true, cumulativeRate: 33 },
     { attempt: 4, correct: false, cumulativeRate: 25 },
+    { attempt: 5, correct: true, cumulativeRate: 40 },
+    { attempt: 6, correct: true, cumulativeRate: 50 },
+    { attempt: 7, correct: false, cumulativeRate: 43 },
+    { attempt: 8, correct: true, cumulativeRate: 50 },
   ],
 }
 
@@ -350,7 +388,7 @@ export default function PracticePage() {
       </header>
       <main className="flex-1 container py-8 hero-gradient dot-pattern">
         {/* Enhanced Word Performance Section - Prominently placed at top */}
-        <div className="mb-8">
+        <div className="mb-6">
           <Card className="border-2 shadow-lg overflow-hidden bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50">
             <CardHeader className="bg-gradient-to-r from-orange-100/50 to-amber-100/50 border-b border-orange-200">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -386,8 +424,8 @@ export default function PracticePage() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="p-6">
-              <div className="grid gap-6 lg:grid-cols-3">
+            <CardContent className="p-4">
+              <div className="grid gap-4 lg:grid-cols-3">
                 <div className="lg:col-span-2">
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="font-semibold text-lg">Historical Success Rate</h4>
@@ -405,7 +443,7 @@ export default function PracticePage() {
                             color: "rgb(249 115 22)",
                           },
                         }}
-                        className="h-[250px]"
+                        className="h-[180px]"
                       >
                         <ResponsiveContainer width="100%" height="100%">
                           <LineChart
@@ -454,7 +492,7 @@ export default function PracticePage() {
                       </ChartContainer>
                     </div>
                   ) : (
-                    <div className="h-[250px] flex items-center justify-center bg-gradient-to-br from-slate-50 to-orange-50 rounded-lg border border-orange-100">
+                    <div className="h-[180px] flex items-center justify-center bg-gradient-to-br from-slate-50 to-orange-50 rounded-lg border border-orange-100">
                       <div className="text-center text-muted-foreground">
                         <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
                           <BookOpen className="w-8 h-8 text-orange-500" />
