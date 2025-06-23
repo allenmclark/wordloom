@@ -288,7 +288,6 @@ export default function PracticePage() {
     setOptions(generateOptions(currentWord))
     setSelectedOption(null)
     setIsCorrect(null)
-    setShowHint(false)
   }, [currentWordIndex, currentWord.id, currentWord])
 
   const handleOptionSelect = (option: string) => {
