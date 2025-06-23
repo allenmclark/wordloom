@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, Check, HelpCircle, X, TrendingUp } from "lucide-react"
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Area, AreaChart, CartesianGrid } from "recharts"
+import { ArrowLeft, ArrowRight, Check, HelpCircle, X, TrendingUp, Target, BarChart3 } from "lucide-react"
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 import { Button } from "@/components/ui/button"
@@ -251,56 +251,17 @@ const getPredictedSuccessRate = (wordId: number, difficulty: string): number => 
   return Math.round(currentRate * 0.7 + recentRate * 0.3)
 }
 
-// Generate dynamic background chart data based on current word performance
-const generateBackgroundChartData = (wordId: number, currentIndex: number) => {
-  const history = wordPerformanceHistory[wordId] || []
-  const baseData = []
+// Calculate overall historical accuracy across all words
+const getOverallHistoricalAccuracy = (): number => {
+  let totalAttempts = 0
+  let totalCorrect = 0
 
-  // Create a smooth trending line based on actual performance data
-  if (history.length > 0) {
-    // Use actual performance data as foundation
-    const performancePoints = history.map((h, index) => ({
-      x: (index / Math.max(history.length - 1, 1)) * 100,
-      y: h.cumulativeRate,
-      volume: Math.random() * 0.3 + 0.1, // Simulated volume for visual effect
-    }))
+  Object.values(wordPerformanceHistory).forEach((history) => {
+    totalAttempts += history.length
+    totalCorrect += history.filter((attempt) => attempt.correct).length
+  })
 
-    // Interpolate additional points for smoother curve
-    for (let i = 0; i <= 100; i += 5) {
-      const nearestPoint = performancePoints.reduce((prev, curr) =>
-        Math.abs(curr.x - i) < Math.abs(prev.x - i) ? curr : prev,
-      )
-
-      // Add some realistic market-like volatility
-      const volatility = Math.sin(i * 0.1 + currentIndex) * 3 + Math.random() * 2 - 1
-      const trendAdjustment = (i / 100) * 10 // Slight upward trend
-
-      baseData.push({
-        x: i,
-        y: Math.max(0, Math.min(100, nearestPoint.y + volatility + trendAdjustment)),
-        volume: Math.random() * 0.4 + 0.1,
-      })
-    }
-  } else {
-    // Generate realistic trending data for words without history
-    const startValue = Math.random() * 30 + 20
-    const endValue = Math.random() * 40 + 50
-
-    for (let i = 0; i <= 100; i += 5) {
-      const progress = i / 100
-      const baseValue = startValue + (endValue - startValue) * progress
-      const marketNoise = Math.sin(i * 0.15 + currentIndex * 0.5) * 8 + Math.random() * 6 - 3
-      const momentum = Math.sin(i * 0.05) * 5
-
-      baseData.push({
-        x: i,
-        y: Math.max(0, Math.min(100, baseValue + marketNoise + momentum)),
-        volume: Math.random() * 0.5 + 0.1,
-      })
-    }
-  }
-
-  return baseData
+  return totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0
 }
 
 export default function PracticePage() {
@@ -311,7 +272,6 @@ export default function PracticePage() {
   const [options, setOptions] = useState<string[]>([])
   const [showHint, setShowHint] = useState(false)
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
-  const [backgroundChartData, setBackgroundChartData] = useState<any[]>([])
 
   const currentWord = spanishVocabulary[currentWordIndex]
 
@@ -321,9 +281,6 @@ export default function PracticePage() {
     setSelectedOption(null)
     setIsCorrect(null)
     setShowHint(false)
-
-    // Update background chart data dynamically
-    setBackgroundChartData(generateBackgroundChartData(currentWord.id, currentWordIndex))
   }, [currentWordIndex, currentWord.id, currentWord])
 
   const handleOptionSelect = (option: string) => {
@@ -354,247 +311,203 @@ export default function PracticePage() {
   }
 
   const accuracy = answeredQuestions > 0 ? Math.round((score / answeredQuestions) * 100) : 0
+  const predictedChance = getPredictedSuccessRate(currentWord.id, currentWord.difficulty)
+  const historicalAccuracy = getCurrentSuccessRate(currentWord.id)
+  const overallAccuracy = getOverallHistoricalAccuracy()
+  const performanceData = wordPerformanceHistory[currentWord.id] || []
 
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 hero-gradient overflow-hidden relative">
         <div className="container py-6">
-          {/* Kalshi-Inspired Performance Analytics with Dynamic Stock Chart */}
-          <div className="mb-4">
-            <Card className="relative border border-orange-200 bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100 shadow-lg overflow-hidden no-fade">
-              {/* Dynamic Stock-Style Background Chart */}
-              <div className="absolute inset-0 opacity-25">
-                <ChartContainer
-                  config={{
-                    backgroundTrend: {
-                      label: "Performance Trend",
-                      color: "#ea580c",
-                    },
-                    volume: {
-                      label: "Volume",
-                      color: "#ea580c",
-                    },
-                  }}
-                  className="h-full w-full"
-                >
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={backgroundChartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
-                      <defs>
-                        <linearGradient id="stockGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#ea580c" stopOpacity={0.4} />
-                          <stop offset="50%" stopColor="#fb923c" stopOpacity={0.2} />
-                          <stop offset="100%" stopColor="#fed7aa" stopOpacity={0.1} />
-                        </linearGradient>
-                        <linearGradient id="volumeGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#ea580c" stopOpacity={0.3} />
-                          <stop offset="100%" stopColor="#ea580c" stopOpacity={0.05} />
-                        </linearGradient>
-                      </defs>
-
-                      {/* Volume bars at bottom */}
-                      <Area
-                        type="monotone"
-                        dataKey="volume"
-                        stroke="none"
-                        fill="url(#volumeGradient)"
-                        fillOpacity={1}
-                        stackId="volume"
-                      />
-
-                      {/* Main trend line with area fill */}
-                      <Area
-                        type="monotone"
-                        dataKey="y"
-                        stroke="#ea580c"
-                        strokeWidth={3}
-                        fill="url(#stockGradient)"
-                        fillOpacity={1}
-                        dot={false}
-                      />
-
-                      {/* Secondary trend line for depth */}
-                      <Line
-                        type="monotone"
-                        dataKey="y"
-                        stroke="#ea580c"
-                        strokeWidth={2}
-                        dot={false}
-                        strokeOpacity={0.8}
-                        strokeDasharray="3,3"
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </ChartContainer>
-              </div>
-
-              {/* Market-style grid overlay */}
-              <div className="absolute inset-0 opacity-5">
-                <svg className="w-full h-full">
-                  <defs>
-                    <pattern id="grid" width="40" height="20" patternUnits="userSpaceOnUse">
-                      <path d="M 40 0 L 0 0 0 20" fill="none" stroke="#f97316" strokeWidth="0.5" />
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
-                </svg>
-              </div>
-
-              {/* Gradient Overlay for readability */}
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-50/95 via-orange-50/80 to-amber-50/95"></div>
-
-              <CardContent className="relative z-10 p-4">
-                <div className="grid grid-cols-12 gap-4 items-center">
-                  {/* Left Section - Primary Metrics */}
-                  <div className="col-span-3">
-                    <div className="space-y-3">
-                      <div>
-                        <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-                          {getCurrentSuccessRate(currentWord.id)}%
-                        </div>
-                        <div className="text-xs text-orange-700/70 font-medium">Success Rate</div>
-                      </div>
-                      <div>
-                        <div className="text-lg font-semibold text-emerald-600">
-                          {getPredictedSuccessRate(currentWord.id, currentWord.difficulty)}%
-                        </div>
-                        <div className="text-xs text-orange-700/70 font-medium">Predicted</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Middle Section - Word Context */}
-                  <div className="col-span-3">
-                    <div className="space-y-2">
-                      <div className="font-bold text-orange-800 truncate text-lg">"{currentWord.spanish}"</div>
-                      <div className="text-xs text-orange-700/80 font-medium">
-                        {wordPerformanceHistory[currentWord.id]?.length || 0} attempts
-                      </div>
-                      <div
-                        className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${
+          {/* Redesigned Performance Overview Card */}
+          <div className="mb-6">
+            <Card className="border-2 border-orange-200 bg-gradient-to-br from-white via-orange-50/30 to-amber-50/50 shadow-xl overflow-hidden no-fade">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-xl font-bold text-gray-900">Performance Overview</CardTitle>
+                    <CardDescription className="text-gray-600">
+                      Current word: <span className="font-semibold text-orange-700">"{currentWord.spanish}"</span> •{" "}
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
                           currentWord.difficulty === "Beginner"
-                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                            ? "bg-emerald-100 text-emerald-800"
                             : currentWord.difficulty === "Intermediate"
-                              ? "bg-amber-50 text-amber-700 border-amber-200"
-                              : "bg-red-50 text-red-700 border-red-200"
+                              ? "bg-amber-100 text-amber-800"
+                              : "bg-red-100 text-red-800"
                         }`}
                       >
                         {currentWord.difficulty}
+                      </span>
+                    </CardDescription>
+                  </div>
+                  <div className="text-xs text-gray-500 font-mono">
+                    VOCAB:{currentWord.id.toString().padStart(3, "0")}
+                  </div>
+                </div>
+              </CardHeader>
+
+              <CardContent className="pt-0">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Predicted Chance of Correctness */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <Target className="w-5 h-5 text-orange-600" />
+                      <h3 className="font-semibold text-gray-900">Predicted Chance</h3>
+                    </div>
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
+                      <div className="text-center">
+                        <div className="text-4xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-1">
+                          {predictedChance}%
+                        </div>
+                        <div className="text-sm text-gray-600">Estimated correctness</div>
+                        <div className="mt-3">
+                          <Progress
+                            value={predictedChance}
+                            className="h-2"
+                            style={{
+                              background: "linear-gradient(to right, #fed7aa, #fdba74, #fb923c)",
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Right Section - Interactive Chart */}
-                  <div className="col-span-6">
-                    {wordPerformanceHistory[currentWord.id] && wordPerformanceHistory[currentWord.id].length > 0 ? (
-                      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-3 border border-orange-200/50 shadow-sm">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <TrendingUp className="w-4 h-4 text-orange-600" />
-                            <span className="text-sm font-semibold text-orange-800">Progress Trend</span>
-                          </div>
-                          <div
-                            className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium border ${
-                              wordPerformanceHistory[currentWord.id] &&
-                              wordPerformanceHistory[currentWord.id].length >= 2
-                                ? wordPerformanceHistory[currentWord.id][
-                                    wordPerformanceHistory[currentWord.id].length - 1
-                                  ].cumulativeRate >=
-                                  wordPerformanceHistory[currentWord.id][
-                                    wordPerformanceHistory[currentWord.id].length - 2
-                                  ].cumulativeRate
-                                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                                  : "bg-red-50 text-red-700 border-red-200"
-                                : "bg-orange-50 text-orange-700 border-orange-200"
-                            }`}
-                          >
-                            {wordPerformanceHistory[currentWord.id] &&
-                            wordPerformanceHistory[currentWord.id].length >= 2
-                              ? wordPerformanceHistory[currentWord.id][
-                                  wordPerformanceHistory[currentWord.id].length - 1
-                                ].cumulativeRate >=
-                                wordPerformanceHistory[currentWord.id][
-                                  wordPerformanceHistory[currentWord.id].length - 2
-                                ].cumulativeRate
-                                ? "↗ Improving"
-                                : "↘ Declining"
-                              : "— Tracking"}
-                          </div>
+                  {/* Historical Accuracy Rate */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <BarChart3 className="w-5 h-5 text-orange-600" />
+                      <h3 className="font-semibold text-gray-900">Historical Accuracy</h3>
+                    </div>
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
+                      <div className="text-center">
+                        <div className="text-4xl font-bold text-gray-900 mb-1">{historicalAccuracy}%</div>
+                        <div className="text-sm text-gray-600">This word ({performanceData.length} attempts)</div>
+                        <div className="mt-2 text-xs text-gray-500">Overall: {overallAccuracy}% across all words</div>
+                        <div className="mt-3">
+                          <Progress
+                            value={historicalAccuracy}
+                            className="h-2"
+                            style={{
+                              background:
+                                historicalAccuracy >= 70
+                                  ? "linear-gradient(to right, #dcfce7, #bbf7d0, #86efac)"
+                                  : historicalAccuracy >= 50
+                                    ? "linear-gradient(to right, #fef3c7, #fde68a, #fcd34d)"
+                                    : "linear-gradient(to right, #fee2e2, #fecaca, #fca5a5)",
+                            }}
+                          />
                         </div>
-                        <ChartContainer
-                          config={{
-                            cumulativeRate: {
-                              label: "Success Rate",
-                              color: "#f97316",
-                            },
-                          }}
-                          className="h-[60px]"
-                        >
-                          <ResponsiveContainer width="100%" height="100%">
-                            <LineChart
-                              data={wordPerformanceHistory[currentWord.id]}
-                              margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Cumulative Performance Chart */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5 text-orange-600" />
+                      <h3 className="font-semibold text-gray-900">Performance Trend</h3>
+                    </div>
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
+                      {performanceData.length > 0 ? (
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600">Cumulative Rate</span>
+                            <div
+                              className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                                performanceData.length >= 2
+                                  ? performanceData[performanceData.length - 1].cumulativeRate >=
+                                    performanceData[performanceData.length - 2].cumulativeRate
+                                    ? "bg-emerald-100 text-emerald-700"
+                                    : "bg-red-100 text-red-700"
+                                  : "bg-gray-100 text-gray-700"
+                              }`}
                             >
-                              <XAxis dataKey="attempt" hide />
-                              <YAxis domain={[0, 100]} hide />
-                              <CartesianGrid strokeDasharray="3 3" stroke="#f97316" strokeOpacity={0.2} />
-                              <ChartTooltip
-                                content={<ChartTooltipContent />}
-                                formatter={(value, name) => [`${value}%`, "Success Rate"]}
-                                labelFormatter={(label) => `Attempt ${label}`}
-                              />
-                              <Line
-                                type="monotone"
-                                dataKey="cumulativeRate"
-                                stroke="#f97316"
-                                strokeWidth={2.5}
-                                dot={false}
-                                activeDot={{
-                                  r: 4,
-                                  stroke: "#f97316",
-                                  strokeWidth: 2,
-                                  fill: "white",
-                                  style: {
-                                    filter: "drop-shadow(0 2px 4px rgba(249,115,22,0.3))",
-                                    cursor: "pointer",
-                                  },
-                                }}
-                              />
-                            </LineChart>
-                          </ResponsiveContainer>
-                        </ChartContainer>
-                        <div className="flex justify-between text-xs text-orange-700/70 font-medium mt-1">
-                          <span>Start</span>
-                          <span className="font-semibold">Latest: {getCurrentSuccessRate(currentWord.id)}%</span>
+                              {performanceData.length >= 2
+                                ? performanceData[performanceData.length - 1].cumulativeRate >=
+                                  performanceData[performanceData.length - 2].cumulativeRate
+                                  ? "↗ Improving"
+                                  : "↘ Declining"
+                                : "— Tracking"}
+                            </div>
+                          </div>
+
+                          <ChartContainer
+                            config={{
+                              cumulativeRate: {
+                                label: "Success Rate",
+                                color: "#f97316",
+                              },
+                            }}
+                            className="h-[120px] w-full"
+                          >
+                            <ResponsiveContainer width="100%" height="100%">
+                              <LineChart data={performanceData} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#f97316" strokeOpacity={0.2} />
+                                <XAxis
+                                  dataKey="attempt"
+                                  axisLine={false}
+                                  tickLine={false}
+                                  tick={{ fontSize: 10, fill: "#6b7280" }}
+                                />
+                                <YAxis
+                                  domain={[0, 100]}
+                                  axisLine={false}
+                                  tickLine={false}
+                                  tick={{ fontSize: 10, fill: "#6b7280" }}
+                                  tickFormatter={(value) => `${value}%`}
+                                />
+                                <ChartTooltip
+                                  content={<ChartTooltipContent />}
+                                  formatter={(value, name) => [`${value}%`, "Success Rate"]}
+                                  labelFormatter={(label) => `Attempt ${label}`}
+                                />
+                                <Line
+                                  type="monotone"
+                                  dataKey="cumulativeRate"
+                                  stroke="#f97316"
+                                  strokeWidth={3}
+                                  dot={{
+                                    fill: "#f97316",
+                                    strokeWidth: 2,
+                                    r: 4,
+                                  }}
+                                  activeDot={{
+                                    r: 6,
+                                    stroke: "#f97316",
+                                    strokeWidth: 2,
+                                    fill: "white",
+                                    style: {
+                                      filter: "drop-shadow(0 2px 4px rgba(249,115,22,0.3))",
+                                    },
+                                  }}
+                                />
+                              </LineChart>
+                            </ResponsiveContainer>
+                          </ChartContainer>
+
+                          <div className="flex justify-between text-xs text-gray-500">
+                            <span>Start: {performanceData[0]?.cumulativeRate}%</span>
+                            <span className="font-semibold">
+                              Latest: {performanceData[performanceData.length - 1]?.cumulativeRate}%
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      <div className="h-[100px] flex items-center justify-center bg-white/50 backdrop-blur-sm rounded-xl border border-orange-200/50">
-                        <div className="text-center text-orange-600/60">
-                          <TrendingUp className="w-8 h-8 mx-auto mb-2 opacity-60" />
-                          <p className="text-sm font-medium">Building your trend...</p>
+                      ) : (
+                        <div className="h-[120px] flex items-center justify-center text-center">
+                          <div className="text-gray-400">
+                            <TrendingUp className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                            <p className="text-sm">No data yet</p>
+                            <p className="text-xs">Start practicing to see your trend</p>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
               </CardContent>
-
-              {/* Kalshi-style decorative elements */}
-              <div className="absolute top-3 right-3 flex items-center gap-1">
-                <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
-                <div className="w-1 h-1 bg-orange-400 rounded-full opacity-60"></div>
-              </div>
-              <div className="absolute bottom-3 left-3 flex items-center gap-1">
-                <div className="w-1 h-1 bg-amber-400 rounded-full opacity-40"></div>
-                <div className="w-1.5 h-1.5 bg-orange-500 rounded-full opacity-50"></div>
-              </div>
-
-              {/* Market ticker style element */}
-              <div className="absolute top-1 left-1/2 transform -translate-x-1/2">
-                <div className="text-xs text-orange-600/40 font-mono">
-                  VOCAB:{currentWord.id.toString().padStart(3, "0")}
-                </div>
-              </div>
             </Card>
           </div>
 
@@ -841,4 +754,6 @@ const wordSets = [
   { name: "Business Spanish", count: 25 },
   { name: "Everyday Conversation", count: 40 },
   { name: "Advanced Spanish", count: 15 },
+  { name: "Word Sets", count: 0 },
 ]
+</merged_code>
