@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   Tooltip as RechartsTooltip,
 } from "recharts"
-import type { TooltipProps } from "recharts"
+import type { TooltipProps as RechartsTooltipProps } from "recharts" // ✅ type-only import
 import { cn } from "@/lib/utils"
 
 /* -------------------------------------------------------------------------- */
@@ -47,9 +47,7 @@ export const useChartConfig = () => {
 /* -------------------------------------------------------------------------- */
 
 export interface ChartContainerProps extends React.ComponentPropsWithoutRef<"div"> {
-  /** A map of dataKey  series configuration */
   config: ChartConfig
-  /** Your Recharts <LineChart>, <AreaChart>, … */
   children: React.ReactNode
 }
 
@@ -63,13 +61,10 @@ export const ChartContainer = React.forwardRef<HTMLDivElement, ChartContainerPro
         <div
           data-chart={chartId}
           ref={ref}
-          /* Removed `aspect-video` so fixed heights like h-[60px] work */
-          className={cn("flex w-full justify-center text-xs", className)}
+          className={cn("flex w-full justify-center text-xs", className)} // 🔸 no aspect-video
           {...props}
         >
-          {/* Inject CSS variables for series colours */}
           <ChartStyle id={chartId} config={config} />
-          {/* Let the caller decide height/width via parent-classes */}
           <ResponsiveContainer width="100%" height="100%">
             {children}
           </ResponsiveContainer>
@@ -81,37 +76,31 @@ export const ChartContainer = React.forwardRef<HTMLDivElement, ChartContainerPro
 ChartContainer.displayName = "ChartContainer"
 
 /* -------------------------------------------------------------------------- */
-/*                             Dynamic CSS-in-JS                              */
+/*                          Inject per–chart CSS vars                         */
 /* -------------------------------------------------------------------------- */
 
-interface ChartStyleProps {
-  id: string
-  config: ChartConfig
-}
-
-function ChartStyle({ id, config }: ChartStyleProps) {
-  const cssVars = Object.entries(config)
-    .map(([key, { color }]) => `--color-${key}: ${color};`)
+function ChartStyle({ id, config }: { id: string; config: ChartConfig }) {
+  const css = Object.entries(config)
+    .map(([k, v]) => `--color-${k}: ${v.color};`)
     .join("")
+
   return (
     <style
-      /* Each chart gets its own scoped CSS variables */
       /* eslint-disable-next-line react/no-danger */
-      dangerouslySetInnerHTML={{
-        __html: `[data-chart="${id}"] {${cssVars}}`,
-      }}
+      dangerouslySetInnerHTML={{ __html: `[data-chart='${id}']{${css}}` }}
     />
   )
 }
 
 /* -------------------------------------------------------------------------- */
-/*                           Default Chart Tooltip                            */
+/*                           Re-usable Tooltip shell                          */
 /* -------------------------------------------------------------------------- */
 
 export function ChartTooltip(props: React.ComponentProps<typeof RechartsTooltip>) {
   return (
     <RechartsTooltip
       {...props}
+      cursor={{ fill: "hsl(var(--muted))" }}
       contentStyle={{
         background: "hsl(var(--background))",
         border: "1px solid hsl(var(--border))",
@@ -119,7 +108,6 @@ export function ChartTooltip(props: React.ComponentProps<typeof RechartsTooltip>
         padding: "0.5rem 0.75rem",
         boxShadow: "0 4px 8px rgba(0,0,0,0.04)",
       }}
-      cursor={{ fill: "hsl(var(--muted))" }}
       labelStyle={{ marginBottom: 4, fontWeight: 500 }}
       itemStyle={{ display: "flex", alignItems: "center", gap: 4 }}
     />
@@ -127,10 +115,14 @@ export function ChartTooltip(props: React.ComponentProps<typeof RechartsTooltip>
 }
 
 /* -------------------------------------------------------------------------- */
-/*                          Simple Tooltip Content UI                         */
+/*                       Minimal tooltip-content component                    */
 /* -------------------------------------------------------------------------- */
 
-export function ChartTooltipContent({ active, payload, label }: TooltipProps) {
+export function ChartTooltipContent({
+  active,
+  payload,
+  label,
+}: RechartsTooltipProps<number, string>) {
   if (!active || !payload?.length) return null
 
   return (
@@ -141,7 +133,9 @@ export function ChartTooltipContent({ active, payload, label }: TooltipProps) {
           <li key={item.dataKey} className="flex items-center gap-2">
             <span className="inline-block h-2 w-2 rounded-sm" style={{ background: item.color }} />
             <span className="text-muted-foreground">{item.name}</span>
-            <span className="ml-auto font-mono tabular-nums">{item.value?.toLocaleString?.()}</span>
+            <span className="ml-auto font-mono tabular-nums">
+              {typeof item.value === "number" ? item.value.toLocaleString() : item.value}
+            </span>
           </li>
         ))}
       </ul>
@@ -149,5 +143,16 @@ export function ChartTooltipContent({ active, payload, label }: TooltipProps) {
   )
 }
 
-/* Convenience re-exports so callers can import everything from "@/components/ui/chart" */
-export { LineChart, BarChart, PieChart, AreaChart, CartesianGrid, ResponsiveContainer }
+/* -------------------------------------------------------------------------- */
+/*                           Convenience re-exports                           */
+/* -------------------------------------------------------------------------- */
+
+// consumers can simply `import { LineChart } from "@/components/ui/chart"`
+export {
+  LineChart,
+  BarChart,
+  PieChart,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+}
