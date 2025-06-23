@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
+
+
 // Enhanced Spanish-English vocabulary data with semantic tags
 const vocabularyData = [
   {
