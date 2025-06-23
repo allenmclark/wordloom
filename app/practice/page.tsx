@@ -511,8 +511,8 @@ export default function PracticePage() {
             </Card>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="md:col-span-2">
+          <div className="grid gap-8 lg:grid-cols-3">
+            <div className="lg:col-span-2">
               <Card className="border-2 shadow-card overflow-hidden animate-in vibrant-card">
                 <CardHeader className="bg-slate-50 border-b">
                   <div className="flex justify-between items-center">
@@ -633,19 +633,11 @@ export default function PracticePage() {
                   </div>
                 </div>
               )}
-              {/* Back to Dashboard Button */}
-              <div className="mt-6 flex justify-center">
-                <Link href="/dashboard">
-                  <Button variant="outline" className="rounded-lg vibrant-button-outline">
-                    <ArrowLeft className="mr-2 h-4 w-4" />
-                    Back to Dashboard
-                  </Button>
-                </Link>
-              </div>
             </div>
 
-            <div className="space-y-6 animate-in" style={{ animationDelay: "0.2s" }}>
-              <Card className="border-2 shadow-card overflow-hidden vibrant-card">
+            {/* Session Statistics - Right Column */}
+            <div className="lg:col-span-1">
+              <Card className="border-2 shadow-card overflow-hidden vibrant-card h-fit">
                 <CardHeader className="bg-slate-50 border-b">
                   <CardTitle>Session Stats</CardTitle>
                   <CardDescription>Your current learning session</CardDescription>
@@ -704,28 +696,41 @@ export default function PracticePage() {
                   </Button>
                 </CardFooter>
               </Card>
-
-              <Card className="border-2 shadow-card overflow-hidden vibrant-card">
-                <CardHeader className="bg-slate-50 border-b">
-                  <CardTitle>Word Sets</CardTitle>
-                  <CardDescription>Choose a different set to practice</CardDescription>
-                </CardHeader>
-                <CardContent className="p-4">
-                  <div className="space-y-2">
-                    {wordSets.map((set, index) => (
-                      <Button
-                        key={index}
-                        variant="outline"
-                        className="w-full justify-between h-auto py-3 rounded-lg vibrant-button-outline transition-all duration-300"
-                      >
-                        <span>{set.name}</span>
-                        <span className="text-xs bg-slate-100 px-2 py-1 rounded-full">{set.count} words</span>
-                      </Button>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
             </div>
+          </div>
+
+          {/* Word Sets - Horizontal Display Below */}
+          <div className="mt-8">
+            <Card className="border-2 shadow-card overflow-hidden vibrant-card">
+              <CardHeader className="bg-slate-50 border-b">
+                <CardTitle>Word Sets</CardTitle>
+                <CardDescription>Choose a different set to practice</CardDescription>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                  {wordSets.map((set, index) => (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      className="h-auto py-4 px-4 rounded-lg vibrant-button-outline transition-all duration-300 flex flex-col items-center space-y-2"
+                    >
+                      <span className="font-medium text-center">{set.name}</span>
+                      <span className="text-xs bg-slate-100 px-2 py-1 rounded-full">{set.count} words</span>
+                    </Button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Back to Dashboard Button */}
+          <div className="mt-6 flex justify-center">
+            <Link href="/dashboard">
+              <Button variant="outline" className="rounded-lg vibrant-button-outline">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Dashboard
+              </Button>
+            </Link>
           </div>
         </div>
       </main>
