@@ -1,17 +1,7 @@
 "use client"
-import { 
-  ResponsiveContainer, 
-  LineChart, 
-  CartesianGrid, 
-  XAxis, 
-  YAxis, 
-  Line 
-} from 'recharts';
-
-
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, Check, HelpCircle, X, TrendingUp, Target, BarChart3 } from "lucide-react"
+import { ArrowLeft, ArrowRight, Check, X, TrendingUp, Target, BarChart3 } from "lucide-react"
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid } from "recharts"
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
@@ -593,7 +583,6 @@ export default function PracticePage() {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between p-4 bg-slate-50 border-t">
-              
                   <Button
                     className="vibrant-button-primary rounded-lg shadow-sm hover:shadow transition-all duration-300"
                     onClick={handleNextWord}
