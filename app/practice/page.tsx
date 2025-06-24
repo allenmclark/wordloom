@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, Check, X, TrendingUp, Target, BarChart3 } from "lucide-react"
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid } from "recharts"
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
