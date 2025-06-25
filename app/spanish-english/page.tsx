@@ -618,8 +618,8 @@ export default function SpanishEnglishPage() {
                                 aria-label={`Select ${word.from_source}`}
                               />
                             </TableCell>
-                            <TableCell className="font-medium text-orange-700">{word.spanish}</TableCell>
-                            <TableCell className="font-medium">{word.english}</TableCell>
+                            <TableCell className="font-medium text-orange-700">{word.from_source}</TableCell>
+                            <TableCell className="font-medium">{word.to_target}</TableCell>
                             <TableCell className="text-sm text-muted-foreground font-mono">
                               {word.pronunciation}
                             </TableCell>
