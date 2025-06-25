@@ -24,16 +24,22 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
-
 export function Page() {
   const [vocabularyData, setLis] = useState([]);
 
   useEffect(() => {
     const fetchLis = async () => {
-      const res = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/20");
-      const data = await res.json();
-      setLis(data);
+      try {
+        const res = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/20");
+        const data = await res.json();
+        setLis(data);
+      } catch (error) {
+        console.error("Failed to fetch vocabulary data:", error);
+      }
     };
+
+    fetchLis();
+  }, []);
 
 
 
