@@ -25,7 +25,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 
 
-export  function VocabularyPage() {
+export function VocabularyPage() {
   const [vocabularyData, setLis] = useState([]);
 
   useEffect(() => {
