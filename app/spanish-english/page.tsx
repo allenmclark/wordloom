@@ -132,7 +132,7 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
   }
 
   // Semantic tag matching
-  const matchingTags = word.semanticTags.filter(
+  const matchingTags = word.frequency.filter(
     (tag: string) => tag.toLowerCase().includes(queryLower) || queryLower.includes(tag.toLowerCase()),
   )
   score += matchingTags.length * 20
@@ -164,7 +164,7 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
         if (
           word.from_source.includes(relatedWord) ||
           word.to_target.includes(relatedWord) ||
-          word.semanticTags.some((tag: string) => tag.includes(relatedWord))
+          word.frequency.some((tag: string) => tag.includes(relatedWord))
         ) {
           score += 25
         }
@@ -533,14 +533,14 @@ export default function SpanishEnglishPage() {
                         <p className="text-sm italic">"{word.example}"</p>
                       </div>
                       <div className="flex flex-wrap gap-1 mb-4">
-                        {word.semanticTags.slice(0, 3).map((tag, index) => (
+                        {word.frequency.slice(0, 3).map((tag, index) => (
                           <Badge key={index} variant="secondary" className="text-xs">
                             {tag}
                           </Badge>
                         ))}
-                        {word.semanticTags.length > 3 && (
+                        {word.frequency.length > 3 && (
                           <Badge variant="secondary" className="text-xs">
-                            +{word.semanticTags.length - 3} more
+                            +{word.frequency.length - 3} more
                           </Badge>
                         )}
                       </div>
@@ -649,14 +649,14 @@ export default function SpanishEnglishPage() {
                             </TableCell>
                             <TableCell>
                               <div className="flex flex-wrap gap-1 max-w-xs">
-                                {word.semanticTags.slice(0, 2).map((tag, index) => (
+                                {word.frequency.slice(0, 2).map((tag, index) => (
                                   <Badge key={index} variant="secondary" className="text-xs">
                                     {tag}
                                   </Badge>
                                 ))}
-                                {word.semanticTags.length > 2 && (
+                                {word.frequency.length > 2 && (
                                   <Badge variant="secondary" className="text-xs">
-                                    +{word.semanticTags.length - 2}
+                                    +{word.frequency.length - 2}
                                   </Badge>
                                 )}
                               </div>
