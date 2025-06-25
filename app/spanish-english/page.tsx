@@ -24,6 +24,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
+/*
 export function Page() {
   const [vocabularyData, setLis] = useState([]);
 
@@ -41,9 +42,9 @@ export function Page() {
     fetchLis();
   }, []);
 
+*/
 
-
-const vocabularyData_null = [
+const vocabularyData = [
 {
 id: 1
 from_source: "hola",
