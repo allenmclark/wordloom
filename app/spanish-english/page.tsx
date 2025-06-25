@@ -2,20 +2,27 @@
 
 import { useState, useMemo } from "react"
 import Link from "next/link"
-import { Search, BookOpen, User, Settings, LogOut, Sparkles, List, ArrowRight } from "lucide-react"
+import { Search, BookOpen, Sparkles, List, ArrowRight, Plus, Users, Edit, Grid } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+
+
 
 // Enhanced Spanish-English vocabulary data with semantic tags
 const vocabularyData = [
@@ -239,6 +246,235 @@ const vocabularyData = [
     example: "Voy a correr en el maratón.",
     pronunciation: "/ko.ˈrer/",
   },
+  {
+  id: 21,
+  spanish: "libertad",
+  english: "freedom",
+  category: "concepts",
+  difficulty: "intermediate",
+  semanticTags: ["rights", "independence", "choice", "expression"],
+  definition: "The power or right to act, speak, or think freely",
+  example: "La libertad es esencial para la democracia.",
+  pronunciation: "/li.βeɾˈtað/",
+},
+{
+  id: 22,
+  spanish: "justicia",
+  english: "justice",
+  category: "concepts",
+  difficulty: "advanced",
+  semanticTags: ["fairness", "law", "equity", "ethics"],
+  definition: "The quality of being fair and reasonable",
+  example: "La justicia debe ser igual para todos.",
+  pronunciation: "/xusˈti.θja/",
+},
+{
+  id: 23,
+  spanish: "cariño",
+  english: "affection",
+  category: "relationships",
+  difficulty: "intermediate",
+  semanticTags: ["love", "emotion", "warmth", "connection"],
+  definition: "A gentle feeling of fondness or liking",
+  example: "Le dio un abrazo lleno de cariño.",
+  pronunciation: "/kaˈɾi.ɲo/",
+},
+{
+  id: 24,
+  spanish: "sabiduría",
+  english: "wisdom",
+  category: "concepts",
+  difficulty: "advanced",
+  semanticTags: ["intelligence", "experience", "judgment", "philosophy"],
+  definition: "The ability to use knowledge and experience to make good decisions",
+  example: "La sabiduría viene con la experiencia.",
+  pronunciation: "/sa.βi.ðuˈɾi.a/",
+},
+{
+  id: 25,
+  spanish: "esperanza",
+  english: "hope",
+  category: "emotions",
+  difficulty: "intermediate",
+  semanticTags: ["optimism", "future", "faith", "desire"],
+  definition: "A feeling of expectation and desire for a certain thing to happen",
+  example: "Nunca pierdas la esperanza.",
+  pronunciation: "/es.peˈɾan.θa/",
+},
+{
+  id: 26,
+  spanish: "fuerza",
+  english: "strength",
+  category: "concepts",
+  difficulty: "basic",
+  semanticTags: ["power", "resilience", "muscle", "stamina"],
+  definition: "The quality or state of being physically strong",
+  example: "Necesitas fuerza para levantar eso.",
+  pronunciation: "/ˈfweɾ.θa/",
+},
+{
+  id: 27,
+  spanish: "belleza",
+  english: "beauty",
+  category: "aesthetics",
+  difficulty: "basic",
+  semanticTags: ["appearance", "art", "nature", "admiration"],
+  definition: "A combination of qualities that pleases the aesthetic senses",
+  example: "La belleza del atardecer era impresionante.",
+  pronunciation: "/beˈʎe.θa/",
+},
+{
+  id: 28,
+  spanish: "responsabilidad",
+  english: "responsibility",
+  category: "concepts",
+  difficulty: "advanced",
+  semanticTags: ["duty", "obligation", "accountability", "maturity"],
+  definition: "The state or fact of having a duty to deal with something",
+  example: "Es tu responsabilidad cuidar el perro.",
+  pronunciation: "/res.pon.sa.βi.liˈðað/",
+},
+{
+  id: 29,
+  spanish: "confianza",
+  english: "trust",
+  category: "relationships",
+  difficulty: "intermediate",
+  semanticTags: ["belief", "security", "honesty", "loyalty"],
+  definition: "Firm belief in the reliability or ability of someone",
+  example: "La confianza se gana con el tiempo.",
+  pronunciation: "/konˈfjan.θa/",
+},
+{
+  id: 30,
+  spanish: "valentía",
+  english: "bravery",
+  category: "traits",
+  difficulty: "intermediate",
+  semanticTags: ["courage", "fearless", "heroism", "action"],
+  definition: "Courageous behavior or character",
+  example: "Mostró gran valentía al hablar.",
+  pronunciation: "/ba.lenˈti.a/",
+},
+{
+  id: 31,
+  spanish: "alegría",
+  english: "joy",
+  category: "emotions",
+  difficulty: "basic",
+  semanticTags: ["happiness", "emotion", "pleasure", "positivity"],
+  definition: "A feeling of great pleasure and happiness",
+  example: "Su sonrisa mostraba alegría pura.",
+  pronunciation: "/a.leˈɣɾi.a/",
+},
+{
+  id: 32,
+  spanish: "paz",
+  english: "peace",
+  category: "concepts",
+  difficulty: "basic",
+  semanticTags: ["calm", "harmony", "nonviolence", "stability"],
+  definition: "Freedom from disturbance; tranquility",
+  example: "Todos deseamos vivir en paz.",
+  pronunciation: "/paθ/",
+},
+{
+  id: 33,
+  spanish: "respeto",
+  english: "respect",
+  category: "relationships",
+  difficulty: "basic",
+  semanticTags: ["esteem", "honor", "manners", "boundaries"],
+  definition: "A feeling of deep admiration for someone or something",
+  example: "El respeto es la base de toda relación.",
+  pronunciation: "/resˈpe.to/",
+},
+{
+  id: 34,
+  spanish: "humildad",
+  english: "humility",
+  category: "traits",
+  difficulty: "advanced",
+  semanticTags: ["modesty", "character", "virtue", "attitude"],
+  definition: "The quality of having a modest view of one's importance",
+  example: "La humildad es una gran virtud.",
+  pronunciation: "/u.milˈðað/",
+},
+{
+  id: 35,
+  spanish: "gratitud",
+  english: "gratitude",
+  category: "emotions",
+  difficulty: "intermediate",
+  semanticTags: ["thankfulness", "appreciation", "grace", "mindfulness"],
+  definition: "The quality of being thankful",
+  example: "Expresó su gratitud con una carta.",
+  pronunciation: "/ɡɾa.tiˈtud/",
+},
+{
+  id: 36,
+  spanish: "orgullo",
+  english: "pride",
+  category: "emotions",
+  difficulty: "intermediate",
+  semanticTags: ["ego", "accomplishment", "self-esteem", "confidence"],
+  definition: "A feeling of deep pleasure from one's own achievements",
+  example: "Sintió orgullo por su trabajo.",
+  pronunciation: "/oɾˈɣu.ʎo/",
+},
+{
+  id: 37,
+  spanish: "compasión",
+  english: "compassion",
+  category: "emotions",
+  difficulty: "advanced",
+  semanticTags: ["empathy", "care", "kindness", "altruism"],
+  definition: "Sympathetic pity and concern for the sufferings of others",
+  example: "La compasión mueve a la acción.",
+  pronunciation: "/kom.paˈsjon/",
+},
+{
+  id: 38,
+  spanish: "paciencia",
+  english: "patience",
+  category: "traits",
+  difficulty: "intermediate",
+  semanticTags: ["endurance", "calm", "waiting", "self-control"],
+  definition: "The capacity to accept delay or suffering without anger",
+  example: "Se necesita paciencia para enseñar.",
+  pronunciation: "/paˈθjen.θja/",
+},
+{
+  id: 39,
+  spanish: "lealtad",
+  english: "loyalty",
+  category: "relationships",
+  difficulty: "intermediate",
+  semanticTags: ["faithfulness", "support", "devotion", "trust"],
+  definition: "A strong feeling of support or allegiance",
+  example: "Su lealtad nunca fue cuestionada.",
+  pronunciation: "/le.alˈtad/",
+},
+{
+  id: 40,
+  spanish: "creatividad",
+  english: "creativity",
+  category: "concepts",
+
+  semanticTags: ["innovation", "imagination", "art", "expression"],
+  definition: "The use of imagination to create something",
+  example: "La creatividad es clave para resolver problemas.",
+  pronunciation: "/kɾe.a.ti.βiˈðað/",
+},
+  
+]
+
+const predefinedGroups = [
+  "Daily Practice",
+  "Exam Preparation",
+  "Conversation Starters",
+  "Advanced Vocabulary",
+  "Review Later",
 ]
 
 type SearchMode = "standard" | "vector"
@@ -302,6 +538,12 @@ export default function SpanishEnglishPage() {
   const [searchMode, setSearchMode] = useState<SearchMode>("standard")
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("all")
+  const [viewMode, setViewMode] = useState<"cards" | "table">("cards")
+  const [selectedWords, setSelectedWords] = useState<Set<number>>(new Set())
+  const [showGroupDialog, setShowGroupDialog] = useState(false)
+  const [newGroupName, setNewGroupName] = useState("")
+  const [selectedGroup, setSelectedGroup] = useState("")
+  const [customGroups, setCustomGroups] = useState<string[]>([])
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(vocabularyData.map((word) => word.category)))
@@ -350,84 +592,44 @@ export default function SpanishEnglishPage() {
     return filtered
   }, [searchTerm, searchMode, selectedCategory, selectedDifficulty])
 
+  const handleWordSelection = (wordId: number, checked: boolean) => {
+    const newSelected = new Set(selectedWords)
+    if (checked) {
+      newSelected.add(wordId)
+    } else {
+      newSelected.delete(wordId)
+    }
+    setSelectedWords(newSelected)
+  }
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedWords(new Set(filteredData.map((word) => word.id)))
+    } else {
+      setSelectedWords(new Set())
+    }
+  }
+
+  const handleAssignToGroup = () => {
+    if (selectedGroup || newGroupName.trim()) {
+      const groupName = newGroupName.trim() || selectedGroup
+      if (newGroupName.trim() && !customGroups.includes(newGroupName.trim())) {
+        setCustomGroups([...customGroups, newGroupName.trim()])
+      }
+      // Here you would typically save the assignment to your backend
+      console.log(`Assigned ${selectedWords.size} words to group: ${groupName}`)
+      setSelectedWords(new Set())
+      setShowGroupDialog(false)
+      setNewGroupName("")
+      setSelectedGroup("")
+    }
+  }
+
+  const allGroups = [...predefinedGroups, ...customGroups]
+
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
-        <div className="container flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-accent" />
-            <span className="text-xl font-display font-bold text-accent">VocabMarket</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="nav-link">
-              Home
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link href="/practice" className="nav-link">
-              Practice
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link href="/spanish-english" className="nav-link-active">
-              Spanish-English
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-orange-500"></span>
-            </Link>
-            <Link href="/dashboard" className="nav-link">
-              Dashboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link href="/leaderboard" className="nav-link">
-              Leaderboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link href="/blog" className="nav-link">
-              Blog
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <span className="sr-only">User menu</span>
-                  <div className="rounded-full bg-orange-100 h-8 w-8 flex items-center justify-center">
-                    <span className="text-sm font-medium text-orange-800">JD</span>
-                  </div>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 overflow-hidden rounded-xl p-1 shadow-elevated">
-                <div className="flex items-center gap-2 p-2 border-b mb-1">
-                  <div className="rounded-full bg-orange-100 h-10 w-10 flex items-center justify-center">
-                    <span className="text-sm font-medium text-orange-800">JD</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">John Doe</p>
-                    <p className="text-xs text-muted-foreground">john.doe@example.com</p>
-                  </div>
-                </div>
-                <DropdownMenuItem asChild className="cursor-pointer rounded-lg h-10 my-1">
-                  <Link href="/user" className="flex items-center">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild className="cursor-pointer rounded-lg h-10 my-1">
-                  <Link href="/user" className="flex items-center">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="flex items-center cursor-pointer rounded-lg h-10 my-1 text-red-500 hover:text-red-600 hover:bg-red-50">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </header>
-
-      <main className="flex-1 container py-8 hero-gradient dot-pattern">
+      <main className="flex-1 container py-8 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold tracking-tight mb-2">Spanish-English Dictionary</h1>
@@ -534,8 +736,8 @@ export default function SpanishEnglishPage() {
             </CardContent>
           </Card>
 
-          {/* Results Section */}
-          <div className="mb-6 flex items-center justify-between">
+          {/* Enhanced Results Section with View Toggle */}
+          <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <h2 className="text-xl font-semibold">
                 {filteredData.length} {filteredData.length === 1 ? "word" : "words"} found
@@ -545,74 +747,295 @@ export default function SpanishEnglishPage() {
                   {searchMode === "standard" ? "Standard" : "Semantic"} search for "{searchTerm}"
                 </Badge>
               )}
+              {selectedWords.size > 0 && (
+                <Badge variant="default" className="bg-orange-500">
+                  {selectedWords.size} selected
+                </Badge>
+              )}
             </div>
-            <Button className="btn-primary btn-sm">
-              Add All to Practice
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+
+            <div className="flex items-center gap-4">
+              {/* View Mode Toggle */}
+              <div className="flex items-center gap-2 bg-white rounded-lg p-1 border">
+                <Button
+                  variant={viewMode === "cards" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("cards")}
+                  className={viewMode === "cards" ? "bg-orange-500 hover:bg-orange-600" : ""}
+                >
+                  <Grid className="h-4 w-4 mr-1" />
+                  Cards
+                </Button>
+                <Button
+                  variant={viewMode === "table" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("table")}
+                  className={viewMode === "table" ? "bg-orange-500 hover:bg-orange-600" : ""}
+                >
+                  <List className="h-4 w-4 mr-1" />
+                  Table
+                </Button>
+              </div>
+
+              {/* Group Management */}
+              {selectedWords.size > 0 && (
+                <Dialog open={showGroupDialog} onOpenChange={setShowGroupDialog}>
+                  <DialogTrigger asChild>
+                    <Button className="btn-primary btn-sm">
+                      <Users className="mr-2 h-4 w-4" />
+                      Assign to Group
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Assign Words to Group</DialogTitle>
+                      <DialogDescription>
+                        Assign {selectedWords.size} selected words to a group for better organization.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div>
+                        <Label htmlFor="group-select">Select existing group</Label>
+                        <Select value={selectedGroup} onValueChange={setSelectedGroup}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose a group..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {allGroups.map((group) => (
+                              <SelectItem key={group} value={group}>
+                                {group}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                          <span className="w-full border-t" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-background px-2 text-muted-foreground">Or</span>
+                        </div>
+                      </div>
+                      <div>
+                        <Label htmlFor="new-group">Create new group</Label>
+                        <Input
+                          id="new-group"
+                          placeholder="Enter group name..."
+                          value={newGroupName}
+                          onChange={(e) => setNewGroupName(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button variant="outline" onClick={() => setShowGroupDialog(false)}>
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={handleAssignToGroup}
+                        disabled={!selectedGroup && !newGroupName.trim()}
+                        className="bg-orange-500 hover:bg-orange-600"
+                      >
+                        Assign Words
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              )}
+
+              <Button className="btn-primary btn-sm">
+                Add All to Practice
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
 
-          {/* Word Grid */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredData.length > 0 ? (
-              filteredData.map((word) => (
-                <Card key={word.id} className="card-base card-hover">
-                  <CardHeader className="card-header">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <CardTitle className="card-title text-lg">{word.spanish}</CardTitle>
-                        <CardDescription className="card-description text-base font-medium">
-                          {word.english}
-                        </CardDescription>
-                        <p className="text-sm text-muted-foreground mt-1">{word.pronunciation}</p>
+          {/* Conditional Word Display */}
+          {viewMode === "cards" ? (
+            /* Card View */
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {filteredData.length > 0 ? (
+                filteredData.map((word) => (
+                  <Card key={word.id} className="card-base card-hover">
+                    <CardHeader className="card-header">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <CardTitle className="card-title text-lg">{word.spanish}</CardTitle>
+                          <CardDescription className="card-description text-base font-medium">
+                            {word.english}
+                          </CardDescription>
+                          <p className="text-sm text-muted-foreground mt-1">{word.pronunciation}</p>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <Badge
+                            variant="outline"
+                            className={`text-xs ${
+                              word.difficulty === "beginner"
+                                ? "border-green-200 text-green-700"
+                                : word.difficulty === "intermediate"
+                                  ? "border-yellow-200 text-yellow-700"
+                                  : "border-red-200 text-red-700"
+                            }`}
+                          >
+                            {word.difficulty}
+                          </Badge>
+                          <Badge variant="outline" className="text-xs border-orange-200 text-orange-700">
+                            {word.category}
+                          </Badge>
+                        </div>
                       </div>
-                      <div className="flex flex-col gap-1">
-                        <Badge
-                          variant="outline"
-                          className={`text-xs ${
-                            word.difficulty === "beginner"
-                              ? "border-green-200 text-green-700"
-                              : word.difficulty === "intermediate"
-                                ? "border-yellow-200 text-yellow-700"
-                                : "border-red-200 text-red-700"
-                          }`}
-                        >
-                          {word.difficulty}
-                        </Badge>
-                        <Badge variant="outline" className="text-xs border-orange-200 text-orange-700">
-                          {word.category}
-                        </Badge>
+                    </CardHeader>
+                    <CardContent className="card-content">
+                      <p className="text-sm mb-3">{word.definition}</p>
+                      <div className="bg-slate-50 rounded-lg p-3 mb-3">
+                        <p className="text-sm italic">"{word.example}"</p>
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="card-content">
-                    <p className="text-sm mb-3">{word.definition}</p>
-                    <div className="bg-slate-50 rounded-lg p-3 mb-3">
-                      <p className="text-sm italic">"{word.example}"</p>
-                    </div>
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {word.semanticTags.slice(0, 3).map((tag, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                      {word.semanticTags.length > 3 && (
-                        <Badge variant="secondary" className="text-xs">
-                          +{word.semanticTags.length - 3} more
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="flex gap-2">
-                      <Button className="btn-primary btn-sm flex-1">Add to Practice</Button>
-                      <Button className="btn-outline btn-sm">Details</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
-            ) : (
-              <div className="col-span-full">
-                <Card className="card-base">
-                  <CardContent className="card-content text-center py-12">
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {word.semanticTags.slice(0, 3).map((tag, index) => (
+                          <Badge key={index} variant="secondary" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                        {word.semanticTags.length > 3 && (
+                          <Badge variant="secondary" className="text-xs">
+                            +{word.semanticTags.length - 3} more
+                          </Badge>
+                        )}
+                      </div>
+                      <div className="flex gap-2">
+                        <Button className="btn-primary btn-sm flex-1">Add to Practice</Button>
+                        <Button className="btn-outline btn-sm">Details</Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              ) : (
+                <div className="col-span-full">
+                  <Card className="card-base">
+                    <CardContent className="card-content text-center py-12">
+                      <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold mb-2">No words found</h3>
+                      <p className="text-muted-foreground mb-4">
+                        {searchMode === "vector"
+                          ? "Try different concepts or meanings in your search"
+                          : "Try adjusting your search terms or filters"}
+                      </p>
+                      <Button
+                        className="btn-outline btn-sm"
+                        onClick={() => {
+                          setSearchTerm("")
+                          setSelectedCategory("all")
+                          setSelectedDifficulty("all")
+                        }}
+                      >
+                        Clear Filters
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
+            </div>
+          ) : (
+            /* Table View */
+            <Card className="card-base">
+              <CardContent className="card-content p-0">
+                {filteredData.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="border-b border-orange-100">
+                          <TableHead className="w-12">
+                            <Checkbox
+                              checked={selectedWords.size === filteredData.length && filteredData.length > 0}
+                              onCheckedChange={handleSelectAll}
+                              aria-label="Select all words"
+                            />
+                          </TableHead>
+                          <TableHead className="font-semibold">Spanish</TableHead>
+                          <TableHead className="font-semibold">English</TableHead>
+                          <TableHead className="font-semibold">Pronunciation</TableHead>
+                          <TableHead className="font-semibold">Category</TableHead>
+                          <TableHead className="font-semibold">Difficulty</TableHead>
+                          <TableHead className="font-semibold">Definition</TableHead>
+                          <TableHead className="font-semibold">Tags</TableHead>
+                          <TableHead className="font-semibold">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {filteredData.map((word) => (
+                          <TableRow
+                            key={word.id}
+                            className={`border-b border-gray-100 hover:bg-orange-50/50 transition-colors ${
+                              selectedWords.has(word.id) ? "bg-orange-50" : ""
+                            }`}
+                          >
+                            <TableCell>
+                              <Checkbox
+                                checked={selectedWords.has(word.id)}
+                                onCheckedChange={(checked) => handleWordSelection(word.id, checked as boolean)}
+                                aria-label={`Select ${word.spanish}`}
+                              />
+                            </TableCell>
+                            <TableCell className="font-medium text-orange-700">{word.spanish}</TableCell>
+                            <TableCell className="font-medium">{word.english}</TableCell>
+                            <TableCell className="text-sm text-muted-foreground font-mono">
+                              {word.pronunciation}
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="outline" className="text-xs border-orange-200 text-orange-700">
+                                {word.category}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <Badge
+                                variant="outline"
+                                className={`text-xs ${
+                                  word.difficulty === "beginner"
+                                    ? "border-green-200 text-green-700"
+                                    : word.difficulty === "intermediate"
+                                      ? "border-yellow-200 text-yellow-700"
+                                      : "border-red-200 text-red-700"
+                                }`}
+                              >
+                                {word.difficulty}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="max-w-xs">
+                              <p className="text-sm truncate" title={word.definition}>
+                                {word.definition}
+                              </p>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex flex-wrap gap-1 max-w-xs">
+                                {word.semanticTags.slice(0, 2).map((tag, index) => (
+                                  <Badge key={index} variant="secondary" className="text-xs">
+                                    {tag}
+                                  </Badge>
+                                ))}
+                                {word.semanticTags.length > 2 && (
+                                  <Badge variant="secondary" className="text-xs">
+                                    +{word.semanticTags.length - 2}
+                                  </Badge>
+                                )}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex gap-1">
+                                <Button size="sm" className="btn-primary btn-sm h-8 px-2">
+                                  <Plus className="h-3 w-3" />
+                                </Button>
+                                <Button size="sm" variant="outline" className="btn-outline btn-sm h-8 px-2">
+                                  <Edit className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
                     <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                     <h3 className="text-lg font-semibold mb-2">No words found</h3>
                     <p className="text-muted-foreground mb-4">
@@ -630,11 +1053,11 @@ export default function SpanishEnglishPage() {
                     >
                       Clear Filters
                     </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            )}
-          </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
         </div>
       </main>
 

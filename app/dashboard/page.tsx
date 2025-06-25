@@ -1,6 +1,5 @@
 "use client"
 
-import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -12,7 +11,6 @@ import { ArrowRight } from "lucide-react"
 export default function DashboardPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
       <main className="flex-1 bg-background py-12 px-4 md:px-6">
         <div className="container mx-auto max-w-6xl">
           <Tabs defaultValue="dashboard" className="w-full">

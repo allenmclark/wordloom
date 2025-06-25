@@ -33,7 +33,6 @@
     --ring: 25 95% 53%; /* Orange ring color */
 
     --radius: 0.5rem;
-    --pattern-opacity: 0.7;
 
     /* Global text styling variables */
     --text-primary: 222.2 84% 4.9%;
@@ -76,8 +75,6 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 25 95% 53%; /* Orange ring color */
-
-    --pattern-opacity: 1.0;
 
     /* Dark mode text variables */
     --text-primary: 210 40% 98%;
@@ -316,22 +313,43 @@
     @apply text-sm;
   }
 
-  /* Background patterns */
+  /* Background patterns - FIXED OPACITY ISSUES */
   .hero-gradient {
     @apply bg-gradient-to-br from-orange-50 via-white to-slate-50;
   }
 
+  .hero-gradient-vibrant {
+    background: linear-gradient(135deg, hsl(255 247 237) 0%, #ffffff 50%, hsl(248 250 252) 100%);
+  }
+
   .dot-pattern {
     background-size: 20px 20px;
-    background-image: radial-gradient(circle, rgba(252, 76, 2, 0.3) 1px, transparent 1px);
-    opacity: var(--pattern-opacity);
+    background-image: radial-gradient(circle, rgba(252, 76, 2, 0.15) 1px, transparent 1px);
+    /* Removed opacity property - no more fading */
   }
 
   .mesh-pattern {
     background-size: 20px 20px;
-    background-image: linear-gradient(to right, rgba(252, 76, 2, 0.15) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(252, 76, 2, 0.15) 1px, transparent 1px);
-    opacity: var(--pattern-opacity);
+    background-image: linear-gradient(to right, rgba(252, 76, 2, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(252, 76, 2, 0.08) 1px, transparent 1px);
+    /* Removed opacity property - no more fading */
+  }
+
+  /* Clean background alternatives for content areas */
+  .content-background {
+    @apply bg-white;
+  }
+
+  .content-background-subtle {
+    @apply bg-slate-50/20;
+  }
+
+  .section-background {
+    @apply bg-white;
+  }
+
+  .section-background-alt {
+    @apply bg-gray-50/30;
   }
 
   /* Text utility classes */
@@ -415,6 +433,39 @@
     color: hsl(var(--text-secondary));
     font-weight: var(--font-weight-normal);
     @apply text-sm;
+  }
+
+  /* Vibrant component utilities */
+  .vibrant-card {
+    @apply bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow;
+  }
+
+  .vibrant-button-primary {
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-sm hover:shadow transition-all;
+  }
+
+  .vibrant-button-outline {
+    @apply border border-orange-200 hover:border-orange-500 hover:bg-orange-50 text-orange-600 font-medium transition-all;
+  }
+
+  .vibrant-text-primary {
+    color: hsl(var(--text-primary));
+    opacity: 1;
+  }
+
+  .vibrant-text-accent {
+    color: hsl(var(--text-accent));
+    opacity: 1;
+  }
+
+  /* Remove any inherited opacity */
+  .no-fade {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .full-opacity {
+    opacity: 1 !important;
   }
 }
 
