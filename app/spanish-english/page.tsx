@@ -195,7 +195,9 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
   return score
 }
 
-export default function SpanishEnglishPage() {
+//export removed!!!
+
+default function SpanishEnglishPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [searchMode, setSearchMode] = useState<SearchMode>("standard")
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
