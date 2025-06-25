@@ -24,7 +24,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
-function Page() {
+export function Page() {
   const [vocabularyData, setLis] = useState([]);
 
   useEffect(() => {
@@ -195,9 +195,7 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
   return score
 }
 
-//export removed!!!
-
-default function SpanishEnglishPage() {
+function SpanishEnglishPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [searchMode, setSearchMode] = useState<SearchMode>("standard")
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
