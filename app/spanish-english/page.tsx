@@ -23,6 +23,21 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
+const words = [
+{
+id: 1
+from_source: "hola",
+to_target: "hello",
+part_of_speech: "noun",
+difficulty: "easy",
+frequency: ["10"],
+definition: "A way to greet your friends",
+example: "Hello, how are you?",
+pronunciation: "hola"
+}
+  ]
+
+  
 
 // Enhanced Spanish-English vocabulary data with semantic tags
 const vocabularyData = [
