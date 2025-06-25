@@ -34,7 +34,7 @@ frequency: ["10"],
 definition: "A way to greet your friends",
 example: "Hello, how are you?",
 pronunciation: "hola",
-}
+},
   ]
 
 
