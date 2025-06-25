@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useMemo } from "react"
+
+import { useEffect, useState, useMemo } from "react"
 import Link from "next/link"
 import { Search, BookOpen, Sparkles, List, ArrowRight, Plus, Users, Edit, Grid } from "lucide-react"
 
@@ -23,7 +24,30 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
-const vocabularyData = [
+
+export default function VocabularyPage() {
+  const [vocabularyData, setLis] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/2");
+        const data = await res.json();
+        setLis(data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return null; // or <></> if you’re not rendering anything
+}
+
+
+
+const vocabularyData_null = [
 {
 id: 1
 from_source: "hola",
