@@ -25,25 +25,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 
 
-export function VocabularyPage() {
+export function Page() {
   const [vocabularyData, setLis] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/2");
-        const data = await res.json();
-        setLis(data);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-      }
+    const fetchLis = async () => {
+      const res = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/20");
+      const data = await res.json();
+      setLis(data);
     };
-
-    fetchData();
-  }, []);
-
-  return null; // or <></> if you’re not rendering anything
-}
 
 
 
