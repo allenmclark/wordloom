@@ -502,7 +502,7 @@ export default function SpanishEnglishPage() {
                     <CardHeader className="card-header">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <CardTitle className="card-title text-lg">{word.from_sourcet}</CardTitle>
+                          <CardTitle className="card-title text-lg">{word.from_source}</CardTitle>
                           <CardDescription className="card-description text-base font-medium">
                             {word.to_target}
                           </CardDescription>
