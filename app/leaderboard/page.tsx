@@ -9,52 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 export default function LeaderboardPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 border-b bg-background">
-        <div className="container flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-bold text-orange-500">VocabMarket</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
-              Home
-            </Link>
-            <Link
-              href="/practice"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Practice
-            </Link>
-            <Link
-              href="/spanish-english"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Spanish-English
-            </Link>
-            <Link
-              href="/dashboard"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Dashboard
-            </Link>
-            <Link href="/leaderboard" className="text-sm font-medium text-orange-500 relative group">
-              Leaderboard
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-orange-500"></span>
-            </Link>
-            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
-              Blog
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon">
-              <span className="sr-only">User profile</span>
-              <div className="rounded-full bg-orange-100 h-8 w-8 flex items-center justify-center">
-                <span className="text-sm font-medium text-orange-800">JD</span>
-              </div>
-            </Button>
-          </div>
-        </div>
-      </header>
       <main className="flex-1 container py-8 hero-gradient dot-pattern page-content">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
           <div>

@@ -10,34 +10,6 @@ import { Label } from "@/components/ui/label"
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 border-b bg-background">
-        <div className="container flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-bold text-orange-500">VocabMarket</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500">
-              Home
-            </Link>
-            <Link href="/practice" className="text-sm font-medium transition-colors hover:text-orange-500">
-              Practice
-            </Link>
-            <Link href="/spanish-english" className="text-sm font-medium transition-colors hover:text-orange-500">
-              Spanish-English
-            </Link>
-            <Link href="/dashboard" className="text-sm font-medium transition-colors hover:text-orange-500">
-              Dashboard
-            </Link>
-            <Link href="/leaderboard" className="text-sm font-medium transition-colors hover:text-orange-500">
-              Leaderboard
-            </Link>
-            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500">
-              Blog
-            </Link>
-          </nav>
-        </div>
-      </header>
       <main className="flex-1 flex items-center justify-center p-4 md:p-8 hero-gradient dot-pattern page-content">
         <Card className="mx-auto max-w-md w-full border-2">
           <CardHeader className="space-y-1">

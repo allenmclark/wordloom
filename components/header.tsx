@@ -1,50 +1,110 @@
+"use client"
+
 import Link from "next/link"
-import { BookOpen } from "lucide-react"
+import { usePathname } from "next/navigation"
+import { BookOpen, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
 
 export function Header() {
+  const pathname = usePathname()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const isActive = (path: string) => pathname === path
+
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/practice", label: "Practice" },
+    { href: "/spanish-english", label: "Spanish-English" },
+    { href: "/dashboard", label: "Dashboard" },
+    { href: "/leaderboard", label: "Leaderboard" },
+    { href: "/blog", label: "Blog" },
+  ]
+
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-fade">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex items-center gap-2">
-          <BookOpen className="h-6 w-6 text-accent" />
-          <span className="text-xl font-display font-bold text-accent">VocabMarket</span>
+          <BookOpen className="h-6 w-6 text-orange-500 no-fade" />
+          <span className="text-xl font-display font-bold text-orange-500 no-fade">VocabMaster</span>
         </div>
+
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="/" className="nav-link">
-            Home
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link href="/practice" className="nav-link">
-            Practice
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link href="/spanish-english" className="nav-link">
-            Spanish-English
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link href="/dashboard" className="nav-link">
-            Dashboard
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link href="/leaderboard" className="nav-link">
-            Leaderboard
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
-          <Link href="/blog" className="nav-link">
-            Blog
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-          </Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-sm font-medium transition-colors relative group no-fade ${
+                isActive(link.href) ? "text-orange-500 font-semibold" : "text-foreground hover:text-orange-500"
+              }`}
+            >
+              {link.label}
+              <span
+                className={`absolute -bottom-1 left-0 h-0.5 bg-orange-500 transition-all ${
+                  isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+              ></span>
+            </Link>
+          ))}
         </nav>
-        <div className="flex items-center gap-4">
+
+        {/* Desktop Auth Buttons */}
+        <div className="hidden md:flex items-center gap-4">
           <Link href="/login">
-            <Button className="btn-outline btn-sm rounded-full px-4">Log in</Button>
+            <Button variant="outline" size="sm" className="rounded-full px-4 vibrant-button-outline no-fade">
+              Log in
+            </Button>
           </Link>
           <Link href="/signup">
-            <Button className="btn-primary btn-sm rounded-full px-4">Sign up</Button>
+            <Button size="sm" className="rounded-full px-4 vibrant-button-primary no-fade">
+              Sign up
+            </Button>
           </Link>
         </div>
+
+        {/* Mobile Menu Button */}
+        <Button
+          variant="ghost"
+          size="sm"
+          className="md:hidden no-fade"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </Button>
       </div>
+
+      {/* Mobile Navigation */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t bg-background/95 backdrop-blur no-fade">
+          <nav className="container py-4 space-y-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`block text-sm font-medium transition-colors no-fade ${
+                  isActive(link.href) ? "text-orange-500 font-semibold" : "text-foreground hover:text-orange-500"
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="flex flex-col gap-2 pt-4 border-t">
+              <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="outline" size="sm" className="w-full vibrant-button-outline no-fade">
+                  Log in
+                </Button>
+              </Link>
+              <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
+                <Button size="sm" className="w-full vibrant-button-primary no-fade">
+                  Sign up
+                </Button>
+              </Link>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   )
 }

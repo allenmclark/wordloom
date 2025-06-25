@@ -13,9 +13,6 @@ import {
   TrendingDown,
   Clock,
   Users,
-  User,
-  Settings,
-  LogOut,
 } from "lucide-react"
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts"
 
@@ -24,13 +21,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 // Types
 type WordData = {
@@ -82,92 +72,6 @@ export default function WordPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
-        <div className="container flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-display font-bold">VocabMarket</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
-              Home
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link
-              href="/practice"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Practice
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link
-              href="/spanish-english"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Spanish-English
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link
-              href="/dashboard"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Dashboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link
-              href="/leaderboard"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Leaderboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
-              Blog
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <span className="sr-only">User menu</span>
-                  <div className="rounded-full bg-orange-100 h-8 w-8 flex items-center justify-center">
-                    <span className="text-sm font-medium text-orange-800">JD</span>
-                  </div>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 overflow-hidden rounded-xl p-1 shadow-elevated">
-                <div className="flex items-center gap-2 p-2 border-b mb-1">
-                  <div className="rounded-full bg-orange-100 h-10 w-10 flex items-center justify-center">
-                    <span className="text-sm font-medium text-orange-800">JD</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">John Doe</p>
-                    <p className="text-xs text-muted-foreground">john.doe@example.com</p>
-                  </div>
-                </div>
-                <DropdownMenuItem asChild className="cursor-pointer rounded-lg h-10 my-1">
-                  <Link href="/user" className="flex items-center">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild className="cursor-pointer rounded-lg h-10 my-1">
-                  <Link href="/user" className="flex items-center">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="flex items-center cursor-pointer rounded-lg h-10 my-1 text-red-500 hover:text-red-600 hover:bg-red-50">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </header>
       <main className="flex-1 container py-8 hero-gradient dot-pattern">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
           <div className="flex items-center gap-4">
