@@ -92,7 +92,7 @@ const vocabularyData = [
     definition: "A building where people live",
     example: "Mi casa está cerca del parque.",
     pronunciation: "/ˈka.sa/",
-  },
+  }
   
 ]
 
