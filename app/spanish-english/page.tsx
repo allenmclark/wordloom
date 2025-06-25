@@ -24,7 +24,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
-export function Page() {
+function Page() {
   const [vocabularyData, setLis] = useState([]);
 
   useEffect(() => {
