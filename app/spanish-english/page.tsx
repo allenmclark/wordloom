@@ -37,7 +37,7 @@ pronunciation: "hola"
 }
   ]
 
-  
+
 
 // Enhanced Spanish-English vocabulary data with semantic tags
 const vocabularyData = [
@@ -127,7 +127,7 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
   let score = 0
 
   // Direct word match
-  if (word.spanish.toLowerCase().includes(queryLower) || word.english.toLowerCase().includes(queryLower)) {
+  if (word.from_source.toLowerCase().includes(queryLower) || word.to_target.toLowerCase().includes(queryLower)) {
     score += 100
   }
 
@@ -162,8 +162,8 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
     if (queryLower.includes(concept)) {
       related.forEach((relatedWord) => {
         if (
-          word.spanish.includes(relatedWord) ||
-          word.english.includes(relatedWord) ||
+          word.from_source.includes(relatedWord) ||
+          word.to_target.includes(relatedWord) ||
           word.semanticTags.some((tag: string) => tag.includes(relatedWord))
         ) {
           score += 25
@@ -212,8 +212,8 @@ export default function SpanishEnglishPage() {
       if (searchMode === "standard") {
         filtered = filtered.filter(
           (word) =>
-            word.spanish.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            word.english.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            word.from_source.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            word.to_target.toLowerCase().includes(searchTerm.toLowerCase()) ||
             word.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
             word.definition.toLowerCase().includes(searchTerm.toLowerCase()),
         )
@@ -502,9 +502,9 @@ export default function SpanishEnglishPage() {
                     <CardHeader className="card-header">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <CardTitle className="card-title text-lg">{word.spanish}</CardTitle>
+                          <CardTitle className="card-title text-lg">{word.from_sourcet}</CardTitle>
                           <CardDescription className="card-description text-base font-medium">
-                            {word.english}
+                            {word.to_target}
                           </CardDescription>
                           <p className="text-sm text-muted-foreground mt-1">{word.pronunciation}</p>
                         </div>
@@ -615,7 +615,7 @@ export default function SpanishEnglishPage() {
                               <Checkbox
                                 checked={selectedWords.has(word.id)}
                                 onCheckedChange={(checked) => handleWordSelection(word.id, checked as boolean)}
-                                aria-label={`Select ${word.spanish}`}
+                                aria-label={`Select ${word.from_source}`}
                               />
                             </TableCell>
                             <TableCell className="font-medium text-orange-700">{word.spanish}</TableCell>
