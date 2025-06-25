@@ -23,7 +23,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
-const words = [
+const vocabularyData = [
 {
 id: 1
 from_source: "hola",
@@ -40,7 +40,7 @@ pronunciation: "hola"
 
 
 // Enhanced Spanish-English vocabulary data with semantic tags
-const vocabularyData = [
+const vocabularyData_nullify = [
   {
     id: 1,
     spanish: "hola",
