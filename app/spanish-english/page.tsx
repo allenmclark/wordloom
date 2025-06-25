@@ -197,6 +197,19 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
 }
 
 export default function SpanishEnglishPage() {
+
+  // fastapi word data call for cards
+  const [vocabularyData, setVocabularyData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/20")
+      .then((res) => res.json())
+      .then((data) => setVocabularyData(data))
+      .catch((err) => console.error("Failed to fetch vocabulary:", err));
+  }, []);
+
+
+
   const [searchTerm, setSearchTerm] = useState("")
   const [searchMode, setSearchMode] = useState<SearchMode>("standard")
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
