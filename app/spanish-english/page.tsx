@@ -29,7 +29,7 @@ id: 1
 from_source: "hola",
 to_target: "hello",
 part_of_speech: "noun",
-difficulty: "easy",
+difficulty: "beginner",
 frequency: ["10"],
 definition: "A way to greet your friends",
 example: "Hello, how are you?",
@@ -143,7 +143,7 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
   }
 
   // Category matching
-  if (word.category.toLowerCase().includes(queryLower)) {
+  if (word.part_of_speech.toLowerCase().includes(queryLower)) {
     score += 10
   }
 
@@ -188,7 +188,7 @@ export default function SpanishEnglishPage() {
   const [customGroups, setCustomGroups] = useState<string[]>([])
 
   const categories = useMemo(() => {
-    const cats = Array.from(new Set(vocabularyData.map((word) => word.category)))
+    const cats = Array.from(new Set(vocabularyData.map((word) => word.part_of_speech)))
     return ["all", ...cats]
   }, [])
 
@@ -199,7 +199,7 @@ export default function SpanishEnglishPage() {
 
     // Apply category filter
     if (selectedCategory !== "all") {
-      filtered = filtered.filter((word) => word.category === selectedCategory)
+      filtered = filtered.filter((word) => word.part_of_speech === selectedCategory)
     }
 
     // Apply difficulty filter
@@ -214,7 +214,7 @@ export default function SpanishEnglishPage() {
           (word) =>
             word.from_source.toLowerCase().includes(searchTerm.toLowerCase()) ||
             word.to_target.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            word.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            word.part_of_speech.toLowerCase().includes(searchTerm.toLowerCase()) ||
             word.definition.toLowerCase().includes(searchTerm.toLowerCase()),
         )
       } else {
@@ -522,7 +522,7 @@ export default function SpanishEnglishPage() {
                             {word.difficulty}
                           </Badge>
                           <Badge variant="outline" className="text-xs border-orange-200 text-orange-700">
-                            {word.category}
+                            {word.part_of_speech}
                           </Badge>
                         </div>
                       </div>
@@ -625,7 +625,7 @@ export default function SpanishEnglishPage() {
                             </TableCell>
                             <TableCell>
                               <Badge variant="outline" className="text-xs border-orange-200 text-orange-700">
-                                {word.category}
+                                {word.part_of_speech}
                               </Badge>
                             </TableCell>
                             <TableCell>
