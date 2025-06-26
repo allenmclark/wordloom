@@ -2,34 +2,24 @@ import Link from "next/link"
 
 export function Footer() {
   return (
-    <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t section-background no-fade">
-      <p className="text-xs vibrant-text-primary">&copy; 2024 VocabMarket. All rights reserved.</p>
-      <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-        <Link
-          className="text-xs hover:underline underline-offset-4 vibrant-text-primary hover:text-orange-500 transition-colors no-fade"
-          href="#"
-        >
-          Terms of Service
-        </Link>
-        <Link
-          className="text-xs hover:underline underline-offset-4 vibrant-text-primary hover:text-orange-500 transition-colors no-fade"
-          href="#"
-        >
-          Privacy
-        </Link>
-        <Link
-          className="text-xs hover:underline underline-offset-4 vibrant-text-primary hover:text-orange-500 transition-colors no-fade"
-          href="#"
-        >
-          Contact
-        </Link>
-        <Link
-          className="text-xs hover:underline underline-offset-4 vibrant-text-primary hover:text-orange-500 transition-colors no-fade"
-          href="#"
-        >
-          Help
-        </Link>
-      </nav>
-    </footer>
+    <footer className="border-t py-6 md:py-0 bg-white">
+        <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+          <div className="flex items-center gap-2">
+            <BookOpen className="h-5 w-5 text-orange-500" />
+            <p className="text-sm text-muted-foreground">© 2025 VocabMaster. All rights reserved.</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/terms" className="text-sm text-muted-foreground hover:underline">
+              Terms
+            </Link>
+            <Link href="/privacy" className="text-sm text-muted-foreground hover:underline">
+              Privacy
+            </Link>
+            <Link href="/contact" className="text-sm text-muted-foreground hover:underline">
+              Contact
+            </Link>
+          </div>
+        </div>
+      </footer>
   )
 }
