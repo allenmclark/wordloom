@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 
 import { useEffect, useState, useMemo } from "react"
 import Link from "next/link"
@@ -23,7 +22,6 @@ import {
 } from "@/components/ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
-
 /*
 export function Page() {
   const [vocabularyData, setLis] = useState([]);
@@ -44,6 +42,7 @@ export function Page() {
 
 */
 
+/* Remove this hardcoded array
 const vocabularyData = [
 {
 id: 1
@@ -56,9 +55,8 @@ definition: "A way to greet your friends",
 example: "Hello, how are you?",
 pronunciation: "hola",
 },
-  ]
-
-
+]
+*/
 
 // Enhanced Spanish-English vocabulary data with semantic tags
 const vocabularyData_nullify = [
@@ -129,7 +127,6 @@ const vocabularyData_nullify = [
     example: "Mi casa está cerca del parque.",
     pronunciation: "/ˈka.sa/",
   },
-  
 ]
 
 const predefinedGroups = [
@@ -152,19 +149,20 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
     score += 100
   }
 
-  // Semantic tag matching
-  const matchingTags = word.frequency.filter(
+  // Semantic tag matching - handle frequency as array or string
+  const frequencyArray = Array.isArray(word.frequency) ? word.frequency : [word.frequency]
+  const matchingTags = frequencyArray.filter(
     (tag: string) => tag.toLowerCase().includes(queryLower) || queryLower.includes(tag.toLowerCase()),
   )
   score += matchingTags.length * 20
 
   // Definition matching
-  if (word.definition.toLowerCase().includes(queryLower)) {
+  if (word.definition && word.definition.toLowerCase().includes(queryLower)) {
     score += 15
   }
 
   // Category matching
-  if (word.part_of_speech.toLowerCase().includes(queryLower)) {
+  if (word.part_of_speech && word.part_of_speech.toLowerCase().includes(queryLower)) {
     score += 10
   }
 
@@ -185,7 +183,7 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
         if (
           word.from_source.includes(relatedWord) ||
           word.to_target.includes(relatedWord) ||
-          word.frequency.some((tag: string) => tag.includes(relatedWord))
+          frequencyArray.some((tag: string) => tag.includes(relatedWord))
         ) {
           score += 25
         }
@@ -197,7 +195,6 @@ const calculateSemanticSimilarity = (query: string, word: any): number => {
 }
 
 export default function SpanishEnglishPage() {
-
   // fastapi word data call for cards
   /*
   const [vocabularyData, setVocabularyData] = useState([]);
@@ -210,9 +207,8 @@ export default function SpanishEnglishPage() {
   }, []);
 */
 
-const [vocabularyData, setVocabularyData] = useState([]);
-const [isLoading, setIsLoading] = useState(true); // track when data is ready
-
+  const [vocabularyData, setVocabularyData] = useState([])
+  const [isLoading, setIsLoading] = useState(true) // track when data is ready
 
   const [searchTerm, setSearchTerm] = useState("")
   const [searchMode, setSearchMode] = useState<SearchMode>("standard")
@@ -228,20 +224,12 @@ const [isLoading, setIsLoading] = useState(true); // track when data is ready
   const categories = useMemo(() => {
     const cats = Array.from(new Set(vocabularyData.map((word) => word.part_of_speech)))
     return ["all", ...cats]
-  }, [])
+  }, [vocabularyData])
 
   const difficulties = ["all", "beginner", "intermediate", "advanced"]
 
   const filteredData = useMemo(() => {
     let filtered = vocabularyData
-
-
-
-
-
-
-
-
 
     // Apply category filter
     if (selectedCategory !== "all") {
@@ -278,7 +266,7 @@ const [isLoading, setIsLoading] = useState(true); // track when data is ready
     }
 
     return filtered
-  }, [searchTerm, searchMode, selectedCategory, selectedDifficulty])
+  }, [searchTerm, searchMode, selectedCategory, selectedDifficulty, vocabularyData])
 
   const handleWordSelection = (wordId: number, checked: boolean) => {
     const newSelected = new Set(selectedWords)
@@ -315,19 +303,18 @@ const [isLoading, setIsLoading] = useState(true); // track when data is ready
 
   const allGroups = [...predefinedGroups, ...customGroups]
 
-
-    useEffect(() => {
+  useEffect(() => {
     fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/20")
       .then((res) => res.json())
       .then((data) => setVocabularyData(data))
       .catch((err) => console.error("Failed to fetch vocabulary:", err))
-      .finally(() => setIsLoading(false)); // mark loading done
-  }, []);
+      .finally(() => setIsLoading(false)) // mark loading done
+  }, [])
 
   if (isLoading) {
-    return <div>Loading vocabulary...</div>; // optional loading spinner
+    return <div>Loading vocabulary...</div> // optional loading spinner
   }
-  console.log("data",vocabularyData)
+  console.log("data", vocabularyData)
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -593,12 +580,18 @@ const [isLoading, setIsLoading] = useState(true); // track when data is ready
                         <p className="text-sm italic">"{word.example}"</p>
                       </div>
                       <div className="flex flex-wrap gap-1 mb-4">
-                        {word.frequency.slice(0, 3).map((tag, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
-                            {tag}
+                        {Array.isArray(word.frequency) ? (
+                          word.frequency.slice(0, 3).map((tag, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))
+                        ) : (
+                          <Badge variant="secondary" className="text-xs">
+                            {word.frequency}
                           </Badge>
-                        ))}
-                        {word.frequency.length > 3 && (
+                        )}
+                        {Array.isArray(word.frequency) && word.frequency.length > 3 && (
                           <Badge variant="secondary" className="text-xs">
                             +{word.frequency.length - 3} more
                           </Badge>
@@ -709,12 +702,18 @@ const [isLoading, setIsLoading] = useState(true); // track when data is ready
                             </TableCell>
                             <TableCell>
                               <div className="flex flex-wrap gap-1 max-w-xs">
-                                {word.frequency.slice(0, 2).map((tag, index) => (
-                                  <Badge key={index} variant="secondary" className="text-xs">
-                                    {tag}
+                                {Array.isArray(word.frequency) ? (
+                                  word.frequency.slice(0, 2).map((tag, index) => (
+                                    <Badge key={index} variant="secondary" className="text-xs">
+                                      {tag}
+                                    </Badge>
+                                  ))
+                                ) : (
+                                  <Badge variant="secondary" className="text-xs">
+                                    {word.frequency}
                                   </Badge>
-                                ))}
-                                {word.frequency.length > 2 && (
+                                )}
+                                {Array.isArray(word.frequency) && word.frequency.length > 2 && (
                                   <Badge variant="secondary" className="text-xs">
                                     +{word.frequency.length - 2}
                                   </Badge>
