@@ -318,7 +318,7 @@
     @apply bg-gradient-to-br from-orange-50 via-white to-slate-50;
   } */
   .hero-gradient {
-  background: orange-50;
+  @apply bg-orange-50;
 }
 
   .hero-gradient-vibrant {
