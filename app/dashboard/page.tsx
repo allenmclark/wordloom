@@ -78,7 +78,7 @@ export default function DashboardPage() {
           </Tabs>
         </div>
       </main>
-      <Footer />
+   //   <Footer />
     </div>
   )
 }
