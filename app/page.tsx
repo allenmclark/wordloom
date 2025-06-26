@@ -579,15 +579,8 @@ app.add_middleware(
                   className="relative group animate-in"
                   style={{ animationDelay: `${0.1 * (index + 1)}s` }}
                 >
-                  {/* Card background with enhanced design */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-orange-50/80 rounded-2xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                  <Card className="relative border-0 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden group">
-                    {/* Gradient top border */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400"></div>
 
-                   
-
-                   
+                  
 
                     <CardHeader className="p-8 pb-4">
                       <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-amber-100 shadow-inner group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">
