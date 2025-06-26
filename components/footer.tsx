@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Search, BookOpen, Sparkles, List, ArrowRight, Plus, Users, Edit, Grid } from "lucide-react"
 
 export function Footer() {
   return (
