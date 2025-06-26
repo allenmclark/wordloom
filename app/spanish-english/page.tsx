@@ -327,6 +327,7 @@ const [isLoading, setIsLoading] = useState(true); // track when data is ready
   if (isLoading) {
     return <div>Loading vocabulary...</div>; // optional loading spinner
   }
+  console.log(vocabularyData)
 
   return (
     <div className="flex min-h-screen flex-col">
