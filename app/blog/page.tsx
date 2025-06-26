@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export default function BlogPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <main className="flex-1 container py-12 md:py-16 hero-gradient page-content">
+      <main className="flex-1 container py-12 md:py-16 hero-gradient-vibrant page-content">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">Our Blog</h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
