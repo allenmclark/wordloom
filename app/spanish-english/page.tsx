@@ -210,7 +210,8 @@ export default function SpanishEnglishPage() {
   }, []);
 */
 
-
+const [vocabularyData, setVocabularyData] = useState([]);
+const [isLoading, setIsLoading] = useState(true); // track when data is ready
 
 
   const [searchTerm, setSearchTerm] = useState("")
@@ -236,8 +237,7 @@ export default function SpanishEnglishPage() {
 
 
 
-const [vocabularyData, setVocabularyData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // track when data is ready
+
 
   useEffect(() => {
     fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/20")
