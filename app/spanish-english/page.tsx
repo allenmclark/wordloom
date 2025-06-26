@@ -210,20 +210,7 @@ export default function SpanishEnglishPage() {
   }, []);
 */
 
-const [vocabularyData, setVocabularyData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // track when data is ready
 
-  useEffect(() => {
-    fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/20")
-      .then((res) => res.json())
-      .then((data) => setVocabularyData(data))
-      .catch((err) => console.error("Failed to fetch vocabulary:", err))
-      .finally(() => setIsLoading(false)); // mark loading done
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading vocabulary...</div>; // optional loading spinner
-  }
 
 
   const [searchTerm, setSearchTerm] = useState("")
@@ -246,6 +233,25 @@ const [vocabularyData, setVocabularyData] = useState([]);
 
   const filteredData = useMemo(() => {
     let filtered = vocabularyData
+
+
+
+const [vocabularyData, setVocabularyData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // track when data is ready
+
+  useEffect(() => {
+    fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/20")
+      .then((res) => res.json())
+      .then((data) => setVocabularyData(data))
+      .catch((err) => console.error("Failed to fetch vocabulary:", err))
+      .finally(() => setIsLoading(false)); // mark loading done
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading vocabulary...</div>; // optional loading spinner
+  }
+
+
 
     // Apply category filter
     if (selectedCategory !== "all") {
