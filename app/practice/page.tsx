@@ -24,6 +24,7 @@ type SpanishWord = {
 }
 
 // Mock data - in a real app, this would come from your database
+/*
 const spanishVocabulary: SpanishWord[] = [
   {
     id: 1,
@@ -96,6 +97,8 @@ const spanishVocabulary: SpanishWord[] = [
     difficulty: "Advanced",
   },
 ]
+
+*/
 
 // Mock historical performance data for each word
 const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean; cumulativeRate: number }[]> = {
