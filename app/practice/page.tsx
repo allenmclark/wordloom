@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, Check, X, TrendingUp, Target, BarChart3 } from "lucide-react"
+import { ArrowLeft, ArrowRight, Check, X, TrendingUp, Target, BarChart3, BookOpen } from "lucide-react"
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts"
 
@@ -18,9 +18,15 @@ type SpanishWord = {
   difficulty: "Beginner" | "Intermediate" | "Advanced"
 }
 
-// Mock data - in a real app, this would come from your database
-/*
-const spanishVocabulary: SpanishWord[] = [
+// Performance tracking type
+type PerformanceAttempt = {
+  attempt: number
+  correct: boolean
+  cumulativeRate: number
+}
+
+// Fallback vocabulary data for offline/error scenarios
+const fallbackVocabulary: SpanishWord[] = [
   {
     id: 1,
     spanish: "casa",
@@ -56,265 +62,187 @@ const spanishVocabulary: SpanishWord[] = [
     exampleSentence: "El acontecimiento fue celebrado por toda la ciudad.",
     difficulty: "Advanced",
   },
-  {
-    id: 6,
-    spanish: "deslumbrante",
-    english: "dazzling",
-    exampleSentence: "Las estrellas eran deslumbrantes en el cielo nocturno.",
-    difficulty: "Advanced",
-  },
-  {
-    id: 7,
-    spanish: "madrugada",
-    english: "early morning",
-    exampleSentence: "Me desperté en la madrugada para ver el amanecer.",
-    difficulty: "Intermediate",
-  },
-  {
-    id: 8,
-    spanish: "aprovechar",
-    english: "to take advantage of",
-    exampleSentence: "Debes aprovechar esta oportunidad única.",
-    difficulty: "Intermediate",
-  },
-  {
-    id: 9,
-    spanish: "desafortunadamente",
-    english: "unfortunately",
-    exampleSentence: "Desafortunadamente, no podré asistir a la reunión.",
-    difficulty: "Intermediate",
-  },
-  {
-    id: 10,
-    spanish: "imprescindible",
-    english: "essential",
-    exampleSentence: "Es imprescindible llevar identificación.",
-    difficulty: "Advanced",
-  },
 ]
 
-*/
-
-// Mock historical performance data for each word
-const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean; cumulativeRate: number }[]> = {
-  1: [
-    { attempt: 1, correct: true, cumulativeRate: 100 },
-    { attempt: 2, correct: true, cumulativeRate: 100 },
-    { attempt: 3, correct: false, cumulativeRate: 67 },
-    { attempt: 4, correct: true, cumulativeRate: 75 },
-    { attempt: 5, correct: true, cumulativeRate: 80 },
-    { attempt: 6, correct: false, cumulativeRate: 67 },
-    { attempt: 7, correct: true, cumulativeRate: 71 },
-    { attempt: 8, correct: true, cumulativeRate: 75 },
-  ],
-  2: [
-    { attempt: 1, correct: false, cumulativeRate: 0 },
-    { attempt: 2, correct: true, cumulativeRate: 50 },
-    { attempt: 3, correct: true, cumulativeRate: 67 },
-    { attempt: 4, correct: false, cumulativeRate: 50 },
-    { attempt: 5, correct: true, cumulativeRate: 60 },
-    { attempt: 6, correct: true, cumulativeRate: 67 },
-    { attempt: 7, correct: true, cumulativeRate: 71 },
-    { attempt: 8, correct: false, cumulativeRate: 63 },
-    { attempt: 9, correct: true, cumulativeRate: 67 },
-    { attempt: 10, correct: true, cumulativeRate: 70 },
-  ],
-  3: [
-    { attempt: 1, correct: true, cumulativeRate: 100 },
-    { attempt: 2, correct: false, cumulativeRate: 50 },
-    { attempt: 3, correct: true, cumulativeRate: 67 },
-    { attempt: 4, correct: true, cumulativeRate: 75 },
-    { attempt: 5, correct: false, cumulativeRate: 60 },
-    { attempt: 6, correct: true, cumulativeRate: 67 },
-  ],
-  4: [
-    { attempt: 1, correct: false, cumulativeRate: 0 },
-    { attempt: 2, correct: false, cumulativeRate: 0 },
-    { attempt: 3, correct: true, cumulativeRate: 33 },
-    { attempt: 4, correct: true, cumulativeRate: 50 },
-    { attempt: 5, correct: false, cumulativeRate: 40 },
-    { attempt: 6, correct: true, cumulativeRate: 50 },
-    { attempt: 7, correct: true, cumulativeRate: 57 },
-    { attempt: 8, correct: true, cumulativeRate: 63 },
-    { attempt: 9, correct: false, cumulativeRate: 56 },
-    { attempt: 10, correct: true, cumulativeRate: 60 },
-    { attempt: 11, correct: true, cumulativeRate: 64 },
-    { attempt: 12, correct: true, cumulativeRate: 67 },
-  ],
-  5: [
-    { attempt: 1, correct: false, cumulativeRate: 0 },
-    { attempt: 2, correct: false, cumulativeRate: 0 },
-    { attempt: 3, correct: false, cumulativeRate: 0 },
-    { attempt: 4, correct: true, cumulativeRate: 25 },
-    { attempt: 5, correct: false, cumulativeRate: 20 },
-    { attempt: 6, correct: true, cumulativeRate: 33 },
-    { attempt: 7, correct: true, cumulativeRate: 43 },
-    { attempt: 8, correct: false, cumulativeRate: 38 },
-    { attempt: 9, correct: true, cumulativeRate: 44 },
-    { attempt: 10, correct: true, cumulativeRate: 50 },
-  ],
-  6: [
-    { attempt: 1, correct: true, cumulativeRate: 100 },
-    { attempt: 2, correct: true, cumulativeRate: 100 },
-    { attempt: 3, correct: false, cumulativeRate: 67 },
-    { attempt: 4, correct: true, cumulativeRate: 75 },
-    { attempt: 5, correct: true, cumulativeRate: 80 },
-  ],
-  7: [
-    { attempt: 1, correct: true, cumulativeRate: 100 },
-    { attempt: 2, correct: true, cumulativeRate: 100 },
-    { attempt: 3, correct: false, cumulativeRate: 67 },
-    { attempt: 4, correct: true, cumulativeRate: 75 },
-    { attempt: 5, correct: true, cumulativeRate: 80 },
-    { attempt: 6, correct: false, cumulativeRate: 67 },
-    { attempt: 7, correct: true, cumulativeRate: 71 },
-    { attempt: 8, correct: true, cumulativeRate: 75 },
-    { attempt: 9, correct: true, cumulativeRate: 78 },
-  ],
-  8: [
-    { attempt: 1, correct: false, cumulativeRate: 0 },
-    { attempt: 2, correct: true, cumulativeRate: 50 },
-    { attempt: 3, correct: true, cumulativeRate: 67 },
-    { attempt: 4, correct: true, cumulativeRate: 75 },
-    { attempt: 5, correct: false, cumulativeRate: 60 },
-    { attempt: 6, correct: true, cumulativeRate: 67 },
-    { attempt: 7, correct: true, cumulativeRate: 71 },
-    { attempt: 8, correct: false, cumulativeRate: 63 },
-  ],
-  9: [
-    { attempt: 1, correct: true, cumulativeRate: 100 },
-    { attempt: 2, correct: false, cumulativeRate: 50 },
-    { attempt: 3, correct: false, cumulativeRate: 33 },
-    { attempt: 4, correct: true, cumulativeRate: 50 },
-    { attempt: 5, correct: true, cumulativeRate: 60 },
-    { attempt: 6, correct: true, cumulativeRate: 67 },
-    { attempt: 7, correct: false, cumulativeRate: 57 },
-    { attempt: 8, correct: true, cumulativeRate: 63 },
-    { attempt: 9, correct: true, cumulativeRate: 67 },
-    { attempt: 10, correct: false, cumulativeRate: 60 },
-    { attempt: 11, correct: true, cumulativeRate: 64 },
-    { attempt: 12, correct: true, cumulativeRate: 67 },
-  ],
-  10: [
-    { attempt: 1, correct: false, cumulativeRate: 0 },
-    { attempt: 2, correct: false, cumulativeRate: 0 },
-    { attempt: 3, correct: true, cumulativeRate: 33 },
-    { attempt: 4, correct: false, cumulativeRate: 25 },
-    { attempt: 5, correct: true, cumulativeRate: 40 },
-    { attempt: 6, correct: true, cumulativeRate: 50 },
-    { attempt: 7, correct: false, cumulativeRate: 43 },
-    { attempt: 8, correct: true, cumulativeRate: 50 },
-  ],
-}
-
-// Get current success rate for a word
-const getCurrentSuccessRate = (wordId: number): number => {
-  const history = wordPerformanceHistory[wordId] || []
-  if (history.length === 0) return 0
-  return history[history.length - 1].cumulativeRate
-}
-
-// Get predicted success rate based on recent performance and difficulty
-const getPredictedSuccessRate = (wordId: number, difficulty: string): number => {
-  const currentRate = getCurrentSuccessRate(wordId)
-  const history = wordPerformanceHistory[wordId] || []
-
-  if (history.length === 0) {
-    // Base prediction on difficulty for new words
-    switch (difficulty) {
-      case "Beginner":
-        return 75
-      case "Intermediate":
-        return 50
-      case "Advanced":
-        return 30
-      default:
-        return 50
-    }
-  }
-
-  // Weight recent performance more heavily
-  const recentAttempts = history.slice(-3)
-  const recentCorrect = recentAttempts.filter((a) => a.correct).length
-  const recentRate = (recentCorrect / recentAttempts.length) * 100
-
-  // Blend current rate with recent performance
-  return Math.round(currentRate * 0.7 + recentRate * 0.3)
-}
-
-// Calculate overall historical accuracy across all words
-const getOverallHistoricalAccuracy = (): number => {
-  let totalAttempts = 0
-  let totalCorrect = 0
-
-  Object.values(wordPerformanceHistory).forEach((history) => {
-    totalAttempts += history.length
-    totalCorrect += history.filter((attempt) => attempt.correct).length
-  })
-
-  return totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0
-}
-
 export default function PracticePage() {
+  // Core state management
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [score, setScore] = useState(0)
   const [options, setOptions] = useState<string[]>([])
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
+
+  // Data management
   const [spanishVocabulary, setVocabularyData] = useState<SpanishWord[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [dataSource, setDataSource] = useState<"api" | "fallback">("api")
 
-  // fetch the words once on mount
+  // Performance tracking - dynamically generated based on actual data
+  const [wordPerformanceHistory, setWordPerformanceHistory] = useState<Record<number, PerformanceAttempt[]>>({})
+
+  // Helper functions
+  const generateOptions = (correctWord: SpanishWord, vocabulary: SpanishWord[]): string[] => {
+    const otherWords = vocabulary.filter((w) => w.id !== correctWord.id)
+    const shuffled = [...otherWords].sort(() => 0.5 - Math.random())
+    const incorrectOptions = shuffled.slice(0, 4).map((word) => word.english)
+    const allOptions = [...incorrectOptions, correctWord.english]
+    return allOptions.sort(() => 0.5 - Math.random())
+  }
+
+  const getCurrentSuccessRate = (wordId: number): number => {
+    const history = wordPerformanceHistory[wordId] || []
+    if (history.length === 0) return 0
+    return history[history.length - 1].cumulativeRate
+  }
+
+  const getPredictedSuccessRate = (wordId: number, difficulty: string): number => {
+    const currentRate = getCurrentSuccessRate(wordId)
+    const history = wordPerformanceHistory[wordId] || []
+
+    if (history.length === 0) {
+      // Base prediction on difficulty for new words
+      switch (difficulty) {
+        case "Beginner":
+          return 75
+        case "Intermediate":
+          return 50
+        case "Advanced":
+          return 30
+        default:
+          return 50
+      }
+    }
+
+    // Weight recent performance more heavily
+    const recentAttempts = history.slice(-3)
+    const recentCorrect = recentAttempts.filter((a) => a.correct).length
+    const recentRate = (recentCorrect / recentAttempts.length) * 100
+
+    // Blend current rate with recent performance
+    return Math.round(currentRate * 0.7 + recentRate * 0.3)
+  }
+
+  const getOverallHistoricalAccuracy = (): number => {
+    let totalAttempts = 0
+    let totalCorrect = 0
+
+    Object.values(wordPerformanceHistory).forEach((history) => {
+      totalAttempts += history.length
+      totalCorrect += history.filter((attempt) => attempt.correct).length
+    })
+
+    return totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0
+  }
+
+  const initializePerformanceData = (vocabulary: SpanishWord[]) => {
+    const initialPerformance: Record<number, PerformanceAttempt[]> = {}
+
+    // Generate some sample performance data for demonstration
+    vocabulary.forEach((word, index) => {
+      const numAttempts = Math.floor(Math.random() * 8) + 2 // 2-10 attempts
+      const attempts: PerformanceAttempt[] = []
+      let correctCount = 0
+
+      for (let i = 1; i <= numAttempts; i++) {
+        const isCorrect =
+          Math.random() > (word.difficulty === "Advanced" ? 0.6 : word.difficulty === "Intermediate" ? 0.4 : 0.2)
+        if (isCorrect) correctCount++
+
+        attempts.push({
+          attempt: i,
+          correct: isCorrect,
+          cumulativeRate: Math.round((correctCount / i) * 100),
+        })
+      }
+
+      initialPerformance[word.id] = attempts
+    })
+
+    setWordPerformanceHistory(initialPerformance)
+  }
+
+  // Fetch vocabulary data
   useEffect(() => {
     const controller = new AbortController()
 
-    fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/100", { signal: controller.signal })
-      .then((res) => res.json())
-      .then((data: SpanishWord[]) => setVocabularyData(data))
-      .catch((err) => {
-        if (err.name !== "AbortError") console.error("Failed to fetch vocabulary:", err)
-      })
-      .finally(() => setIsLoading(false))
+    const fetchVocabulary = async () => {
+      try {
+        setIsLoading(true)
+        setError(null)
 
-    // cancel fetch if component unmounts
+        const response = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/100", {
+          signal: controller.signal,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+        const data: SpanishWord[] = await response.json()
+
+        // Validate data structure
+        if (!Array.isArray(data) || data.length === 0) {
+          throw new Error("Invalid or empty data received from API")
+        }
+
+        // Ensure all required fields are present
+        const validatedData = data.filter(
+          (word) => word.id && word.spanish && word.english && word.exampleSentence && word.difficulty,
+        )
+
+        if (validatedData.length === 0) {
+          throw new Error("No valid vocabulary items found in API response")
+        }
+
+        setVocabularyData(validatedData)
+        setDataSource("api")
+        initializePerformanceData(validatedData)
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          console.error("Failed to fetch vocabulary:", err)
+          setError(err.message || "Failed to load vocabulary")
+
+          // Fallback to local data
+          setVocabularyData(fallbackVocabulary)
+          setDataSource("fallback")
+          initializePerformanceData(fallbackVocabulary)
+        }
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchVocabulary()
+
     return () => controller.abort()
   }, [])
 
-  // Generate options when the current word changes
+  // Generate options when vocabulary or current word changes
   useEffect(() => {
-    if (spanishVocabulary[currentWordIndex]) {
-      setOptions(generateOptions(spanishVocabulary[currentWordIndex]))
+    if (spanishVocabulary.length > 0 && spanishVocabulary[currentWordIndex]) {
+      setOptions(generateOptions(spanishVocabulary[currentWordIndex], spanishVocabulary))
       setSelectedOption(null)
       setIsCorrect(null)
     }
   }, [currentWordIndex, spanishVocabulary])
 
-  const generateOptions = (correctWord: SpanishWord): string[] => {
-    const otherWords = spanishVocabulary.filter((w) => w.id !== correctWord.id)
-    const incorrect = [...otherWords].sort(() => 0.5 - Math.random()).slice(0, 4)
-    return [...incorrect.map((w) => w.english), correctWord.english].sort(() => 0.5 - Math.random())
-  }
-
-  // Keep the index in range if the word list shrinks (edge cases)
-  if (currentWordIndex >= spanishVocabulary.length) {
-    setCurrentWordIndex(0)
-  }
-
-  const currentWord = spanishVocabulary[currentWordIndex]
-  const accuracy = answeredQuestions > 0 ? Math.round((score / answeredQuestions) * 100) : 0
-  const predictedChance = getPredictedSuccessRate(currentWord.id, currentWord.difficulty)
-  const historicalAccuracy = getCurrentSuccessRate(currentWord.id)
-  const overallAccuracy = getOverallHistoricalAccuracy()
-  const performanceData = wordPerformanceHistory[currentWord.id] || []
-
-  if (isLoading || spanishVocabulary.length === 0) {
-    return <div className="flex h-screen items-center justify-center">Loading vocabulary…</div>
-  }
+  // Ensure currentWordIndex stays within bounds
+  useEffect(() => {
+    if (currentWordIndex >= spanishVocabulary.length && spanishVocabulary.length > 0) {
+      setCurrentWordIndex(0)
+    }
+  }, [spanishVocabulary.length, currentWordIndex])
 
   const handleOptionSelect = (option: string) => {
-    if (selectedOption !== null) return // Prevent changing answer after selection
+    if (selectedOption !== null || !spanishVocabulary[currentWordIndex]) return
 
+    const currentWord = spanishVocabulary[currentWordIndex]
     setSelectedOption(option)
     const correct = option === currentWord.english
     setIsCorrect(correct)
@@ -324,13 +252,34 @@ export default function PracticePage() {
     }
 
     setAnsweredQuestions(answeredQuestions + 1)
+
+    // Update performance history
+    const wordId = currentWord.id
+    const currentHistory = wordPerformanceHistory[wordId] || []
+    const newAttempt = currentHistory.length + 1
+    const totalCorrect = currentHistory.filter((a) => a.correct).length + (correct ? 1 : 0)
+    const newCumulativeRate = Math.round((totalCorrect / newAttempt) * 100)
+
+    const updatedHistory = [
+      ...currentHistory,
+      {
+        attempt: newAttempt,
+        correct,
+        cumulativeRate: newCumulativeRate,
+      },
+    ]
+
+    setWordPerformanceHistory((prev) => ({
+      ...prev,
+      [wordId]: updatedHistory,
+    }))
   }
 
   const handleNextWord = () => {
     if (currentWordIndex < spanishVocabulary.length - 1) {
       setCurrentWordIndex(currentWordIndex + 1)
     } else {
-      // Quiz completed - in a real app, you'd save progress to the database here
+      // Quiz completed
       alert("¡Felicidades! You've completed the practice session.")
       // Reset for another round
       setCurrentWordIndex(0)
@@ -339,11 +288,109 @@ export default function PracticePage() {
     }
   }
 
+  const retryFetch = () => {
+    setError(null)
+    window.location.reload() // Simple retry by reloading
+  }
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <main className="flex-1 hero-gradient overflow-hidden relative">
+          <div className="container py-6">
+            <div className="flex h-96 items-center justify-center">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
+                <p className="text-lg font-medium">Loading vocabulary...</p>
+                <p className="text-sm text-muted-foreground">Fetching words from our database</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    )
+  }
+
+  // Error state
+  if (error && spanishVocabulary.length === 0) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <main className="flex-1 hero-gradient overflow-hidden relative">
+          <div className="container py-6">
+            <div className="flex h-96 items-center justify-center">
+              <Card className="w-full max-w-md">
+                <CardContent className="p-6 text-center">
+                  <X className="h-12 w-12 text-red-500 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">Failed to Load Vocabulary</h3>
+                  <p className="text-sm text-muted-foreground mb-4">{error}</p>
+                  <Button onClick={retryFetch} className="w-full">
+                    Try Again
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </main>
+      </div>
+    )
+  }
+
+  // No vocabulary available
+  if (spanishVocabulary.length === 0) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <main className="flex-1 hero-gradient overflow-hidden relative">
+          <div className="container py-6">
+            <div className="flex h-96 items-center justify-center">
+              <Card className="w-full max-w-md">
+                <CardContent className="p-6 text-center">
+                  <BookOpen className="h-12 w-12 text-orange-500 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">No Vocabulary Available</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    We couldn't find any vocabulary words to practice with.
+                  </p>
+                  <Button onClick={retryFetch} className="w-full">
+                    Refresh
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </main>
+      </div>
+    )
+  }
+
+  const currentWord = spanishVocabulary[currentWordIndex]
+  const accuracy = answeredQuestions > 0 ? Math.round((score / answeredQuestions) * 100) : 0
+  const predictedChance = getPredictedSuccessRate(currentWord.id, currentWord.difficulty)
+  const historicalAccuracy = getCurrentSuccessRate(currentWord.id)
+  const overallAccuracy = getOverallHistoricalAccuracy()
+  const performanceData = wordPerformanceHistory[currentWord.id] || []
+
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 hero-gradient overflow-hidden relative">
         <div className="container py-6">
-          {/* Refactored Performance Overview Card */}
+          {/* Data Source Indicator */}
+          {dataSource === "fallback" && (
+            <div className="mb-4">
+              <Card className="border-yellow-200 bg-yellow-50">
+                <CardContent className="p-3">
+                  <div className="flex items-center gap-2 text-yellow-800">
+                    <X className="h-4 w-4" />
+                    <span className="text-sm">Using offline vocabulary. Some features may be limited.</span>
+                    <Button variant="outline" size="sm" onClick={retryFetch} className="ml-auto bg-transparent">
+                      Retry Online
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Performance Overview Card */}
           <div className="mb-6">
             <Card className="border-2 border-orange-200 bg-gradient-to-br from-white via-orange-50/30 to-amber-50/50 shadow-xl overflow-hidden no-fade">
               <CardHeader className="pb-4">
@@ -712,6 +759,19 @@ export default function PracticePage() {
                             {spanishVocabulary.filter((w) => w.difficulty === "Advanced").length} words
                           </span>
                         </div>
+                      </div>
+                    </div>
+
+                    {/* Data Source Info */}
+                    <div className="pt-4 border-t">
+                      <div className="text-xs text-muted-foreground">
+                        Data source: {dataSource === "api" ? "Online" : "Offline"}
+                        {dataSource === "api" && (
+                          <div className="flex items-center gap-1 mt-1">
+                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span>Connected</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
