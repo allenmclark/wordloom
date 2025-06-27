@@ -313,6 +313,20 @@ export default function PracticePage() {
   const overallAccuracy = getOverallHistoricalAccuracy()
   const performanceData = wordPerformanceHistory[currentWord.id] || []
 
+
+  useEffect(() => {
+    fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/100")
+      .then((res) => res.json())
+      .then((data) => setVocabularyData(data))
+      .catch((err) => console.error("Failed to fetch vocabulary:", err))
+      .finally(() => setIsLoading(false)) // mark loading done
+  }, [])
+
+  if (isLoading) {
+    return <div>Loading vocabulary...</div> // optional loading spinner
+  }
+  
+
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 hero-gradient overflow-hidden relative">
