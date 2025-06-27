@@ -262,8 +262,6 @@ export default function PracticePage() {
   const [score, setScore] = useState(0)
   const [options, setOptions] = useState<string[]>([])
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
-
-  // --- vocabulary fetched from API -------------------------------
   const [spanishVocabulary, setVocabularyData] = useState<SpanishWord[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -282,15 +280,6 @@ export default function PracticePage() {
     // cancel fetch if component unmounts
     return () => controller.abort()
   }, [])
-  // ----------------------------------------------------------------
-
-  const generateOptions = (correctWord: SpanishWord): string[] => {
-    const otherWords = spanishVocabulary.filter((w) => w.id !== correctWord.id)
-    const incorrect = [...otherWords].sort(() => 0.5 - Math.random()).slice(0, 4)
-    return [...incorrect.map((w) => w.english), correctWord.english].sort(() => 0.5 - Math.random())
-  }
-
-  const currentWord = spanishVocabulary[currentWordIndex]
 
   // Generate options when the current word changes
   useEffect(() => {
@@ -300,6 +289,28 @@ export default function PracticePage() {
       setIsCorrect(null)
     }
   }, [currentWordIndex, spanishVocabulary])
+
+  const generateOptions = (correctWord: SpanishWord): string[] => {
+    const otherWords = spanishVocabulary.filter((w) => w.id !== correctWord.id)
+    const incorrect = [...otherWords].sort(() => 0.5 - Math.random()).slice(0, 4)
+    return [...incorrect.map((w) => w.english), correctWord.english].sort(() => 0.5 - Math.random())
+  }
+
+  // Keep the index in range if the word list shrinks (edge cases)
+  if (currentWordIndex >= spanishVocabulary.length) {
+    setCurrentWordIndex(0)
+  }
+
+  const currentWord = spanishVocabulary[currentWordIndex]
+  const accuracy = answeredQuestions > 0 ? Math.round((score / answeredQuestions) * 100) : 0
+  const predictedChance = getPredictedSuccessRate(currentWord.id, currentWord.difficulty)
+  const historicalAccuracy = getCurrentSuccessRate(currentWord.id)
+  const overallAccuracy = getOverallHistoricalAccuracy()
+  const performanceData = wordPerformanceHistory[currentWord.id] || []
+
+  if (isLoading || spanishVocabulary.length === 0) {
+    return <div className="flex h-screen items-center justify-center">Loading vocabulary…</div>
+  }
 
   const handleOptionSelect = (option: string) => {
     if (selectedOption !== null) return // Prevent changing answer after selection
@@ -326,16 +337,6 @@ export default function PracticePage() {
       setScore(0)
       setAnsweredQuestions(0)
     }
-  }
-
-  const accuracy = answeredQuestions > 0 ? Math.round((score / answeredQuestions) * 100) : 0
-  const predictedChance = getPredictedSuccessRate(currentWord.id, currentWord.difficulty)
-  const historicalAccuracy = getCurrentSuccessRate(currentWord.id)
-  const overallAccuracy = getOverallHistoricalAccuracy()
-  const performanceData = wordPerformanceHistory[currentWord.id] || []
-
-  if (isLoading || spanishVocabulary.length === 0) {
-    return <div className="flex h-screen items-center justify-center">Loading vocabulary…</div>
   }
 
   return (
