@@ -620,7 +620,7 @@ app.add_middleware(
             {/* Connection lines between cards (visible on larger screens) */}
             <div className="hidden lg:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl">
               <div className="relative h-1">
-                <div className="absolute top-0 left-1/6 w-1/3 h-0.5 bg-gradient-to-r from-orange-300 to-amber-300 opacity-30"></div>
+                
                 
               </div>
             </div>
