@@ -18,6 +18,41 @@ type SpanishWord = {
   difficulty: "Beginner" | "Intermediate" | "Advanced"
 }
 
+// Convert an arbitrary record from the API into the structure our UI needs
+const normalizeWord = (raw: any, fallbackId: number): SpanishWord | null => {
+  /* Derive mandatory fields */
+  const spanish = raw.spanish ?? raw.word ?? raw.spanish_word ?? raw.es ?? null
+  const english = raw.english ?? raw.translation ?? raw.definition ?? raw.en ?? null
+
+  if (!spanish || !english) return null
+
+  /* Example sentence (optional in API) */
+  const exampleSentence =
+    raw.exampleSentence ?? raw.example_sentence ?? raw.example ?? `Ejemplo: Uso de "${spanish}" en una oración.`
+
+  /* Difficulty Heuristics ─ keep existing label if present, otherwise fall-back
+     on word length as a simple proxy                                        */
+  let difficulty: SpanishWord["difficulty"] = "Beginner"
+  const apiDifficulty = raw.difficulty ?? raw.level ?? raw.difficulty_level ?? raw.rank ?? null
+
+  if (apiDifficulty === "Beginner" || apiDifficulty === "Intermediate" || apiDifficulty === "Advanced") {
+    difficulty = apiDifficulty
+  } else {
+    const len = spanish.length
+    if (len <= 5) difficulty = "Beginner"
+    else if (len <= 8) difficulty = "Intermediate"
+    else difficulty = "Advanced"
+  }
+
+  return {
+    id: raw.id ?? fallbackId,
+    spanish,
+    english,
+    exampleSentence,
+    difficulty,
+  }
+}
+
 // Performance tracking type
 type PerformanceAttempt = {
   attempt: number
@@ -85,8 +120,10 @@ export default function PracticePage() {
   // Helper functions
   const generateOptions = (correctWord: SpanishWord, vocabulary: SpanishWord[]): string[] => {
     const otherWords = vocabulary.filter((w) => w.id !== correctWord.id)
-    const shuffled = [...otherWords].sort(() => 0.5 - Math.random())
-    const incorrectOptions = shuffled.slice(0, 4).map((word) => word.english)
+    const incorrectOptions = [...otherWords]
+      .sort(() => 0.5 - Math.random())
+      .slice(0, Math.min(4, otherWords.length))
+      .map((word) => word.english)
     const allOptions = [...incorrectOptions, correctWord.english]
     return allOptions.sort(() => 0.5 - Math.random())
   }
@@ -184,25 +221,20 @@ export default function PracticePage() {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
 
-        const data: SpanishWord[] = await response.json()
+        const rawData: any = await response.json()
 
-        // Validate data structure
-        if (!Array.isArray(data) || data.length === 0) {
-          throw new Error("Invalid or empty data received from API")
+        // The endpoint can return either { data: [...] } or [...] directly
+        const arrayData: any[] = Array.isArray(rawData) ? rawData : Array.isArray(rawData.data) ? rawData.data : []
+
+        const normalized = arrayData.map((item, idx) => normalizeWord(item, idx + 1)).filter(Boolean) as SpanishWord[]
+
+        if (normalized.length === 0) {
+          throw new Error("Could not normalize any vocabulary items from API")
         }
 
-        // Ensure all required fields are present
-        const validatedData = data.filter(
-          (word) => word.id && word.spanish && word.english && word.exampleSentence && word.difficulty,
-        )
-
-        if (validatedData.length === 0) {
-          throw new Error("No valid vocabulary items found in API response")
-        }
-
-        setVocabularyData(validatedData)
+        setVocabularyData(normalized)
         setDataSource("api")
-        initializePerformanceData(validatedData)
+        initializePerformanceData(normalized)
       } catch (err) {
         if (err.name !== "AbortError") {
           console.error("Failed to fetch vocabulary:", err)
@@ -303,7 +335,7 @@ export default function PracticePage() {
               <div className="text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
                 <p className="text-lg font-medium">Loading vocabulary...</p>
-                <p className="text-sm text-muted-foreground">Fetching words from our database</p>
+                <p className="text-sm text-muted-foreground">Fetching words from our server</p>
               </div>
             </div>
           </div>
