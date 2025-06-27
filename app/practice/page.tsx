@@ -9,11 +9,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 
-
-const [spanishVocabulary, setVocabularyData] = useState([])
-const [isLoading, setIsLoading] = useState(true) // track when data is ready
-
-
 // Types for our vocabulary items
 type SpanishWord = {
   id: number
@@ -212,17 +207,6 @@ const wordPerformanceHistory: Record<number, { attempt: number; correct: boolean
   ],
 }
 
-// Generate incorrect options for a given word
-const generateOptions = (correctWord: SpanishWord): string[] => {
-  const otherWords = spanishVocabulary.filter((word) => word.id !== correctWord.id)
-  const shuffled = [...otherWords].sort(() => 0.5 - Math.random())
-  const incorrectOptions = shuffled.slice(0, 4).map((word) => word.english)
-
-  // Add the correct answer and shuffle again
-  const allOptions = [...incorrectOptions, correctWord.english]
-  return allOptions.sort(() => 0.5 - Math.random())
-}
-
 // Get current success rate for a word
 const getCurrentSuccessRate = (wordId: number): number => {
   const history = wordPerformanceHistory[wordId] || []
@@ -279,14 +263,43 @@ export default function PracticePage() {
   const [options, setOptions] = useState<string[]>([])
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
 
+  // --- vocabulary fetched from API -------------------------------
+  const [spanishVocabulary, setVocabularyData] = useState<SpanishWord[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  // fetch the words once on mount
+  useEffect(() => {
+    const controller = new AbortController()
+
+    fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/100", { signal: controller.signal })
+      .then((res) => res.json())
+      .then((data: SpanishWord[]) => setVocabularyData(data))
+      .catch((err) => {
+        if (err.name !== "AbortError") console.error("Failed to fetch vocabulary:", err)
+      })
+      .finally(() => setIsLoading(false))
+
+    // cancel fetch if component unmounts
+    return () => controller.abort()
+  }, [])
+  // ----------------------------------------------------------------
+
+  const generateOptions = (correctWord: SpanishWord): string[] => {
+    const otherWords = spanishVocabulary.filter((w) => w.id !== correctWord.id)
+    const incorrect = [...otherWords].sort(() => 0.5 - Math.random()).slice(0, 4)
+    return [...incorrect.map((w) => w.english), correctWord.english].sort(() => 0.5 - Math.random())
+  }
+
   const currentWord = spanishVocabulary[currentWordIndex]
 
   // Generate options when the current word changes
   useEffect(() => {
-    setOptions(generateOptions(currentWord))
-    setSelectedOption(null)
-    setIsCorrect(null)
-  }, [currentWordIndex, currentWord.id, currentWord])
+    if (spanishVocabulary[currentWordIndex]) {
+      setOptions(generateOptions(spanishVocabulary[currentWordIndex]))
+      setSelectedOption(null)
+      setIsCorrect(null)
+    }
+  }, [currentWordIndex, spanishVocabulary])
 
   const handleOptionSelect = (option: string) => {
     if (selectedOption !== null) return // Prevent changing answer after selection
@@ -321,20 +334,9 @@ export default function PracticePage() {
   const overallAccuracy = getOverallHistoricalAccuracy()
   const performanceData = wordPerformanceHistory[currentWord.id] || []
 
-
-
-  useEffect(() => {
-    fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/100")
-      .then((res) => res.json())
-      .then((data) => setVocabularyData(data))
-      .catch((err) => console.error("Failed to fetch vocabulary:", err))
-      .finally(() => setIsLoading(false)) // mark loading done
-  }, [])
-
-  if (isLoading) {
-    return <div>Loading vocabulary...</div> // optional loading spinner
+  if (isLoading || spanishVocabulary.length === 0) {
+    return <div className="flex h-screen items-center justify-center">Loading vocabulary…</div>
   }
-  
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -645,7 +647,7 @@ export default function PracticePage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="text-xs rounded-full px-3 vibrant-button-outline"
+                            className="text-xs rounded-full px-3 vibrant-button-outline bg-transparent"
                           >
                             View word details
                             <ArrowRight className="ml-1 h-3 w-3" />
@@ -714,7 +716,7 @@ export default function PracticePage() {
                   </div>
                 </CardContent>
                 <CardFooter className="p-4 bg-slate-50 border-t">
-                  <Button variant="outline" className="w-full rounded-lg vibrant-button-outline">
+                  <Button variant="outline" className="w-full rounded-lg vibrant-button-outline bg-transparent">
                     End Session
                   </Button>
                 </CardFooter>
@@ -735,7 +737,7 @@ export default function PracticePage() {
                     <Button
                       key={index}
                       variant="outline"
-                      className="h-auto py-4 px-4 rounded-lg vibrant-button-outline transition-all duration-300 flex flex-col items-center space-y-2"
+                      className="h-auto py-4 px-4 rounded-lg vibrant-button-outline transition-all duration-300 flex flex-col items-center space-y-2 bg-transparent"
                     >
                       <span className="font-medium text-center">{set.name}</span>
                       <span className="text-xs bg-slate-100 px-2 py-1 rounded-full">{set.count} words</span>
@@ -749,7 +751,7 @@ export default function PracticePage() {
           {/* Back to Dashboard Button */}
           <div className="mt-6 flex justify-center">
             <Link href="/dashboard">
-              <Button variant="outline" className="rounded-lg vibrant-button-outline">
+              <Button variant="outline" className="rounded-lg vibrant-button-outline bg-transparent">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Dashboard
               </Button>
