@@ -346,67 +346,58 @@ export default function PracticePage() {
               </CardHeader>
 
               <CardContent className="pt-0">
-                <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
-                  {/* Horizontal Metrics Section */}
-                  <div className="lg:col-span-1">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                      {/* Predicted Chance */}
-                      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
-                        <div className="flex items-center gap-3">
-                          <div className="flex-shrink-0">
-                            <Target className="w-5 h-5 text-orange-600" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-baseline gap-2">
-                              <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-                                {predictedChance}%
-                              </div>
-                              <div className="text-sm text-gray-600">predicted</div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                  {/* Compact Metrics Section - Left Side */}
+                  <div className="lg:col-span-4 space-y-4">
+                    {/* Predicted Chance */}
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
+                      <div className="flex items-center gap-3">
+                        <div className="flex-shrink-0">
+                          <Target className="w-5 h-5 text-orange-600" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-baseline gap-2">
+                            <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                              {predictedChance}%
                             </div>
-                            <div className="text-xs text-gray-500 mt-1">Estimated correctness</div>
+                            <div className="text-sm text-gray-600">predicted</div>
                           </div>
+                          <div className="text-xs text-gray-500 mt-1">Estimated correctness</div>
                         </div>
                       </div>
+                    </div>
 
-                      {/* Historical Accuracy */}
-                      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
-                        <div className="flex items-center gap-3">
-                          <div className="flex-shrink-0">
-                            <BarChart3 className="w-5 h-5 text-orange-600" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-baseline gap-2">
-                              <div className="text-2xl font-bold text-gray-900">{historicalAccuracy}%</div>
-                              <div className="text-sm text-gray-600">historical</div>
-                            </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              This word ({performanceData.length} attempts)
-                            </div>
-                          </div>
+                    {/* Historical Accuracy */}
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
+                      <div className="flex items-center gap-3">
+                        <div className="flex-shrink-0">
+                          <BarChart3 className="w-5 h-5 text-orange-600" />
                         </div>
-                      </div>
-
-                      {/* Overall Stats */}
-                      <div className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-orange-200/30 shadow-sm">
-                        <div className="flex items-center gap-3">
-                          <div className="flex-shrink-0">
-                            <TrendingUp className="w-5 h-5 text-orange-600" />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-baseline gap-2">
+                            <div className="text-2xl font-bold text-gray-900">{historicalAccuracy}%</div>
+                            <div className="text-sm text-gray-600">historical</div>
                           </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-baseline gap-2">
-                              <div className="text-2xl font-bold text-gray-800">{overallAccuracy}%</div>
-                              <div className="text-sm text-gray-600">overall</div>
-                            </div>
-                            <div className="text-xs text-gray-500 mt-1">across all words</div>
+                          <div className="text-xs text-gray-500 mt-1">
+                            This word ({performanceData.length} attempts)
                           </div>
                         </div>
                       </div>
                     </div>
+
+                    {/* Overall Stats */}
+                    <div className="bg-white/50 backdrop-blur-sm rounded-xl p-3 border border-orange-200/30">
+                      <div className="text-center">
+                        <div className="text-sm text-gray-600 mb-1">Overall Accuracy</div>
+                        <div className="text-lg font-semibold text-gray-800">{overallAccuracy}%</div>
+                        <div className="text-xs text-gray-500">across all words</div>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Chart Section */}
-                  <div className="lg:col-span-1">
-                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm">
+                  {/* Expanded Chart Section - Right Side */}
+                  <div className="lg:col-span-8">
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-orange-200/50 shadow-sm h-full">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">
                           <TrendingUp className="w-5 h-5 text-orange-600" />
@@ -631,7 +622,7 @@ export default function PracticePage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="text-xs rounded-full px-3 vibrant-button-outline bg-transparent"
+                            className="text-xs rounded-full px-3 vibrant-button-outline"
                           >
                             View word details
                             <ArrowRight className="ml-1 h-3 w-3" />
@@ -700,7 +691,7 @@ export default function PracticePage() {
                   </div>
                 </CardContent>
                 <CardFooter className="p-4 bg-slate-50 border-t">
-                  <Button variant="outline" className="w-full rounded-lg vibrant-button-outline bg-transparent">
+                  <Button variant="outline" className="w-full rounded-lg vibrant-button-outline">
                     End Session
                   </Button>
                 </CardFooter>
@@ -721,7 +712,7 @@ export default function PracticePage() {
                     <Button
                       key={index}
                       variant="outline"
-                      className="h-auto py-4 px-4 rounded-lg vibrant-button-outline transition-all duration-300 flex flex-col items-center space-y-2 bg-transparent"
+                      className="h-auto py-4 px-4 rounded-lg vibrant-button-outline transition-all duration-300 flex flex-col items-center space-y-2"
                     >
                       <span className="font-medium text-center">{set.name}</span>
                       <span className="text-xs bg-slate-100 px-2 py-1 rounded-full">{set.count} words</span>
@@ -735,7 +726,7 @@ export default function PracticePage() {
           {/* Back to Dashboard Button */}
           <div className="mt-6 flex justify-center">
             <Link href="/dashboard">
-              <Button variant="outline" className="rounded-lg vibrant-button-outline bg-transparent">
+              <Button variant="outline" className="rounded-lg vibrant-button-outline">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Dashboard
               </Button>
