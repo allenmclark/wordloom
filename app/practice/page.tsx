@@ -9,6 +9,11 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 
+
+const [spanishVocabulary, setVocabularyData] = useState([])
+const [isLoading, setIsLoading] = useState(true) // track when data is ready
+
+
 // Types for our vocabulary items
 type SpanishWord = {
   id: number
@@ -313,8 +318,7 @@ export default function PracticePage() {
   const overallAccuracy = getOverallHistoricalAccuracy()
   const performanceData = wordPerformanceHistory[currentWord.id] || []
 
-  const [spanishVocabulary, setVocabularyData] = useState([])
-  const [isLoading, setIsLoading] = useState(true) // track when data is ready
+
 
   useEffect(() => {
     fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/100")
