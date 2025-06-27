@@ -18,34 +18,56 @@ type SpanishWord = {
   difficulty: "Beginner" | "Intermediate" | "Advanced"
 }
 
-// Convert an arbitrary record from the API into the structure our UI needs
+// Try to coerce an arbitrary record into the structure our UI needs
 const normalizeWord = (raw: any, fallbackId: number): SpanishWord | null => {
-  /* Derive mandatory fields */
-  const spanish = raw.spanish ?? raw.word ?? raw.spanish_word ?? raw.es ?? null
-  const english = raw.english ?? raw.translation ?? raw.definition ?? raw.en ?? null
+  // The API might use many possible key names – check them in priority order
+  const spanish =
+    raw.spanish ??
+    raw.word ??
+    raw.spanish_word ??
+    raw.spanishWord ??
+    raw.es ??
+    raw.source ??
+    raw.term ??
+    raw.original ??
+    null
 
+  const english =
+    raw.english ??
+    raw.translation ??
+    raw.translation_en ??
+    raw.en ??
+    raw.meaning ??
+    raw.definition ??
+    raw.definition_en ??
+    raw.target ??
+    raw.target_text ??
+    null
+
+  // If we still don’t have both, bail out and let the caller try the heuristic pass
   if (!spanish || !english) return null
 
-  /* Example sentence (optional in API) */
+  // Example sentence is optional
   const exampleSentence =
-    raw.exampleSentence ?? raw.example_sentence ?? raw.example ?? `Ejemplo: Uso de "${spanish}" en una oración.`
+    raw.exampleSentence ??
+    raw.example_sentence ??
+    raw.example ??
+    raw.sentence ??
+    `Ejemplo: Uso de "${spanish}" en una oración.`
 
-  /* Difficulty Heuristics ─ keep existing label if present, otherwise fall-back
-     on word length as a simple proxy                                        */
+  // Difficulty – accept API value or derive from word length
+  const apiDifficulty = raw.difficulty ?? raw.level ?? raw.difficulty_level ?? raw.rank ?? raw.tier ?? null
+
   let difficulty: SpanishWord["difficulty"] = "Beginner"
-  const apiDifficulty = raw.difficulty ?? raw.level ?? raw.difficulty_level ?? raw.rank ?? null
-
   if (apiDifficulty === "Beginner" || apiDifficulty === "Intermediate" || apiDifficulty === "Advanced") {
     difficulty = apiDifficulty
   } else {
     const len = spanish.length
-    if (len <= 5) difficulty = "Beginner"
-    else if (len <= 8) difficulty = "Intermediate"
-    else difficulty = "Advanced"
+    difficulty = len <= 5 ? "Beginner" : len <= 8 ? "Intermediate" : "Advanced"
   }
 
   return {
-    id: raw.id ?? fallbackId,
+    id: typeof raw.id === "number" ? raw.id : fallbackId,
     spanish,
     english,
     exampleSentence,
@@ -226,11 +248,36 @@ export default function PracticePage() {
         // The endpoint can return either { data: [...] } or [...] directly
         const arrayData: any[] = Array.isArray(rawData) ? rawData : Array.isArray(rawData.data) ? rawData.data : []
 
-        const normalized = arrayData.map((item, idx) => normalizeWord(item, idx + 1)).filter(Boolean) as SpanishWord[]
+        let normalized = arrayData
+          .map((item: any, idx: number) => normalizeWord(item, idx + 1))
+          .filter(Boolean) as SpanishWord[]
 
+        // --- ❶ Secondary heuristic if nothing was recognised ---
         if (normalized.length === 0) {
-          throw new Error("Could not normalize any vocabulary items from API")
+          normalized = arrayData
+            .map((obj: any, idx: number) => {
+              // Find two distinct string fields
+              const stringValues = Object.values(obj).filter((v) => typeof v === "string") as string[]
+              if (stringValues.length < 2) return null
+
+              // Heuristic: shorter word-like token → Spanish, longer → English
+              const [first, second] =
+                stringValues[0].length <= stringValues[1].length
+                  ? [stringValues[0], stringValues[1]]
+                  : [stringValues[1], stringValues[0]]
+
+              return {
+                id: typeof obj.id === "number" ? obj.id : idx + 1,
+                spanish: first.trim(),
+                english: second.trim(),
+                exampleSentence: `Ejemplo: Uso de "${first.trim()}" en una oración.`,
+                difficulty: first.length <= 5 ? "Beginner" : first.length <= 8 ? "Intermediate" : "Advanced",
+              } as SpanishWord
+            })
+            .filter(Boolean) as SpanishWord[]
         }
+
+        if (normalized.length === 0) throw new Error("API payload not recognisable")
 
         setVocabularyData(normalized)
         setDataSource("api")
