@@ -231,7 +231,7 @@ export default function PracticePage() {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/5000", {
+        const response = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/50000", {
           signal: controller.signal,
           headers: {
             Accept: "application/json",
