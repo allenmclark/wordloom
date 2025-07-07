@@ -6,65 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export default function BlogPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
-        <div className="container flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-orange-500" />
-            <span className="text-xl font-display font-bold text-orange-500">VocabMaster</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium transition-colors hover:text-orange-500 relative group">
-              Home
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link
-              href="/practice"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Practice
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link
-              href="/spanish-english"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Spanish-English
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link
-              href="/dashboard"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Dashboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link
-              href="/leaderboard"
-              className="text-sm font-medium transition-colors hover:text-orange-500 relative group"
-            >
-              Leaderboard
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-            <Link href="/blog" className="text-sm font-medium text-orange-500 relative group">
-              Blog
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-orange-500"></span>
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <Link href="/login">
-              <Button variant="outline" size="sm" className="rounded-full px-4 btn-orange-outline">
-                Log in
-              </Button>
-            </Link>
-            <Link href="/signup">
-              <Button size="sm" className="rounded-full px-4 btn-orange">
-                Sign up
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-      <main className="flex-1 container py-12 md:py-16 hero-gradient dot-pattern page-content">
+      <main className="flex-1 container py-12 md:py-16 hero-gradient-vibrant page-content">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">Our Blog</h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -105,25 +47,7 @@ export default function BlogPage() {
           ))}
         </div>
       </main>
-      <footer className="border-t py-6 md:py-0 bg-white">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-orange-500" />
-            <p className="text-sm text-muted-foreground">© 2025 VocabMaster. All rights reserved.</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="/terms" className="text-sm text-muted-foreground hover:underline">
-              Terms
-            </Link>
-            <Link href="/privacy" className="text-sm text-muted-foreground hover:underline">
-              Privacy
-            </Link>
-            <Link href="/contact" className="text-sm text-muted-foreground hover:underline">
-              Contact
-            </Link>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   )
 }

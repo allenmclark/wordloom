@@ -1,242 +1,226 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Calendar, TrendingUp } from "lucide-react"
 
-import { useState, useEffect } from "react"
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
+// Generate sample heatmap data for the past year
+const generateHeatmapData = () => {
+  const data = []
+  const startDate = new Date()
+  startDate.setFullYear(startDate.getFullYear() - 1)
 
-interface WordData {
-  word: string
-  probability: number
+  for (let i = 0; i < 365; i++) {
+    const date = new Date(startDate)
+    date.setDate(date.getDate() + i)
+
+    // Simulate activity levels (0-4)
+    const activity = Math.random() > 0.3 ? Math.floor(Math.random() * 5) : 0
+
+    data.push({
+      date: date.toISOString().split("T")[0],
+      activity,
+      words: activity * 5 + Math.floor(Math.random() * 10),
+    })
+  }
+
+  return data
 }
 
-const commonWords = [
-  "apple",
-  "house",
-  "river",
-  "happy",
-  "dream",
-  "light",
-  "music",
-  "ocean",
-  "story",
-  "cloud",
-  "brave",
-  "quiet",
-  "swift",
-  "grace",
-  "truth",
-  "peace",
-  "honor",
-  "faith",
-  "hope",
-  "wisdom",
-  "journey",
-  "forest",
-  "mountain",
-  "valley",
-  "flower",
-  "garden",
-  "spirit",
-  "friend",
-  "family",
-  "future",
-  "present",
-  "past",
-  "moment",
-  "silence",
-  "whisper",
-  "echo",
-  "shadow",
-  "bright",
-  "gentle",
-  "vivid",
-  "serene",
-  "calm",
-  "vibrant",
-  "radiant",
-  "bliss",
-  "wonder",
-  "magic",
-  "destiny",
-  "freedom",
-  "courage",
-  "knowledge",
-  "learn",
-  "vocabulary",
-  "success",
-  "growth",
-  "insight",
-  "explore",
-  "discover",
-  "mastery",
-  "challenge",
-  "abundant",
-  "benevolent",
-  "captivate",
-  "dazzling",
-  "eloquent",
-  "flourish",
-  "glorious",
-  "harmonious",
-  "illustrious",
-  "jubilant",
-  "kaleidoscope",
-  "luminous",
-  "magnificent",
-  "nebulous",
-  "opulent",
-  "paradox",
-  "quixotic",
-  "resplendent",
-  "serendipity",
-  "tranquil",
-  "ubiquitous",
-  "venerable",
-  "whimsical",
-  "xenodochial",
-  "yearning",
-  "zephyr",
-  "ephemeral",
-  "incandescent",
-  "mellifluous",
-  "penumbra",
-  "quintessential",
-  "rhapsodic",
-  "solitude",
-  "transient",
-  "veridian",
-  "wistful",
-  "zenith",
-  "azure",
-  "celestial",
-  "effervescent",
-  "halcyon",
-  "iridescent",
-  "limerence",
-  "nemesis",
-  "oblivion",
-  "panacea",
-  "quiescent",
-  "reverie",
-  "sylvan",
-  "talisman",
-  "umbrage",
-  "valiant",
-  "winsome",
-  "xylophone",
-  "yonder",
-  "zestful",
-  "amethyst",
-  "chrysanthemum",
-  "dandelion",
-  "emerald",
-  "fuchsia",
-  "geranium",
-  "hyacinth",
-  "indigo",
-  "jasmine",
-  "kiwi",
-  "lavender",
-  "magnolia",
-  "narcissus",
-  "orchid",
-  "petunia",
-  "quince",
-  "rose",
-  "sunflower",
-  "tulip",
-  "violet",
-  "waterlily",
-  "xenia",
-  "yarrow",
-  "zinnia",
-]
+const heatmapData = generateHeatmapData()
 
-const generateRandomWords = (count: number): WordData[] => {
-  const shuffledWords = [...commonWords].sort(() => 0.5 - Math.random())
-  return shuffledWords.slice(0, count).map((word) => ({
-    word,
-    probability: Math.random(), // Random probability between 0 and 1
-  }))
+const getActivityColor = (level: number) => {
+  const colors = [
+    "bg-gray-100", // No activity
+    "bg-orange-100", // Low activity
+    "bg-orange-200", // Medium-low activity
+    "bg-orange-400", // Medium-high activity
+    "bg-orange-500", // High activity
+  ]
+  return colors[level] || colors[0]
 }
 
-const getColor = (probability: number): string => {
-  // Hue for orange/red is around 25-35. Saturation 100%.
-  // Lightness ranges from 95% (very light) to 40% (dark)
-  const lightness = 95 - probability * 55
-  return `hsl(25, 100%, ${lightness}%)`
-}
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 export function HeatmapVisualization() {
-  const [wordsData, setWordsData] = useState<WordData[]>([])
+  const totalWords = heatmapData.reduce((sum, day) => sum + day.words, 0)
+  const activeDays = heatmapData.filter((day) => day.activity > 0).length
+  const currentStreak = calculateCurrentStreak()
+  const longestStreak = calculateLongestStreak()
 
-  useEffect(() => {
-    // Generate 50 words as requested
-    setWordsData(generateRandomWords(50))
-  }, [])
+  function calculateCurrentStreak() {
+    let streak = 0
+    for (let i = heatmapData.length - 1; i >= 0; i--) {
+      if (heatmapData[i].activity > 0) {
+        streak++
+      } else {
+        break
+      }
+    }
+    return streak
+  }
+
+  function calculateLongestStreak() {
+    let maxStreak = 0
+    let currentStreak = 0
+
+    heatmapData.forEach((day) => {
+      if (day.activity > 0) {
+        currentStreak++
+        maxStreak = Math.max(maxStreak, currentStreak)
+      } else {
+        currentStreak = 0
+      }
+    })
+
+    return maxStreak
+  }
 
   return (
-    <div className="w-full h-full overflow-hidden">
-      <h2 className="text-3xl font-bold text-center mb-4 text-gradient">Vocabulary Heatmap</h2>
-      <p className="text-center text-lg text-gray-600 mb-8">
-        Predicted probability of knowing a word. Darker shades indicate higher confidence.
-        <br />
-        Use your mouse wheel to zoom and drag to pan.
-      </p>
-      <div className="relative w-full h-[600px] border border-gray-200 rounded-lg overflow-hidden bg-white/50 backdrop-blur-sm shadow-inner">
-        <TransformWrapper
-          initialScale={1}
-          minScale={0.5}
-          maxScale={5}
-          limitToBounds={false} // Allow panning outside initial bounds for better zoom experience
-          centerZoomedOut={true}
-          wheel={{ step: 0.1 }}
-          panning={{ disabled: false }}
-        >
-          {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-            <>
-              <div className="absolute top-2 right-2 z-10 flex gap-2">
-                <Button onClick={() => zoomIn()} size="sm" variant="outline">
-                  Zoom In
-                </Button>
-                <Button onClick={() => zoomOut()} size="sm" variant="outline">
-                  Zoom Out
-                </Button>
-                <Button onClick={() => resetTransform()} size="sm" variant="outline">
-                  Reset
-                </Button>
+    <div className="space-y-6">
+      <div>
+        <CardTitle className="flex items-center gap-2 mb-2">
+          <Calendar className="h-5 w-5 text-orange-500" />
+          Learning Activity Heatmap
+        </CardTitle>
+        <CardDescription>Your vocabulary learning activity over the past year</CardDescription>
+      </div>
+
+      {/* Stats Row */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-orange-600">{totalWords}</div>
+            <p className="text-sm text-muted-foreground">Total words learned</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-green-600">{activeDays}</div>
+            <p className="text-sm text-muted-foreground">Active days</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-blue-600">{currentStreak}</div>
+            <p className="text-sm text-muted-foreground">Current streak</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-purple-600">{longestStreak}</div>
+            <p className="text-sm text-muted-foreground">Longest streak</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Heatmap */}
+      <Card>
+        <CardContent className="p-6">
+          <div className="space-y-4">
+            {/* Month labels */}
+            <div className="flex justify-between text-xs text-muted-foreground mb-2">
+              {months.map((month) => (
+                <span key={month}>{month}</span>
+              ))}
+            </div>
+
+            {/* Heatmap grid */}
+            <div className="flex gap-1">
+              {/* Weekday labels */}
+              <div className="flex flex-col gap-1 mr-2">
+                {weekdays.map((day, index) => (
+                  <div key={day} className="h-3 text-xs text-muted-foreground flex items-center">
+                    {index % 2 === 1 ? day.slice(0, 3) : ""}
+                  </div>
+                ))}
               </div>
-              <TransformComponent
-                wrapperStyle={{ width: "100%", height: "100%" }}
-                contentStyle={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-7 lg:grid-cols-8 xl:grid-cols-10 gap-3 p-4 min-w-[600px] min-h-[400px]">
-                  {wordsData.map((data, index) => (
+
+              {/* Heatmap cells */}
+              <div className="grid grid-cols-53 gap-1">
+                {heatmapData.map((day, index) => {
+                  const date = new Date(day.date)
+                  return (
                     <div
-                      key={index}
-                      className="relative flex flex-col items-center justify-center p-3 rounded-lg shadow-sm text-center transition-all duration-200 ease-in-out aspect-square border border-gray-100"
-                      style={{ backgroundColor: getColor(data.probability) }}
-                    >
-                      <span className="font-semibold text-white text-base sm:text-lg break-words leading-tight">
-                        {data.word}
-                      </span>
-                      <span className="absolute bottom-1 right-1 text-xs text-white/80 font-mono">
-                        {(data.probability * 100).toFixed(0)}%
-                      </span>
-                    </div>
+                      key={day.date}
+                      className={`w-3 h-3 rounded-sm ${getActivityColor(day.activity)} hover:ring-2 hover:ring-orange-300 cursor-pointer transition-all`}
+                      title={`${day.date}: ${day.words} words learned`}
+                    />
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Legend */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span>Less</span>
+                <div className="flex gap-1">
+                  {[0, 1, 2, 3, 4].map((level) => (
+                    <div key={level} className={`w-3 h-3 rounded-sm ${getActivityColor(level)}`} />
                   ))}
                 </div>
-              </TransformComponent>
-            </>
-          )}
-        </TransformWrapper>
+                <span>More</span>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <Badge variant="secondary" className="flex items-center gap-1">
+                  <TrendingUp className="h-3 w-3" />
+                  {Math.round((activeDays / 365) * 100)}% active days
+                </Badge>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Activity Insights */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Best Performing Months</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span>March 2024</span>
+                <Badge>28 days active</Badge>
+              </div>
+              <div className="flex justify-between">
+                <span>January 2024</span>
+                <Badge>25 days active</Badge>
+              </div>
+              <div className="flex justify-between">
+                <span>November 2023</span>
+                <Badge>23 days active</Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Weekly Patterns</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span>Most active day</span>
+                <Badge variant="secondary">Tuesday</Badge>
+              </div>
+              <div className="flex justify-between">
+                <span>Least active day</span>
+                <Badge variant="secondary">Sunday</Badge>
+              </div>
+              <div className="flex justify-between">
+                <span>Weekend activity</span>
+                <Badge variant="secondary">65%</Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
