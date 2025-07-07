@@ -1,6 +1,8 @@
+
 "use client"
 
 import { useState, useEffect } from "react"
+
 import Link from "next/link"
 import { ArrowRight, BookOpen, Brain, TrendingUp, ChevronRight, RefreshCw } from "lucide-react"
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer, Tooltip } from "recharts"
