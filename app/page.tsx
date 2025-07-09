@@ -184,7 +184,7 @@ export default function Home() {
                     <Button
                       size="lg"
                       variant="outline"
-                      className="rounded-full px-6 border-orange-200 hover:border-orange-500 hover:bg-orange-50 bg-transparent"
+                      className="rounded-full px-6 border-orange-200 hover:border-orange-500 hover:bg-orange-50"
                     >
                       How it works
                     </Button>
@@ -573,7 +573,7 @@ app.add_middleware(
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 lg:gap-12 mt-16">
+            <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3 lg:gap-12 mt-16">
               {features.map((feature, index) => (
                 <div
                   key={index}
@@ -593,7 +593,7 @@ app.add_middleware(
 
                     <CardHeader className="p-8 pb-4">
                       <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-amber-100 shadow-inner group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">
-                        <img src="/placeholder.svg?height=100&width=300" alt="Example" />
+                        {feature.icon}
                       </div>
                       <CardTitle className="mt-6 text-xl font-bold bg-gradient-to-r from-orange-800 to-amber-800 bg-clip-text text-transparent">
                         {feature.title}
@@ -627,7 +627,7 @@ app.add_middleware(
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-orange-50 via-white to-slate-50 relative">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-orange-50 via-white to-slate-50">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center animate-in">
               <div className="space-y-2">
@@ -698,6 +698,10 @@ const features = [
     icon: <TrendingUp className="h-6 w-6 text-orange-500" />,
   },
 ]
+
+
+
+
 
 // Generate hourly data for the last 7 days with more realistic patterns
 const generateHourlyData = () => {
