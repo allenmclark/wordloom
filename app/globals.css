@@ -511,7 +511,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
+
   background: #999999 ;
+
+
   border-radius: 4px;
 }
 
