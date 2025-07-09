@@ -573,3 +573,8 @@ html {
   color: hsl(var(--text-primary));
   font-weight: var(--font-weight-semibold);
 }
+
+/* global.css */
+html {
+  color-scheme: light;
+}
