@@ -20,7 +20,8 @@ const montserrat = Montserrat({
 
 export const metadata = {
   title: "VocabMarket - Invest in Your Vocabulary",
-  description: "Learn new words, track your progress, and compete with friends. Grow your vocabulary portfolio today.",
+  description:
+    "Learn new words, track your progress, and compete with friends. Grow your vocabulary portfolio today.",
   generator: "v0.dev",
 }
 
@@ -32,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class"  enableSystem disableTransitionOnChange>
           <Header />
           {children}
           <Footer />

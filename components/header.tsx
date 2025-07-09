@@ -52,7 +52,7 @@ export function Header() {
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center gap-4">
           <Link href="/login">
-            <Button variant="outline" size="sm" className="rounded-full px-4 vibrant-button-outline no-fade">
+            <Button variant="outline" size="sm" className="rounded-full px-4 vibrant-button-outline no-fade hover:bg-transparent hover:text-orange-500">
               Log in
             </Button>
           </Link>

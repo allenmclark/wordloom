@@ -511,7 +511,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #999999;
+
+  background: #999999 ;
+
+
   border-radius: 4px;
 }
 
@@ -572,4 +575,9 @@ html {
   margin-bottom: 0.75em;
   color: hsl(var(--text-primary));
   font-weight: var(--font-weight-semibold);
+}
+
+/* global.css */
+html {
+  color-scheme: light;
 }

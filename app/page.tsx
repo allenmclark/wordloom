@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from "react"
@@ -699,6 +698,10 @@ const features = [
     icon: <TrendingUp className="h-6 w-6 text-orange-500" />,
   },
 ]
+
+
+
+
 
 // Generate hourly data for the last 7 days with more realistic patterns
 const generateHourlyData = () => {
