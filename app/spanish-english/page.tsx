@@ -543,7 +543,7 @@ export default function SpanishEnglishPage() {
                       </div>
                       <div className="flex gap-2">
                         <Button className="btn-primary btn-sm flex-1">Add to Practice</Button>
-                        <Button className="btn-outline btn-sm">Details</Button>
+                        <Button className="btn-primary btn-sm">Details</Button>
                       </div>
                     </CardContent>
                   </Card>

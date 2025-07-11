@@ -8,6 +8,7 @@ import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis } fro
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+//import { api_url } from "@/backend_config.ts"
 
 // Types for our vocabulary items
 type SpanishWord = {
@@ -30,7 +31,8 @@ const normalizeWord = (raw: any, fallbackId: number): SpanishWord | null => {
     raw.source ??
     raw.term ??
     raw.original ??
-    null
+    raw.from_source ??
+    "spanish not found"
 
   const english =
     raw.english ??
@@ -42,7 +44,7 @@ const normalizeWord = (raw: any, fallbackId: number): SpanishWord | null => {
     raw.definition_en ??
     raw.target ??
     raw.target_text ??
-    null
+    "english not found"
 
   // If we still don’t have both, bail out and let the caller try the heuristic pass
   if (!spanish || !english) return null
@@ -53,6 +55,7 @@ const normalizeWord = (raw: any, fallbackId: number): SpanishWord | null => {
     raw.example_sentence ??
     raw.example ??
     raw.sentence ??
+    raw.source_example
     `Ejemplo: Uso de "${spanish}" en una oración.`
 
   // Difficulty – accept API value or derive from word length
@@ -81,45 +84,6 @@ type PerformanceAttempt = {
   correct: boolean
   cumulativeRate: number
 }
-
-// Fallback vocabulary data for offline/error scenarios
-const fallbackVocabulary: SpanishWord[] = [
-  {
-    id: 1,
-    spanish: "casa",
-    english: "house",
-    exampleSentence: "Mi casa está cerca del parque.",
-    difficulty: "Beginner",
-  },
-  {
-    id: 2,
-    spanish: "tiempo",
-    english: "time",
-    exampleSentence: "No tengo tiempo para hacer ejercicio hoy.",
-    difficulty: "Beginner",
-  },
-  {
-    id: 3,
-    spanish: "trabajo",
-    english: "work",
-    exampleSentence: "Me gusta mi trabajo porque es interesante.",
-    difficulty: "Beginner",
-  },
-  {
-    id: 4,
-    spanish: "desarrollar",
-    english: "to develop",
-    exampleSentence: "Necesitamos desarrollar nuevas estrategias.",
-    difficulty: "Intermediate",
-  },
-  {
-    id: 5,
-    spanish: "acontecimiento",
-    english: "event",
-    exampleSentence: "El acontecimiento fue celebrado por toda la ciudad.",
-    difficulty: "Advanced",
-  },
-]
 
 export default function PracticePage() {
   // Core state management
@@ -231,7 +195,7 @@ export default function PracticePage() {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/50000", {
+        const response = await fetch("https://vocab-backend-dev-615369945513.us-east1.run.app/words/50", {
           signal: controller.signal,
           headers: {
             Accept: "application/json",
@@ -282,16 +246,12 @@ export default function PracticePage() {
         setVocabularyData(normalized)
         setDataSource("api")
         initializePerformanceData(normalized)
-      } catch (err) {
+      } catch (err: any) {
         if (err.name !== "AbortError") {
           console.error("Failed to fetch vocabulary:", err)
           setError(err.message || "Failed to load vocabulary")
-
-          // Fallback to local data
-          setVocabularyData(fallbackVocabulary)
-          setDataSource("fallback")
-          initializePerformanceData(fallbackVocabulary)
         }
+
       } finally {
         setIsLoading(false)
       }

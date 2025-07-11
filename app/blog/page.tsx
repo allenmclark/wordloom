@@ -57,7 +57,7 @@ const blogPosts = [
     title: "The Power of Spaced Repetition in Vocabulary Learning",
     slug: "spaced-repetition",
     date: "May 28, 2025",
-    image: "/placeholder.svg?height=225&width=400",
+    image: "https://blog.logrocket.com/wp-content/uploads/2021/09/next-js-automatic-image-optimization-next-image.png?height=225&width=400",
     excerpt:
       "Discover how spaced repetition, a scientifically proven learning technique, can dramatically improve your vocabulary retention and recall. Learn to integrate it into your daily study routine for maximum effectiveness.",
   },
@@ -65,7 +65,7 @@ const blogPosts = [
     title: "Why Learning a New Word Every Day Matters",
     slug: "word-a-day",
     date: "May 20, 2025",
-    image: "/placeholder.svg?height=225&width=400",
+    image: "/image.png?height=225&width=400",
     excerpt:
       "Consistency is key in vocabulary acquisition. This post explores the cumulative benefits of learning just one new word daily and how it can transform your communication skills over time.",
   },

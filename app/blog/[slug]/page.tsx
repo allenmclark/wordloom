@@ -11,7 +11,7 @@ const blogPosts = {
     author: "Dr. Sarah Chen",
     date: "May 28, 2025",
     readTime: "8 min read",
-    image: "/placeholder.svg?height=400&width=800&text=Spaced+Repetition",
+    image: "/placeholder.svg?height=600&width=600&text=Spaced+Repetition",
     content: `
       <p>Spaced repetition is one of the most powerful learning techniques backed by decades of cognitive science research. When it comes to vocabulary acquisition, this method can dramatically improve both retention and recall rates.</p>
 
@@ -89,7 +89,7 @@ const blogPosts = {
     author: "Michael Rodriguez",
     date: "May 20, 2025",
     readTime: "6 min read",
-    image: "/placeholder.svg?height=400&width=800&text=Daily+Learning",
+    image: "/image.png?height=600&width=600&text=Daily+Learning",
     content: `
       <p>The concept of learning one new word every day might seem simple, but its impact on your communication skills, cognitive development, and personal growth is profound. This small daily habit can transform your vocabulary and, by extension, your ability to express complex ideas and connect with others.</p>
 
