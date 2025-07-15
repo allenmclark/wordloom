@@ -72,6 +72,10 @@ export default function LoginPage() {
     <main className="flex-1 flex items-center justify-center p-4 md:p-8 hero-gradient dot-pattern page-content">
       <Card className="mx-auto max-w-md w-full border-2">
         <form onSubmit={handleSubmit}>
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold">Log in to your account</CardTitle>
+            <CardDescription>Enter your email and password to access your vocabulary dashboard</CardDescription>
+          </CardHeader>
           <CardContent className="space-y-4">
             {error && (
               <div className="p-3 text-sm text-red-500 bg-red-50 rounded-md">
