@@ -4,17 +4,18 @@ import { useState } from "react"
 import Link from "next/link"
 import { BookOpen, ArrowRight } from "lucide-react"
 
-
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+import { api_url } from "@/backend_config";
+
 
 export default function SignupPage() {
 
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
@@ -23,13 +24,52 @@ export default function SignupPage() {
   e.preventDefault();
 
   console.log({
-    name,
+    username,
     email,
     password,
     agreedToTerms,
   });
 
-setName('');
+  // Here you would typically send the data to your backend API
+  fetch("https://opulent-spork-vj9764pvvj6hp49v-8000.app.github.dev/users/signup", {
+
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      username,
+      email,
+      password
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+
+
+console.log(
+JSON.stringify(
+  {
+      username,
+      email,
+      password,
+      agreedToTerms,
+    }
+  )
+  );
+
+setUsername('');
 setEmail('');
 setPassword('');
 setAgreedToTerms(false);
@@ -51,11 +91,11 @@ setAgreedToTerms(false);
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
                 <Input
-                  id="name"
+                  id="username"
                   type="text"
                   placeholder="John Doe"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div className="space-y-2">
