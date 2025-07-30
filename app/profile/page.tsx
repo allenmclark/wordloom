@@ -1,290 +1,299 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
-import { ArrowLeft, BookOpen, Calendar, Crown, Globe, Languages, Save, User, Zap } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { User, Calendar, Crown, BookOpen, Target, Flame, ArrowLeft, Save, Loader2 } from "lucide-react"
+import Link from "next/link"
+
+const languages = [
+  { code: "es", name: "Spanish" },
+  { code: "fr", name: "French" },
+  { code: "de", name: "German" },
+  { code: "it", name: "Italian" },
+  { code: "pt", name: "Portuguese" },
+  { code: "ru", name: "Russian" },
+  { code: "ja", name: "Japanese" },
+  { code: "ko", name: "Korean" },
+  { code: "zh", name: "Chinese" },
+  { code: "ar", name: "Arabic" },
+  { code: "hi", name: "Hindi" },
+  { code: "nl", name: "Dutch" },
+]
 
 export default function ProfilePage() {
-  const [username, setUsername] = useState("JohnLearner")
-  const [defaultLanguage, setDefaultLanguage] = useState("en")
-  const [nativeLanguage, setNativeLanguage] = useState("en")
   const [isLoading, setIsLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    username: "john_learner",
+    defaultLanguage: "es",
+    nativeLanguage: "en",
+  })
 
-  // Mock user data - in a real app, this would come from your backend
-  const userSignupDate = "January 15, 2024"
-  const subscriptionTier = "premium" // or "free"
-
-  const handleSaveProfile = async () => {
-    setIsLoading(true)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    // Here you would make an actual API call to update the user profile
-    console.log("Saving profile:", {
-      username,
-      defaultLanguage,
-      nativeLanguage,
-    })
-
-    setIsLoading(false)
+  // Mock user data
+  const userData = {
+    email: "john@example.com",
+    signupDate: "January 15, 2024",
+    subscriptionTier: "Premium",
+    wordsLearned: 248,
+    currentStreak: 7,
+    avatar: "JL",
   }
 
-  const languageOptions = [
-    { value: "en", label: "English" },
-    { value: "es", label: "Spanish" },
-    { value: "fr", label: "French" },
-    { value: "de", label: "German" },
-    { value: "it", label: "Italian" },
-    { value: "pt", label: "Portuguese" },
-    { value: "ru", label: "Russian" },
-    { value: "ja", label: "Japanese" },
-    { value: "ko", label: "Korean" },
-    { value: "zh", label: "Chinese" },
-    { value: "ar", label: "Arabic" },
-    { value: "hi", label: "Hindi" },
-  ]
+  const handleSave = async () => {
+    setIsLoading(true)
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+    setIsLoading(false)
+    // In a real app, you would save to your backend here
+  }
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }))
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-slate-50">
-      <main className="container py-8">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50 via-white to-slate-50">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <Link href="/dashboard">
-            <Button variant="outline" size="sm" className="gap-2 bg-transparent">
+            <Button variant="ghost" size="sm" className="gap-2">
               <ArrowLeft className="h-4 w-4" />
               Back to Dashboard
             </Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Profile Settings</h1>
-            <p className="text-muted-foreground">Manage your account preferences and language settings</p>
+            <h1 className="text-3xl font-bold text-gray-900">Profile Settings</h1>
+            <p className="text-gray-600">Manage your account preferences and learning settings</p>
           </div>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
-          {/* Profile Overview Card */}
-          <Card className="md:col-span-1 border-2">
-            <CardHeader className="text-center">
-              <div className="mx-auto w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center mb-4">
-                <User className="h-10 w-10 text-orange-600" />
-              </div>
-              <CardTitle className="text-xl">{username}</CardTitle>
-              <CardDescription>Vocabulary Enthusiast</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Subscription Status */}
-              <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-orange-50 to-orange-100 border border-orange-200">
-                <div className="flex items-center gap-2">
-                  {subscriptionTier === "premium" ? (
-                    <Crown className="h-5 w-5 text-orange-600" />
-                  ) : (
-                    <Zap className="h-5 w-5 text-slate-600" />
-                  )}
-                  <span className="font-medium">{subscriptionTier === "premium" ? "Premium" : "Free"} Plan</span>
-                </div>
-                <Badge variant={subscriptionTier === "premium" ? "default" : "secondary"}>
-                  {subscriptionTier === "premium" ? "Active" : "Basic"}
-                </Badge>
-              </div>
-
-              {/* Signup Date */}
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 border border-slate-200">
-                <Calendar className="h-5 w-5 text-slate-600" />
-                <div>
-                  <p className="text-sm font-medium">Member Since</p>
-                  <p className="text-sm text-muted-foreground">{userSignupDate}</p>
-                </div>
-              </div>
-
-              {/* Quick Stats */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="text-center p-3 rounded-lg bg-blue-50 border border-blue-200">
-                  <p className="text-2xl font-bold text-blue-600">248</p>
-                  <p className="text-xs text-blue-600">Words Learned</p>
-                </div>
-                <div className="text-center p-3 rounded-lg bg-green-50 border border-green-200">
-                  <p className="text-2xl font-bold text-green-600">7</p>
-                  <p className="text-xs text-green-600">Day Streak</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Profile Settings Form */}
-          <Card className="md:col-span-2 border-2">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
-                Profile Information
-              </CardTitle>
-              <CardDescription>
-                Update your username and language preferences to personalize your learning experience
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Username */}
-              <div className="space-y-2">
-                <Label htmlFor="username" className="text-sm font-medium">
-                  Username
-                </Label>
-                <Input
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your username"
-                  className="h-11"
-                />
-                <p className="text-xs text-muted-foreground">
-                  This will be displayed on leaderboards and in your profile
-                </p>
-              </div>
-
-              {/* Default Learning Language */}
-              <div className="space-y-2">
-                <Label htmlFor="default-language" className="text-sm font-medium flex items-center gap-2">
-                  <BookOpen className="h-4 w-4" />
-                  Default Learning Language
-                </Label>
-                <Select value={defaultLanguage} onValueChange={setDefaultLanguage}>
-                  <SelectTrigger id="default-language" className="h-11">
-                    <SelectValue placeholder="Select your default learning language" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {languageOptions.map((lang) => (
-                      <SelectItem key={lang.value} value={lang.value}>
-                        {lang.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <p className="text-xs text-muted-foreground">The primary language you want to learn vocabulary for</p>
-              </div>
-
-              {/* Native Language */}
-              <div className="space-y-2">
-                <Label htmlFor="native-language" className="text-sm font-medium flex items-center gap-2">
-                  <Globe className="h-4 w-4" />
-                  Native Language
-                </Label>
-                <Select value={nativeLanguage} onValueChange={setNativeLanguage}>
-                  <SelectTrigger id="native-language" className="h-11">
-                    <SelectValue placeholder="Select your native language" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {languageOptions.map((lang) => (
-                      <SelectItem key={lang.value} value={lang.value}>
-                        {lang.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <p className="text-xs text-muted-foreground">Your native language for translations and explanations</p>
-              </div>
-
-              {/* Language Learning Goals */}
-              <div className="p-4 rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
-                <div className="flex items-center gap-2 mb-2">
-                  <Languages className="h-5 w-5 text-blue-600" />
-                  <h3 className="font-medium text-blue-900">Language Learning Tip</h3>
-                </div>
-                <p className="text-sm text-blue-700">
-                  Setting your native language helps us provide better translations and explanations tailored to your
-                  linguistic background.
-                </p>
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button variant="outline" asChild>
-                <Link href="/dashboard">Cancel</Link>
-              </Button>
-              <Button onClick={handleSaveProfile} disabled={isLoading} className="gap-2">
-                <Save className="h-4 w-4" />
-                {isLoading ? "Saving..." : "Save Changes"}
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-
-        {/* Additional Settings Cards */}
-        <div className="grid gap-6 md:grid-cols-2 mt-8">
-          {/* Subscription Management */}
-          <Card className="border-2">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Crown className="h-5 w-5" />
-                Subscription
-              </CardTitle>
-              <CardDescription>Manage your subscription and billing</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {subscriptionTier === "premium" ? (
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-orange-50 border border-orange-200">
-                    <div>
-                      <p className="font-medium text-orange-900">Premium Plan</p>
-                      <p className="text-sm text-orange-700">$9.99/month</p>
-                    </div>
-                    <Badge className="bg-orange-100 text-orange-800">Active</Badge>
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* User Info Card */}
+          <div className="lg:col-span-1">
+            <Card>
+              <CardHeader className="text-center">
+                <div className="flex justify-center mb-4">
+                  <div className="rounded-full bg-orange-100 h-20 w-20 flex items-center justify-center">
+                    <span className="text-2xl font-bold text-orange-800">{userData.avatar}</span>
                   </div>
-                  <Button variant="outline" className="w-full bg-transparent">
-                    Manage Subscription
+                </div>
+                <CardTitle className="text-xl">{formData.username}</CardTitle>
+                <CardDescription>{userData.email}</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-gray-500" />
+                    <span className="text-sm text-gray-600">Joined</span>
+                  </div>
+                  <span className="text-sm font-medium">{userData.signupDate}</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Crown className="h-4 w-4 text-orange-500" />
+                    <span className="text-sm text-gray-600">Plan</span>
+                  </div>
+                  <Badge
+                    variant={userData.subscriptionTier === "Premium" ? "default" : "secondary"}
+                    className={
+                      userData.subscriptionTier === "Premium"
+                        ? "bg-orange-500 hover:bg-orange-600"
+                        : "bg-gray-100 text-gray-700"
+                    }
+                  >
+                    {userData.subscriptionTier}
+                  </Badge>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <BookOpen className="h-4 w-4 text-blue-500" />
+                      <span className="text-sm text-gray-600">Words Learned</span>
+                    </div>
+                    <span className="text-sm font-medium">{userData.wordsLearned}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Flame className="h-4 w-4 text-red-500" />
+                      <span className="text-sm text-gray-600">Current Streak</span>
+                    </div>
+                    <span className="text-sm font-medium">{userData.currentStreak} days</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Subscription Card */}
+            <Card className="mt-6">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Crown className="h-5 w-5 text-orange-500" />
+                  Subscription
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-medium text-orange-900">Premium Plan</span>
+                      <Badge className="bg-orange-500 hover:bg-orange-600">Active</Badge>
+                    </div>
+                    <p className="text-sm text-orange-700">Unlimited access to all features</p>
+                  </div>
+                  <Button variant="outline" className="w-full bg-transparent" asChild>
+                    <Link href="/pricing">Manage Subscription</Link>
                   </Button>
                 </div>
-              ) : (
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-slate-50 border border-slate-200">
-                    <div>
-                      <p className="font-medium">Free Plan</p>
-                      <p className="text-sm text-muted-foreground">Limited features</p>
-                    </div>
-                    <Badge variant="secondary">Basic</Badge>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Settings Form */}
+          <div className="lg:col-span-2">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <User className="h-5 w-5" />
+                  Account Settings
+                </CardTitle>
+                <CardDescription>Update your profile information and learning preferences</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Username */}
+                <div className="space-y-2">
+                  <Label htmlFor="username">Username</Label>
+                  <Input
+                    id="username"
+                    value={formData.username}
+                    onChange={(e) => handleInputChange("username", e.target.value)}
+                    placeholder="Enter your username"
+                  />
+                  <p className="text-xs text-gray-500">This is how other users will see you on leaderboards</p>
+                </div>
+
+                <Separator />
+
+                {/* Language Preferences */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Target className="h-5 w-5 text-orange-500" />
+                    <h3 className="text-lg font-semibold">Language Preferences</h3>
                   </div>
-                  <Button className="w-full gap-2">
-                    <Crown className="h-4 w-4" />
-                    Upgrade to Premium
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="defaultLanguage">Default Learning Language</Label>
+                      <Select
+                        value={formData.defaultLanguage}
+                        onValueChange={(value) => handleInputChange("defaultLanguage", value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select language" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {languages.map((lang) => (
+                            <SelectItem key={lang.code} value={lang.code}>
+                              {lang.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-gray-500">The language you want to learn by default</p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="nativeLanguage">Native Language</Label>
+                      <Select
+                        value={formData.nativeLanguage}
+                        onValueChange={(value) => handleInputChange("nativeLanguage", value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select language" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="en">English</SelectItem>
+                          <SelectItem value="es">Spanish</SelectItem>
+                          <SelectItem value="fr">French</SelectItem>
+                          <SelectItem value="de">German</SelectItem>
+                          <SelectItem value="it">Italian</SelectItem>
+                          <SelectItem value="pt">Portuguese</SelectItem>
+                          <SelectItem value="ru">Russian</SelectItem>
+                          <SelectItem value="ja">Japanese</SelectItem>
+                          <SelectItem value="ko">Korean</SelectItem>
+                          <SelectItem value="zh">Chinese</SelectItem>
+                          <SelectItem value="ar">Arabic</SelectItem>
+                          <SelectItem value="hi">Hindi</SelectItem>
+                          <SelectItem value="nl">Dutch</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-gray-500">Used for translations and explanations</p>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* Save Button */}
+                <div className="flex justify-end gap-4">
+                  <Button variant="outline" asChild>
+                    <Link href="/dashboard">Cancel</Link>
+                  </Button>
+                  <Button onClick={handleSave} disabled={isLoading} className="bg-orange-500 hover:bg-orange-600">
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="mr-2 h-4 w-4" />
+                        Save Changes
+                      </>
+                    )}
                   </Button>
                 </div>
-              )}
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          {/* Quick Actions */}
-          <Card className="border-2">
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-              <CardDescription>Common profile-related tasks</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Button variant="outline" className="w-full justify-start gap-2 bg-transparent" asChild>
-                <Link href="/user">
-                  <User className="h-4 w-4" />
-                  Advanced Settings
-                </Link>
-              </Button>
-              <Button variant="outline" className="w-full justify-start gap-2 bg-transparent" asChild>
-                <Link href="/dashboard">
-                  <BookOpen className="h-4 w-4" />
-                  View Dashboard
-                </Link>
-              </Button>
-              <Button variant="outline" className="w-full justify-start gap-2 bg-transparent" asChild>
-                <Link href="/practice">
-                  <Zap className="h-4 w-4" />
-                  Start Learning
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
+            {/* Quick Actions */}
+            <Card className="mt-6">
+              <CardHeader>
+                <CardTitle className="text-lg">Quick Actions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Button variant="outline" className="justify-start gap-2 bg-transparent" asChild>
+                    <Link href="/user">
+                      <User className="h-4 w-4" />
+                      Advanced Settings
+                    </Link>
+                  </Button>
+                  <Button variant="outline" className="justify-start gap-2 bg-transparent" asChild>
+                    <Link href="/dashboard">
+                      <BookOpen className="h-4 w-4" />
+                      View Dashboard
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   )
 }
