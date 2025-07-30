@@ -118,11 +118,7 @@ export function ChartTooltip(props: React.ComponentProps<typeof RechartsTooltip>
 /*                       Minimal tooltip-content component                    */
 /* -------------------------------------------------------------------------- */
 
-export function ChartTooltipContent({
-  active,
-  payload,
-  label,
-}: RechartsTooltipProps<number, string>) {
+export function ChartTooltipContent({ active, payload, label }: RechartsTooltipProps<number, string>) {
   if (!active || !payload?.length) return null
 
   return (
@@ -148,11 +144,4 @@ export function ChartTooltipContent({
 /* -------------------------------------------------------------------------- */
 
 // consumers can simply `import { LineChart } from "@/components/ui/chart"`
-export {
-  LineChart,
-  BarChart,
-  PieChart,
-  AreaChart,
-  CartesianGrid,
-  ResponsiveContainer,
-}
+export { LineChart, BarChart, PieChart, AreaChart, CartesianGrid, ResponsiveContainer }
