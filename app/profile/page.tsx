@@ -1,47 +1,77 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
+import {
+  ArrowLeft,
+  User,
+  Globe,
+  Calendar,
+  Crown,
+  Settings,
+  Save,
+  Loader2,
+  Star,
+  Target,
+  TrendingUp,
+} from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { User, Calendar, Crown, BookOpen, Target, Flame, ArrowLeft, Save, Loader2 } from "lucide-react"
-import Link from "next/link"
 
 const languages = [
-  { code: "es", name: "Spanish" },
-  { code: "fr", name: "French" },
-  { code: "de", name: "German" },
-  { code: "it", name: "Italian" },
-  { code: "pt", name: "Portuguese" },
-  { code: "ru", name: "Russian" },
-  { code: "ja", name: "Japanese" },
-  { code: "ko", name: "Korean" },
-  { code: "zh", name: "Chinese" },
-  { code: "ar", name: "Arabic" },
-  { code: "hi", name: "Hindi" },
-  { code: "nl", name: "Dutch" },
+  { code: "es", name: "Spanish", flag: "🇪🇸" },
+  { code: "fr", name: "French", flag: "🇫🇷" },
+  { code: "de", name: "German", flag: "🇩🇪" },
+  { code: "it", name: "Italian", flag: "🇮🇹" },
+  { code: "pt", name: "Portuguese", flag: "🇵🇹" },
+  { code: "ru", name: "Russian", flag: "🇷🇺" },
+  { code: "ja", name: "Japanese", flag: "🇯🇵" },
+  { code: "ko", name: "Korean", flag: "🇰🇷" },
+  { code: "zh", name: "Chinese", flag: "🇨🇳" },
+  { code: "ar", name: "Arabic", flag: "🇸🇦" },
+  { code: "hi", name: "Hindi", flag: "🇮🇳" },
+  { code: "nl", name: "Dutch", flag: "🇳🇱" },
+]
+
+const nativeLanguages = [
+  { code: "en", name: "English", flag: "🇺🇸" },
+  { code: "es", name: "Spanish", flag: "🇪🇸" },
+  { code: "fr", name: "French", flag: "🇫🇷" },
+  { code: "de", name: "German", flag: "🇩🇪" },
+  { code: "pt", name: "Portuguese", flag: "🇵🇹" },
+  { code: "it", name: "Italian", flag: "🇮🇹" },
+  { code: "ru", name: "Russian", flag: "🇷🇺" },
+  { code: "ja", name: "Japanese", flag: "🇯🇵" },
+  { code: "ko", name: "Korean", flag: "🇰🇷" },
+  { code: "zh", name: "Chinese", flag: "🇨🇳" },
 ]
 
 export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(false)
-  const [formData, setFormData] = useState({
-    username: "john_learner",
+  const [userSettings, setUserSettings] = useState({
+    username: "john_doe",
+    email: "john.doe@example.com",
     defaultLanguage: "es",
     nativeLanguage: "en",
+    firstName: "John",
+    lastName: "Doe",
   })
 
   // Mock user data
   const userData = {
-    email: "john@example.com",
     signupDate: "January 15, 2024",
     subscriptionTier: "Premium",
     wordsLearned: 248,
     currentStreak: 7,
-    avatar: "JL",
+    totalPracticeTime: "24h 15m",
+    averageAccuracy: 87,
   }
 
   const handleSave = async () => {
@@ -49,68 +79,218 @@ export default function ProfilePage() {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500))
     setIsLoading(false)
-    // In a real app, you would save to your backend here
+    // Show success message (in real app, you'd use a toast)
+    alert("Settings saved successfully!")
   }
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }))
+  const getLanguageDisplay = (code: string, languageList: typeof languages) => {
+    const lang = languageList.find((l) => l.code === code)
+    return lang ? `${lang.flag} ${lang.name}` : code
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-50 via-white to-slate-50">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
+      <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <Link href="/dashboard">
-            <Button variant="ghost" size="sm" className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Dashboard
-            </Button>
-          </Link>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Profile Settings</h1>
-            <p className="text-gray-600">Manage your account preferences and learning settings</p>
+        <div className="mb-8">
+          <div className="flex items-center gap-4 mb-6">
+            <Link href="/dashboard">
+              <Button variant="outline" size="sm" className="hover:bg-orange-50 hover:border-orange-200 bg-transparent">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Dashboard
+              </Button>
+            </Link>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Profile Settings</h1>
+              <p className="text-gray-600 mt-1">Manage your account preferences and learning settings</p>
+            </div>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* User Info Card */}
-          <div className="lg:col-span-1">
-            <Card>
-              <CardHeader className="text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="rounded-full bg-orange-100 h-20 w-20 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-orange-800">{userData.avatar}</span>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Settings */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Personal Information */}
+            <Card className="border-2 shadow-sm">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <User className="h-5 w-5 text-orange-600" />
+                  Personal Information
+                </CardTitle>
+                <CardDescription>Update your basic account information</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex items-center gap-6">
+                  <Avatar className="h-20 w-20">
+                    <AvatarImage src="/placeholder-user.jpg" alt="Profile" />
+                    <AvatarFallback className="bg-orange-500 text-white text-xl">
+                      {userSettings.firstName[0]}
+                      {userSettings.lastName[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <Button variant="outline" size="sm" className="hover:bg-orange-50 bg-transparent">
+                      Change Photo
+                    </Button>
+                    <p className="text-xs text-gray-500 mt-2">JPG, PNG or GIF. Max size 2MB.</p>
                   </div>
                 </div>
-                <CardTitle className="text-xl">{formData.username}</CardTitle>
-                <CardDescription>{userData.email}</CardDescription>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input
+                      id="firstName"
+                      value={userSettings.firstName}
+                      onChange={(e) => setUserSettings((prev) => ({ ...prev, firstName: e.target.value }))}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input
+                      id="lastName"
+                      value={userSettings.lastName}
+                      onChange={(e) => setUserSettings((prev) => ({ ...prev, lastName: e.target.value }))}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="username">Username</Label>
+                  <Input
+                    id="username"
+                    value={userSettings.username}
+                    onChange={(e) => setUserSettings((prev) => ({ ...prev, username: e.target.value }))}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={userSettings.email}
+                    onChange={(e) => setUserSettings((prev) => ({ ...prev, email: e.target.value }))}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Language Preferences */}
+            <Card className="border-2 shadow-sm">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Globe className="h-5 w-5 text-orange-600" />
+                  Language Preferences
+                </CardTitle>
+                <CardDescription>Set your learning and native languages</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="defaultLanguage">Default Learning Language</Label>
+                    <Select
+                      value={userSettings.defaultLanguage}
+                      onValueChange={(value) => setUserSettings((prev) => ({ ...prev, defaultLanguage: value }))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {languages.map((lang) => (
+                          <SelectItem key={lang.code} value={lang.code}>
+                            {lang.flag} {lang.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-gray-500">The language you want to learn</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="nativeLanguage">Native Language</Label>
+                    <Select
+                      value={userSettings.nativeLanguage}
+                      onValueChange={(value) => setUserSettings((prev) => ({ ...prev, nativeLanguage: value }))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {nativeLanguages.map((lang) => (
+                          <SelectItem key={lang.code} value={lang.code}>
+                            {lang.flag} {lang.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-gray-500">Your native language for translations</p>
+                  </div>
+                </div>
+
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="text-orange-600 mt-0.5">
+                      <Globe className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-orange-900">Language Learning Path</h4>
+                      <p className="text-sm text-orange-700 mt-1">
+                        You're learning {getLanguageDisplay(userSettings.defaultLanguage, languages)} from{" "}
+                        {getLanguageDisplay(userSettings.nativeLanguage, nativeLanguages)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Save Button */}
+            <div className="flex justify-end">
+              <Button
+                onClick={handleSave}
+                disabled={isLoading}
+                className="bg-orange-500 hover:bg-orange-600 text-white min-w-[120px]"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    Save Changes
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Account Overview */}
+            <Card className="border-2 shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-lg">Account Overview</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-600">Joined</span>
+                    <span className="text-sm text-gray-600">Member since</span>
                   </div>
                   <span className="text-sm font-medium">{userData.signupDate}</span>
                 </div>
 
+                <Separator />
+
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Crown className="h-4 w-4 text-orange-500" />
-                    <span className="text-sm text-gray-600">Plan</span>
+                    <span className="text-sm text-gray-600">Subscription</span>
                   </div>
-                  <Badge
-                    variant={userData.subscriptionTier === "Premium" ? "default" : "secondary"}
-                    className={
-                      userData.subscriptionTier === "Premium"
-                        ? "bg-orange-500 hover:bg-orange-600"
-                        : "bg-gray-100 text-gray-700"
-                    }
-                  >
+                  <Badge className="bg-orange-100 text-orange-800 hover:bg-orange-100">
                     {userData.subscriptionTier}
                   </Badge>
                 </div>
@@ -118,177 +298,108 @@ export default function ProfilePage() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <BookOpen className="h-4 w-4 text-blue-500" />
-                      <span className="text-sm text-gray-600">Words Learned</span>
+                  <h4 className="font-medium text-sm">Quick Stats</h4>
+                  <div className="grid grid-cols-2 gap-3 text-center">
+                    <div className="bg-orange-50 rounded-lg p-3">
+                      <div className="text-lg font-bold text-orange-600">{userData.wordsLearned}</div>
+                      <div className="text-xs text-gray-600">Words Learned</div>
                     </div>
-                    <span className="text-sm font-medium">{userData.wordsLearned}</span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Flame className="h-4 w-4 text-red-500" />
-                      <span className="text-sm text-gray-600">Current Streak</span>
+                    <div className="bg-orange-50 rounded-lg p-3">
+                      <div className="text-lg font-bold text-orange-600">{userData.currentStreak}</div>
+                      <div className="text-xs text-gray-600">Day Streak</div>
                     </div>
-                    <span className="text-sm font-medium">{userData.currentStreak} days</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Subscription Card */}
-            <Card className="mt-6">
+            {/* Subscription Management */}
+            <Card className="border-2 shadow-sm">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Crown className="h-5 w-5 text-orange-500" />
                   Subscription
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-orange-900">Premium Plan</span>
-                      <Badge className="bg-orange-500 hover:bg-orange-600">Active</Badge>
-                    </div>
-                    <p className="text-sm text-orange-700">Unlimited access to all features</p>
-                  </div>
-                  <Button variant="outline" className="w-full bg-transparent" asChild>
-                    <Link href="/pricing">Manage Subscription</Link>
+              <CardContent className="space-y-4">
+                <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg border border-orange-200">
+                  <Crown className="h-8 w-8 text-orange-500 mx-auto mb-2" />
+                  <div className="font-semibold text-orange-900">Premium Plan</div>
+                  <div className="text-sm text-orange-700">$30/month</div>
+                  <div className="text-xs text-orange-600 mt-1">Next billing: Feb 15, 2024</div>
+                </div>
+
+                <div className="space-y-2">
+                  <Button variant="outline" className="w-full hover:bg-orange-50 bg-transparent">
+                    <Settings className="h-4 w-4 mr-2" />
+                    Manage Subscription
                   </Button>
+                  <Link href="/pricing">
+                    <Button variant="outline" className="w-full hover:bg-orange-50 bg-transparent">
+                      View All Plans
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
-          </div>
 
-          {/* Settings Form */}
-          <div className="lg:col-span-2">
-            <Card>
+            {/* Learning Progress */}
+            <Card className="border-2 shadow-sm">
               <CardHeader>
-                <CardTitle className="text-xl flex items-center gap-2">
-                  <User className="h-5 w-5" />
-                  Account Settings
-                </CardTitle>
-                <CardDescription>Update your profile information and learning preferences</CardDescription>
+                <CardTitle className="text-lg">Learning Progress</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Username */}
-                <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    value={formData.username}
-                    onChange={(e) => handleInputChange("username", e.target.value)}
-                    placeholder="Enter your username"
-                  />
-                  <p className="text-xs text-gray-500">This is how other users will see you on leaderboards</p>
-                </div>
-
-                <Separator />
-
-                {/* Language Preferences */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2">
-                    <Target className="h-5 w-5 text-orange-500" />
-                    <h3 className="text-lg font-semibold">Language Preferences</h3>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Target className="h-4 w-4 text-orange-500" />
+                      <span className="text-sm">Accuracy</span>
+                    </div>
+                    <span className="text-sm font-medium">{userData.averageAccuracy}%</span>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="defaultLanguage">Default Learning Language</Label>
-                      <Select
-                        value={formData.defaultLanguage}
-                        onValueChange={(value) => handleInputChange("defaultLanguage", value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select language" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {languages.map((lang) => (
-                            <SelectItem key={lang.code} value={lang.code}>
-                              {lang.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <p className="text-xs text-gray-500">The language you want to learn by default</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="h-4 w-4 text-orange-500" />
+                      <span className="text-sm">Practice Time</span>
                     </div>
+                    <span className="text-sm font-medium">{userData.totalPracticeTime}</span>
+                  </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="nativeLanguage">Native Language</Label>
-                      <Select
-                        value={formData.nativeLanguage}
-                        onValueChange={(value) => handleInputChange("nativeLanguage", value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select language" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="en">English</SelectItem>
-                          <SelectItem value="es">Spanish</SelectItem>
-                          <SelectItem value="fr">French</SelectItem>
-                          <SelectItem value="de">German</SelectItem>
-                          <SelectItem value="it">Italian</SelectItem>
-                          <SelectItem value="pt">Portuguese</SelectItem>
-                          <SelectItem value="ru">Russian</SelectItem>
-                          <SelectItem value="ja">Japanese</SelectItem>
-                          <SelectItem value="ko">Korean</SelectItem>
-                          <SelectItem value="zh">Chinese</SelectItem>
-                          <SelectItem value="ar">Arabic</SelectItem>
-                          <SelectItem value="hi">Hindi</SelectItem>
-                          <SelectItem value="nl">Dutch</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <p className="text-xs text-gray-500">Used for translations and explanations</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Star className="h-4 w-4 text-orange-500" />
+                      <span className="text-sm">Current Streak</span>
                     </div>
+                    <span className="text-sm font-medium">{userData.currentStreak} days</span>
                   </div>
                 </div>
 
-                <Separator />
-
-                {/* Save Button */}
-                <div className="flex justify-end gap-4">
-                  <Button variant="outline" asChild>
-                    <Link href="/dashboard">Cancel</Link>
-                  </Button>
-                  <Button onClick={handleSave} disabled={isLoading} className="bg-orange-500 hover:bg-orange-600">
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Saving...
-                      </>
-                    ) : (
-                      <>
-                        <Save className="mr-2 h-4 w-4" />
-                        Save Changes
-                      </>
-                    )}
-                  </Button>
-                </div>
+                <Button variant="outline" className="w-full hover:bg-orange-50 bg-transparent">
+                  View Detailed Analytics
+                </Button>
               </CardContent>
             </Card>
 
             {/* Quick Actions */}
-            <Card className="mt-6">
+            <Card className="border-2 shadow-sm">
               <CardHeader>
                 <CardTitle className="text-lg">Quick Actions</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <Button variant="outline" className="justify-start gap-2 bg-transparent" asChild>
-                    <Link href="/user">
-                      <User className="h-4 w-4" />
-                      Advanced Settings
-                    </Link>
+              <CardContent className="space-y-2">
+                <Link href="/word-groups">
+                  <Button variant="outline" className="w-full justify-start hover:bg-orange-50 bg-transparent">
+                    Manage Word Groups
                   </Button>
-                  <Button variant="outline" className="justify-start gap-2 bg-transparent" asChild>
-                    <Link href="/dashboard">
-                      <BookOpen className="h-4 w-4" />
-                      View Dashboard
-                    </Link>
+                </Link>
+                <Link href="/practice">
+                  <Button variant="outline" className="w-full justify-start hover:bg-orange-50 bg-transparent">
+                    Start Practice Session
                   </Button>
-                </div>
+                </Link>
+                <Button variant="outline" className="w-full justify-start hover:bg-orange-50 bg-transparent">
+                  Export Learning Data
+                </Button>
               </CardContent>
             </Card>
           </div>
