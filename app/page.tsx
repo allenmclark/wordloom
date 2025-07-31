@@ -253,10 +253,10 @@ export default function Home() {
                             <code className="block bg-yellow-100 p-2 rounded text-xs">
                               {`from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
-  CORSMiddleware,
-  allow_origins=["*"],
-  allow_methods=["*"],
-  allow_headers=["*"],
+CORSMiddleware,
+allow_origins=["*"],
+allow_methods=["*"],
+allow_headers=["*"],
 )`}
                             </code>
                           </div>
@@ -606,14 +606,14 @@ const features = [
   {
     title: "Practice",
     description: "Test your knowledge with interactive exercises and spaced repetition techniques.",
-    icon: <Brain className="h-8 w-8 text-blue-500" />,
-    borderColor: "border-blue-500",
+    icon: <Brain className="h-8 w-8 text-emerald-500" />,
+    borderColor: "border-emerald-500",
   },
   {
     title: "Track",
     description: "Monitor your progress and see your vocabulary knowledge grow over time.",
-    icon: <TrendingUp className="h-8 w-8 text-indigo-500" />,
-    borderColor: "border-indigo-500",
+    icon: <TrendingUp className="h-8 w-8 text-slate-500" />,
+    borderColor: "border-slate-500",
   },
 ]
 
