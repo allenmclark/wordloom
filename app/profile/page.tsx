@@ -14,6 +14,7 @@ import {
   Star,
   Target,
   TrendingUp,
+  Shield,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -24,34 +25,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-
-const languages = [
-  { code: "es", name: "Spanish", flag: "🇪🇸" },
-  { code: "fr", name: "French", flag: "🇫🇷" },
-  { code: "de", name: "German", flag: "🇩🇪" },
-  { code: "it", name: "Italian", flag: "🇮🇹" },
-  { code: "pt", name: "Portuguese", flag: "🇵🇹" },
-  { code: "ru", name: "Russian", flag: "🇷🇺" },
-  { code: "ja", name: "Japanese", flag: "🇯🇵" },
-  { code: "ko", name: "Korean", flag: "🇰🇷" },
-  { code: "zh", name: "Chinese", flag: "🇨🇳" },
-  { code: "ar", name: "Arabic", flag: "🇸🇦" },
-  { code: "hi", name: "Hindi", flag: "🇮🇳" },
-  { code: "nl", name: "Dutch", flag: "🇳🇱" },
-]
-
-const nativeLanguages = [
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "es", name: "Spanish", flag: "🇪🇸" },
-  { code: "fr", name: "French", flag: "🇫🇷" },
-  { code: "de", name: "German", flag: "🇩🇪" },
-  { code: "pt", name: "Portuguese", flag: "🇵🇹" },
-  { code: "it", name: "Italian", flag: "🇮🇹" },
-  { code: "ru", name: "Russian", flag: "🇷🇺" },
-  { code: "ja", name: "Japanese", flag: "🇯🇵" },
-  { code: "ko", name: "Korean", flag: "🇰🇷" },
-  { code: "zh", name: "Chinese", flag: "🇨🇳" },
-]
+import { Switch } from "@/components/ui/switch"
+import { languages, nativeLanguages } from "@/lib/languages"
 
 export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(false)
@@ -62,6 +37,8 @@ export default function ProfilePage() {
     nativeLanguage: "en",
     firstName: "John",
     lastName: "Doe",
+    location: "San Francisco, USA",
+    showOnLeaderboard: true,
   })
 
   // Mock user data
@@ -155,13 +132,24 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    value={userSettings.username}
-                    onChange={(e) => setUserSettings((prev) => ({ ...prev, username: e.target.value }))}
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="username">Username</Label>
+                    <Input
+                      id="username"
+                      value={userSettings.username}
+                      onChange={(e) => setUserSettings((prev) => ({ ...prev, username: e.target.value }))}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="location">Location</Label>
+                    <Input
+                      id="location"
+                      value={userSettings.location}
+                      onChange={(e) => setUserSettings((prev) => ({ ...prev, location: e.target.value }))}
+                      placeholder="e.g., San Francisco, USA"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-2">
@@ -241,6 +229,32 @@ export default function ProfilePage() {
                       </p>
                     </div>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Privacy Settings */}
+            <Card className="border-2 shadow-sm">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-orange-600" />
+                  Privacy Settings
+                </CardTitle>
+                <CardDescription>Control how your information is shared</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between rounded-lg border p-4">
+                  <div>
+                    <Label htmlFor="showOnLeaderboard" className="font-medium">
+                      Show profile on leaderboards
+                    </Label>
+                    <p className="text-xs text-gray-500 mt-1">Allow other users to see your rank and profile.</p>
+                  </div>
+                  <Switch
+                    id="showOnLeaderboard"
+                    checked={userSettings.showOnLeaderboard}
+                    onCheckedChange={(checked) => setUserSettings((prev) => ({ ...prev, showOnLeaderboard: checked }))}
+                  />
                 </div>
               </CardContent>
             </Card>

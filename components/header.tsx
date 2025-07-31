@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { languages } from "@/lib/languages"
 
 export function Header() {
   const pathname = usePathname()
@@ -30,9 +31,13 @@ export function Header() {
     { href: "/pricing", label: "Pricing" },
   ]
 
-  // Mock authentication state - in a real app, this would come from your auth system
+  // Mock authentication state and user data
   const isAuthenticated = true
-  const userInitials = "JL"
+  const user = {
+    initials: "JL",
+    defaultLanguage: "es",
+  }
+  const currentLanguage = languages.find((lang) => lang.code === user.defaultLanguage)
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-fade">
@@ -63,33 +68,39 @@ export function Header() {
         </nav>
 
         {/* Desktop Auth Section */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-2">
           {isAuthenticated ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="rounded-full p-2">
-                  <div className="rounded-full bg-orange-100 h-8 w-8 flex items-center justify-center">
-                    <span className="text-sm font-medium text-orange-800">{userInitials}</span>
-                  </div>
+            <>
+              {currentLanguage && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center gap-2 text-foreground/80 hover:text-foreground hover:bg-accent"
+                >
+                  <span className="text-lg">{currentLanguage.flag}</span>
+                  <span className="hidden lg:inline text-sm font-medium">{currentLanguage.name}</span>
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem asChild>
-                  <Link href="/profile" className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    Profile Settings
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/user" className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    Advanced Settings
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Sign Out</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              )}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="rounded-full p-2">
+                    <div className="rounded-full bg-orange-100 h-8 w-8 flex items-center justify-center">
+                      <span className="text-sm font-medium text-orange-800">{user.initials}</span>
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile" className="flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      Profile Settings
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Sign Out</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
           ) : (
             <>
               <Link href="/login">
