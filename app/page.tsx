@@ -253,10 +253,10 @@ export default function Home() {
                             <code className="block bg-yellow-100 p-2 rounded text-xs">
                               {`from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+  CORSMiddleware,
+  allow_origins=["*"],
+  allow_methods=["*"],
+  allow_headers=["*"],
 )`}
                             </code>
                           </div>
@@ -524,106 +524,40 @@ app.add_middleware(
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-100 relative overflow-hidden">
-          {/* Educational themed background elements */}
-          <div className="absolute inset-0">
-            {/* Floating book icons */}
-            <div className="absolute top-20 left-10 opacity-10">
-              <BookOpen className="h-16 w-16 text-orange-600 transform rotate-12" />
-            </div>
-            <div className="absolute top-40 right-20 opacity-10">
-              <Brain className="h-12 w-12 text-amber-600 transform -rotate-12" />
-            </div>
-            <div className="absolute bottom-32 left-1/4 opacity-10">
-              <TrendingUp className="h-14 w-14 text-orange-500 transform rotate-45" />
-            </div>
-            <div className="absolute bottom-20 right-1/3 opacity-10">
-              <BookOpen className="h-10 w-10 text-yellow-600 transform -rotate-45" />
-            </div>
-
-            {/* Gradient orbs */}
-            <div className="absolute top-16 right-16 w-40 h-40 bg-gradient-to-br from-orange-200/30 to-amber-200/30 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-16 left-16 w-32 h-32 bg-gradient-to-br from-yellow-200/35 to-orange-200/35 rounded-full blur-xl"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-br from-amber-100/25 to-orange-100/25 rounded-full blur-3xl"></div>
-          </div>
-
-          <div className="container px-4 md:px-6 relative z-10">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-slate-50">
+          <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center animate-in">
               <div className="space-y-2">
-                <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full border border-orange-200/50 shadow-lg mb-6">
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"></div>
-                    <div
-                      className="w-2 h-2 bg-amber-500 rounded-full animate-bounce"
-                      style={{ animationDelay: "0.1s" }}
-                    ></div>
-                    <div
-                      className="w-2 h-2 bg-yellow-500 rounded-full animate-bounce"
-                      style={{ animationDelay: "0.2s" }}
-                    ></div>
-                  </div>
-                  <span className="text-sm font-semibold text-orange-800">How It Works</span>
+                <div className="inline-block rounded-lg bg-orange-100 px-3 py-1 text-sm font-medium text-orange-700">
+                  How It Works
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-orange-800 via-amber-700 to-yellow-700 bg-clip-text text-transparent">
-                  How VocabMaster Works
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-slate-900">
+                  A Smarter Way to Learn
                 </h2>
-                <p className="max-w-[900px] text-slate-700 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Learn vocabulary like you're trading on a prediction market. Invest time in words, earn points, and
-                  watch your knowledge grow.
+                <p className="max-w-[900px] text-slate-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Our platform is built on three core principles: active learning, intelligent practice, and measurable
+                  progress.
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3 lg:gap-12 mt-16">
+            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3 lg:gap-12 mt-16">
               {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="relative group animate-in"
-                  style={{ animationDelay: `${0.1 * (index + 1)}s` }}
-                >
-                  {/* Card background with enhanced design */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-orange-50/80 rounded-2xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                  <Card className="relative border-0 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden group">
-                    {/* Gradient top border */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400"></div>
-
-                    {/* Step number indicator */}
-                    <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-white font-bold text-lg">{index + 1}</span>
-                    </div>
-
-                    <CardHeader className="p-8 pb-4">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-amber-100 shadow-inner group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">
-                        {feature.icon}
-                      </div>
-                      <CardTitle className="mt-6 text-xl font-bold bg-gradient-to-r from-orange-800 to-amber-800 bg-clip-text text-transparent">
-                        {feature.title}
-                      </CardTitle>
+                <div key={index} className="animate-in" style={{ animationDelay: `${0.1 * (index + 1)}s` }}>
+                  <Card
+                    className={`relative h-full overflow-hidden rounded-2xl border-l-4 bg-white/80 backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${feature.borderColor}`}
+                  >
+                    <CardHeader className="p-6">
+                      <div className="mb-4">{feature.icon}</div>
+                      <CardTitle className="text-xl font-bold text-slate-800">{feature.title}</CardTitle>
                     </CardHeader>
-                    <CardContent className="p-8 pt-0">
+                    <CardContent className="p-6 pt-0">
                       <CardDescription className="text-base text-slate-600 leading-relaxed">
                         {feature.description}
                       </CardDescription>
-
-                      {/* Interactive element */}
-                      <div className="mt-6 flex items-center text-orange-600 font-medium text-sm group-hover:text-orange-700 transition-colors duration-300">
-                        <span>Get started</span>
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                      </div>
                     </CardContent>
-
-                    {/* Hover effect overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
                   </Card>
                 </div>
               ))}
-            </div>
-
-            {/* Connection lines between cards (visible on larger screens) */}
-            <div className="hidden lg:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl">
-              <div className="relative h-1">
-                <div className="absolute top-0 left-1/6 w-1/3 h-0.5 bg-gradient-to-r from-orange-300 to-amber-300 opacity-30"></div>
-                <div className="absolute top-0 right-1/6 w-1/3 h-0.5 bg-gradient-to-r from-amber-300 to-yellow-300 opacity-30"></div>
-              </div>
             </div>
           </div>
         </section>
@@ -666,17 +600,20 @@ const features = [
   {
     title: "Learn",
     description: "Discover new words daily with our curated vocabulary lists tailored to your level.",
-    icon: <BookOpen className="h-6 w-6 text-orange-500" />,
+    icon: <BookOpen className="h-8 w-8 text-orange-500" />,
+    borderColor: "border-orange-500",
   },
   {
     title: "Practice",
     description: "Test your knowledge with interactive exercises and spaced repetition techniques.",
-    icon: <Brain className="h-6 w-6 text-orange-500" />,
+    icon: <Brain className="h-8 w-8 text-blue-500" />,
+    borderColor: "border-blue-500",
   },
   {
     title: "Track",
     description: "Monitor your progress and see your vocabulary knowledge grow over time.",
-    icon: <TrendingUp className="h-6 w-6 text-orange-500" />,
+    icon: <TrendingUp className="h-8 w-8 text-indigo-500" />,
+    borderColor: "border-indigo-500",
   },
 ]
 
