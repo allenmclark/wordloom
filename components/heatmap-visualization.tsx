@@ -1,8 +1,12 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useState, useMemo } from "react"
+import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, TrendingUp } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Calendar, TrendingUp, Filter } from "lucide-react"
+
+const partsOfSpeech = ["All", "Verb", "Noun", "Adjective", "Adverb", "Conjunction"]
 
 // Generate sample heatmap data for the past year
 const generateHeatmapData = () => {
@@ -17,17 +21,27 @@ const generateHeatmapData = () => {
     // Simulate activity levels (0-4)
     const activity = Math.random() > 0.3 ? Math.floor(Math.random() * 5) : 0
 
-    data.push({
-      date: date.toISOString().split("T")[0],
-      activity,
-      words: activity * 5 + Math.floor(Math.random() * 10),
-    })
+    if (activity > 0) {
+      data.push({
+        date: date.toISOString().split("T")[0],
+        activity,
+        words: activity * 5 + Math.floor(Math.random() * 10),
+        partOfSpeech: partsOfSpeech[Math.floor(Math.random() * (partsOfSpeech.length - 1)) + 1],
+      })
+    } else {
+      data.push({
+        date: date.toISOString().split("T")[0],
+        activity: 0,
+        words: 0,
+        partOfSpeech: "None",
+      })
+    }
   }
 
   return data
 }
 
-const heatmapData = generateHeatmapData()
+const rawHeatmapData = generateHeatmapData()
 
 const getActivityColor = (level: number) => {
   const colors = [
@@ -41,51 +55,80 @@ const getActivityColor = (level: number) => {
 }
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-
 const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 export function HeatmapVisualization() {
+  const [selectedPOS, setSelectedPOS] = useState("All")
+
+  const heatmapData = useMemo(() => {
+    if (selectedPOS === "All") {
+      return rawHeatmapData
+    }
+    // For filtering, we still need to show all days, but only count activity for the selected POS
+    return rawHeatmapData.map((day) => {
+      if (day.partOfSpeech === selectedPOS) {
+        return day
+      }
+      return { ...day, activity: 0, words: 0 }
+    })
+  }, [selectedPOS])
+
   const totalWords = heatmapData.reduce((sum, day) => sum + day.words, 0)
   const activeDays = heatmapData.filter((day) => day.activity > 0).length
-  const currentStreak = calculateCurrentStreak()
-  const longestStreak = calculateLongestStreak()
 
-  function calculateCurrentStreak() {
-    let streak = 0
-    for (let i = heatmapData.length - 1; i >= 0; i--) {
-      if (heatmapData[i].activity > 0) {
-        streak++
+  const calculateStreak = (data: typeof heatmapData) => {
+    let currentStreak = 0
+    let longestStreak = 0
+    data.forEach((day) => {
+      if (day.activity > 0) {
+        currentStreak++
+      } else {
+        longestStreak = Math.max(longestStreak, currentStreak)
+        currentStreak = 0
+      }
+    })
+    longestStreak = Math.max(longestStreak, currentStreak) // Check streak at the end
+
+    let finalCurrentStreak = 0
+    for (let i = data.length - 1; i >= 0; i--) {
+      if (data[i].activity > 0) {
+        finalCurrentStreak++
       } else {
         break
       }
     }
-    return streak
+    return { currentStreak: finalCurrentStreak, longestStreak }
   }
 
-  function calculateLongestStreak() {
-    let maxStreak = 0
-    let currentStreak = 0
-
-    heatmapData.forEach((day) => {
-      if (day.activity > 0) {
-        currentStreak++
-        maxStreak = Math.max(maxStreak, currentStreak)
-      } else {
-        currentStreak = 0
-      }
-    })
-
-    return maxStreak
-  }
+  const { currentStreak, longestStreak } = calculateStreak(heatmapData)
 
   return (
     <div className="space-y-6">
-      <div>
-        <CardTitle className="flex items-center gap-2 mb-2">
-          <Calendar className="h-5 w-5 text-orange-500" />
-          Learning Activity Heatmap
-        </CardTitle>
-        <CardDescription>Your vocabulary learning activity over the past year</CardDescription>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+        <div>
+          <CardTitle className="flex items-center gap-2 mb-2">
+            <Calendar className="h-5 w-5 text-orange-500" />
+            Learning Activity
+          </CardTitle>
+          <CardDescription>Your vocabulary learning activity over the past year.</CardDescription>
+        </div>
+        <div className="mt-4 md:mt-0">
+          <Select value={selectedPOS} onValueChange={setSelectedPOS}>
+            <SelectTrigger className="w-full md:w-[180px]">
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4" />
+                <SelectValue placeholder="Filter by Type" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              {partsOfSpeech.map((pos) => (
+                <SelectItem key={pos} value={pos}>
+                  {pos}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Stats Row */}
@@ -118,8 +161,8 @@ export function HeatmapVisualization() {
 
       {/* Heatmap */}
       <Card>
-        <CardContent className="p-6">
-          <div className="space-y-4">
+        <CardContent className="p-6 overflow-x-auto">
+          <div className="space-y-4 min-w-[600px]">
             {/* Month labels */}
             <div className="flex justify-between text-xs text-muted-foreground mb-2">
               {months.map((month) => (
@@ -140,8 +183,7 @@ export function HeatmapVisualization() {
 
               {/* Heatmap cells */}
               <div className="grid grid-cols-53 gap-1">
-                {heatmapData.map((day, index) => {
-                  const date = new Date(day.date)
+                {heatmapData.map((day) => {
                   return (
                     <div
                       key={day.date}
@@ -175,53 +217,6 @@ export function HeatmapVisualization() {
           </div>
         </CardContent>
       </Card>
-
-      {/* Activity Insights */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Best Performing Months</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span>March 2024</span>
-                <Badge>28 days active</Badge>
-              </div>
-              <div className="flex justify-between">
-                <span>January 2024</span>
-                <Badge>25 days active</Badge>
-              </div>
-              <div className="flex justify-between">
-                <span>November 2023</span>
-                <Badge>23 days active</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Weekly Patterns</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span>Most active day</span>
-                <Badge variant="secondary">Tuesday</Badge>
-              </div>
-              <div className="flex justify-between">
-                <span>Least active day</span>
-                <Badge variant="secondary">Sunday</Badge>
-              </div>
-              <div className="flex justify-between">
-                <span>Weekend activity</span>
-                <Badge variant="secondary">65%</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   )
 }
