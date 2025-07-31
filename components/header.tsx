@@ -23,9 +23,8 @@ export function Header() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/practice", label: "Practice" },
-    { href: "/word-groups", label: "Word Groups" },
+    { href: "/vocabulary", label: "Vocabulary" },
     { href: "/portfolio-map", label: "Portfolio Map" },
-    { href: "/spanish-english", label: "Spanish-English" },
     { href: "/dashboard", label: "Dashboard" },
     { href: "/leaderboard", label: "Leaderboard" },
     { href: "/blog", label: "Blog" },
