@@ -66,7 +66,7 @@ export default function VocabularyPage() {
   const [newGroupName, setNewGroupName] = useState("")
 
   const categories = useMemo(() => {
-    const cats = Array.from(new Set(vocabularyData.map((word: any) => word.part_of_speech)))
+    const cats = Array.from(new Set(vocabularyData.map((word: any) => word.part_of_speech).filter(Boolean)))
     return ["all", ...cats]
   }, [vocabularyData])
 
@@ -97,8 +97,8 @@ export default function VocabularyPage() {
           (word: any) =>
             word.from_source.toLowerCase().includes(searchTerm.toLowerCase()) ||
             word.to_target.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            word.part_of_speech.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            word.definition.toLowerCase().includes(searchTerm.toLowerCase()),
+            (word.part_of_speech && word.part_of_speech.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (word.definition && word.definition.toLowerCase().includes(searchTerm.toLowerCase())),
         )
       } else {
         const scoredResults = filtered.map((word: any) => ({
@@ -406,8 +406,8 @@ export default function VocabularyPage() {
                   <CardContent>
                     <p className="text-sm text-muted-foreground mb-2">{word.definition}</p>
                     <div className="flex gap-2">
-                      <Badge variant="outline">{word.part_of_speech}</Badge>
-                      <Badge variant="outline">{word.difficulty}</Badge>
+                      {word.part_of_speech && <Badge variant="outline">{word.part_of_speech}</Badge>}
+                      {word.difficulty && <Badge variant="outline">{word.difficulty}</Badge>}
                     </div>
                   </CardContent>
                 </Card>
@@ -443,11 +443,9 @@ export default function VocabularyPage() {
                       <TableCell className="font-medium">{word.from_source}</TableCell>
                       <TableCell>{word.to_target}</TableCell>
                       <TableCell>
-                        <Badge variant="outline">{word.part_of_speech}</Badge>
+                        {word.part_of_speech && <Badge variant="outline">{word.part_of_speech}</Badge>}
                       </TableCell>
-                      <TableCell>
-                        <Badge variant="outline">{word.difficulty}</Badge>
-                      </TableCell>
+                      <TableCell>{word.difficulty && <Badge variant="outline">{word.difficulty}</Badge>}</TableCell>
                       <TableCell className="text-sm text-muted-foreground truncate max-w-xs">
                         {word.definition}
                       </TableCell>
