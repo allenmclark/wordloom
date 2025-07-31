@@ -44,7 +44,7 @@ const mockWords: {
 export function WordCloud3D() {
   return (
     <Canvas camera={{ position: [0, 0, 25], fov: 45 }}>
-      <color attach="background" args={["#111827"]} />
+      <color attach="background" args={["#030712"]} />
       <ambientLight intensity={0.8} />
       <pointLight position={[10, 10, 10]} intensity={1} />
 
