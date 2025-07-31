@@ -1,7 +1,19 @@
 "use client"
 
 import { useEffect, useState, useMemo } from "react"
-import { Search, BookOpen, List, Plus, Grid, FolderPlus, ChevronDown, Folder, Sparkles } from "lucide-react"
+import {
+  Search,
+  BookOpen,
+  List,
+  Plus,
+  Grid,
+  FolderPlus,
+  ChevronDown,
+  Folder,
+  Sparkles,
+  Trash2,
+  PlusCircle,
+} from "lucide-react"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -53,18 +65,18 @@ const sampleWordGroups = [
 const getDifficultyBadge = (difficulty: string): { variant: BadgeVariant; className: string } => {
   switch (difficulty?.toLowerCase()) {
     case "beginner":
-      return { variant: "outline", className: "text-blue-600 border-blue-300 bg-blue-50" }
+      return { variant: "outline", className: "text-blue-600 border-blue-400 bg-blue-50" }
     case "intermediate":
-      return { variant: "outline", className: "text-orange-600 border-orange-300 bg-orange-50" }
+      return { variant: "outline", className: "text-orange-600 border-orange-400 bg-orange-50" }
     case "advanced":
-      return { variant: "outline", className: "text-red-600 border-red-300 bg-red-50" }
+      return { variant: "outline", className: "text-red-600 border-red-400 bg-red-50" }
     default:
-      return { variant: "outline", className: "" }
+      return { variant: "outline", className: "border-slate-300" }
   }
 }
 
 export default function VocabularyPage() {
-  const [vocabularyData, setVocabularyData] = useState([])
+  const [vocabularyData, setVocabularyData] = useState<any[]>([])
   const [wordGroups, setWordGroups] = useState(sampleWordGroups)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -76,11 +88,11 @@ export default function VocabularyPage() {
   const [selectedWords, setSelectedWords] = useState<Set<number>>(new Set())
   const [activeGroup, setActiveGroup] = useState<number | "all">("all")
 
-  const [showGroupDialog, setShowGroupDialog] = useState(false)
+  const [showCreateGroupDialog, setShowCreateGroupDialog] = useState(false)
   const [newGroupName, setNewGroupName] = useState("")
 
   const categories = useMemo(() => {
-    const cats = Array.from(new Set(vocabularyData.map((word: any) => word.part_of_speech).filter(Boolean)))
+    const cats = Array.from(new Set(vocabularyData.map((word) => word.part_of_speech).filter(Boolean)))
     return ["all", ...cats]
   }, [vocabularyData])
 
@@ -89,33 +101,31 @@ export default function VocabularyPage() {
   const filteredData = useMemo(() => {
     let filtered = vocabularyData
 
-    // Filter by active word group
     if (activeGroup !== "all") {
-      // This is a placeholder. In a real app, you'd have a mapping of group IDs to word IDs.
-      // For now, we'll just slice the data to simulate filtering.
       const group = wordGroups.find((g) => g.id === activeGroup)
       if (group) {
+        // Placeholder logic for showing words in a group
         filtered = vocabularyData.slice(0, group.wordCount)
       }
     }
 
     if (selectedCategory !== "all") {
-      filtered = filtered.filter((word: any) => word.part_of_speech === selectedCategory)
+      filtered = filtered.filter((word) => word.part_of_speech === selectedCategory)
     }
     if (selectedDifficulty !== "all") {
-      filtered = filtered.filter((word: any) => word.difficulty === selectedDifficulty)
+      filtered = filtered.filter((word) => word.difficulty === selectedDifficulty)
     }
     if (searchTerm.trim()) {
       if (searchMode === "standard") {
         filtered = filtered.filter(
-          (word: any) =>
+          (word) =>
             word.from_source.toLowerCase().includes(searchTerm.toLowerCase()) ||
             word.to_target.toLowerCase().includes(searchTerm.toLowerCase()) ||
             (word.part_of_speech && word.part_of_speech.toLowerCase().includes(searchTerm.toLowerCase())) ||
             (word.definition && word.definition.toLowerCase().includes(searchTerm.toLowerCase())),
         )
       } else {
-        const scoredResults = filtered.map((word: any) => ({
+        const scoredResults = filtered.map((word) => ({
           ...word,
           similarity: calculateSemanticSimilarity(searchTerm, word),
         }))
@@ -137,7 +147,7 @@ export default function VocabularyPage() {
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedWords(new Set(filteredData.map((word: any) => word.id)))
+      setSelectedWords(new Set(filteredData.map((word) => word.id)))
     } else {
       setSelectedWords(new Set())
     }
@@ -146,19 +156,28 @@ export default function VocabularyPage() {
   const handleCreateGroup = () => {
     if (newGroupName.trim()) {
       const newGroup = {
-        id: wordGroups.length + 1,
+        id: Date.now(), // Use a more robust ID in production
         name: newGroupName.trim(),
         wordCount: selectedWords.size,
         isPublic: false,
         creator: "You",
       }
       setWordGroups([...wordGroups, newGroup])
-      // In a real app, you'd also associate the selected words with this new group ID.
       console.log(`Created group "${newGroup.name}" with ${selectedWords.size} words.`)
       setSelectedWords(new Set())
-      setShowGroupDialog(false)
+      setShowCreateGroupDialog(false)
       setNewGroupName("")
     }
+  }
+
+  const handleAddWordToDeck = (wordId: number, deckId: number) => {
+    console.log(`Adding word ${wordId} to deck ${deckId}`)
+    // Here you would make an API call to add the word to the deck
+  }
+
+  const handleRemoveWordFromDeck = (wordId: number, deckId: number) => {
+    console.log(`Removing word ${wordId} from deck ${deckId}`)
+    // Here you would make an API call to remove the word from the deck
   }
 
   useEffect(() => {
@@ -169,6 +188,12 @@ export default function VocabularyPage() {
       .finally(() => setIsLoading(false))
   }, [])
 
+  const isViewingUserDeck = useMemo(() => {
+    if (activeGroup === "all") return false
+    const group = wordGroups.find((g) => g.id === activeGroup)
+    return group?.creator === "You"
+  }, [activeGroup, wordGroups])
+
   if (isLoading) {
     return <div className="flex items-center justify-center h-screen">Loading vocabulary explorer...</div>
   }
@@ -178,7 +203,7 @@ export default function VocabularyPage() {
       {/* Sidebar for Word Groups */}
       <aside className="w-72 border-r bg-white p-4 flex flex-col">
         <h2 className="text-lg font-semibold mb-4">Word Decks</h2>
-        <Dialog open={showGroupDialog} onOpenChange={setShowGroupDialog}>
+        <Dialog open={showCreateGroupDialog} onOpenChange={setShowCreateGroupDialog}>
           <DialogTrigger asChild>
             <Button className="w-full mb-4 bg-orange-500 hover:bg-orange-600">
               <FolderPlus className="mr-2 h-4 w-4" />
@@ -203,7 +228,7 @@ export default function VocabularyPage() {
               />
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setShowGroupDialog(false)}>
+              <Button variant="outline" onClick={() => setShowCreateGroupDialog(false)}>
                 Cancel
               </Button>
               <Button onClick={handleCreateGroup} disabled={!newGroupName.trim()}>
@@ -396,7 +421,7 @@ export default function VocabularyPage() {
             </div>
             <div className="flex items-center gap-2">
               {selectedWords.size > 0 && (
-                <Button onClick={() => setShowGroupDialog(true)}>
+                <Button onClick={() => setShowCreateGroupDialog(true)}>
                   <Plus className="mr-2 h-4 w-4" />
                   Add to Deck
                 </Button>
@@ -422,35 +447,52 @@ export default function VocabularyPage() {
 
           {/* Word Display */}
           {viewMode === "cards" ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {filteredData.map((word: any) => {
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {filteredData.map((word) => {
                 const difficultyBadge = getDifficultyBadge(word.difficulty)
                 return (
                   <Card
                     key={word.id}
-                    className="relative group cursor-pointer bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                    className="relative group flex flex-col bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 shadow-md hover:shadow-xl hover:border-orange-300 hover:-translate-y-1 transition-all duration-300"
                   >
-                    <Checkbox
-                      className="absolute top-4 right-4 h-5 w-5 z-10 opacity-0 group-hover:opacity-100 checked:opacity-100 transition-opacity"
-                      checked={selectedWords.has(word.id)}
-                      onCheckedChange={(checked) => handleWordSelection(word.id, checked as boolean)}
-                    />
-                    <CardContent className="p-6 flex flex-col justify-between h-full">
-                      <div>
+                    <CardContent className="p-6 flex flex-col flex-grow">
+                      <div className="flex-grow">
                         <p className="text-2xl font-bold text-slate-800">{word.from_source}</p>
                         <p className="text-lg text-slate-600">{word.to_target}</p>
                         <p className="text-sm text-slate-500 mt-4 line-clamp-3">{word.definition}</p>
                       </div>
-                      <div className="flex gap-2 mt-4">
-                        {word.part_of_speech && <Badge variant="outline">{word.part_of_speech}</Badge>}
-                        {word.difficulty && (
-                          <Badge
-                            variant={difficultyBadge.variant}
-                            className={cn("font-medium", difficultyBadge.className)}
-                          >
-                            {word.difficulty}
-                          </Badge>
-                        )}
+                      <div className="mt-auto pt-4 flex justify-between items-end">
+                        <div className="flex flex-wrap gap-2">
+                          {word.part_of_speech && (
+                            <Badge variant="outline" className="border-slate-300">
+                              {word.part_of_speech}
+                            </Badge>
+                          )}
+                          {word.difficulty && (
+                            <Badge
+                              variant={difficultyBadge.variant}
+                              className={cn("font-medium", difficultyBadge.className)}
+                            >
+                              {word.difficulty}
+                            </Badge>
+                          )}
+                        </div>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className="bg-orange-500 text-white hover:bg-orange-600 border-orange-600 h-8 w-8"
+                          onClick={(e) => {
+                            e.stopPropagation() // Prevent card click events
+                            if (isViewingUserDeck) {
+                              handleRemoveWordFromDeck(word.id, activeGroup as number)
+                            } else {
+                              // In a real app, this would open a dialog to select a deck
+                              handleAddWordToDeck(word.id, wordGroups.find((g) => g.creator === "You")?.id || 0)
+                            }
+                          }}
+                        >
+                          {isViewingUserDeck ? <Trash2 className="h-4 w-4" /> : <PlusCircle className="h-4 w-4" />}
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -476,7 +518,7 @@ export default function VocabularyPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredData.map((word: any) => (
+                  {filteredData.map((word) => (
                     <TableRow key={word.id} data-state={selectedWords.has(word.id) && "selected"}>
                       <TableCell>
                         <Checkbox
