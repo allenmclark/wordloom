@@ -180,11 +180,11 @@ export default function Home() {
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
-                  <Link href="/how-it-works">
+                  <Link href="/about">
                     <Button
                       size="lg"
                       variant="outline"
-                      className="rounded-full px-6 border-orange-200 hover:border-orange-500 hover:bg-orange-50"
+                      className="rounded-full px-6 border-orange-200 hover:border-orange-500 hover:bg-orange-50 bg-transparent"
                     >
                       How it works
                     </Button>
@@ -679,10 +679,6 @@ const features = [
     icon: <TrendingUp className="h-6 w-6 text-orange-500" />,
   },
 ]
-
-
-
-
 
 // Generate hourly data for the last 7 days with more realistic patterns
 const generateHourlyData = () => {
