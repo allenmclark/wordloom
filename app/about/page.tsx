@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, BookOpen, Brain, TrendingUp, Target, Zap, Lightbulb, Rocket } from "lucide-react"
+import { ArrowRight, BookOpen, Brain, TrendingUp, Target, Zap, Lightbulb, Rocket, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function AboutPage() {
@@ -77,6 +77,21 @@ export default function AboutPage() {
                   <p className="text-muted-foreground">{step.description}</p>
                 </div>
               ))}
+            </div>
+            <div className="text-center mt-16">
+              <p className="text-lg text-muted-foreground mb-4">
+                Want a deeper dive into our methodology and a step-by-step guide?
+              </p>
+              <Link href="/how-it-works">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="rounded-full px-8 py-6 border-orange-200 hover:border-orange-500 hover:bg-white text-lg bg-transparent"
+                >
+                  Read The Official Playbook
+                  <ExternalLink className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
