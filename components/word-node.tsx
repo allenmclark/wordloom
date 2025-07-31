@@ -33,21 +33,28 @@ export function WordNode({ word, translation, mastery, position }: WordNodeProps
         {word}
       </Text>
 
-      {/* Detail text group, scaled to 0 when not active to prevent unmounting */}
-      <group scale={active ? 1 : 0} position={[0, -0.65, 0]}>
-        <Text
-          position={[0, 0, 0]}
-          fontSize={0.3}
-          color="#d1d5db" // gray-300
-          anchorX="center"
-          anchorY="middle"
-        >
-          "{translation}"
-        </Text>
-        <Text position={[0, -0.3, 0]} fontSize={0.25} color={color} anchorX="center" anchorY="middle">
-          Mastery: {Math.round(mastery * 100)}%
-        </Text>
-      </group>
+      <Text
+        position={[0, -0.5, 0]}
+        fontSize={0.3}
+        color="#d1d5db" // gray-300
+        anchorX="center"
+        anchorY="middle"
+        fillOpacity={active ? 1 : 0}
+        material-transparent={true}
+      >
+        {`"${translation}"`}
+      </Text>
+      <Text
+        position={[0, -0.8, 0]}
+        fontSize={0.25}
+        color={color}
+        anchorX="center"
+        anchorY="middle"
+        fillOpacity={active ? 1 : 0}
+        material-transparent={true}
+      >
+        {`Mastery: ${Math.round(mastery * 100)}%`}
+      </Text>
     </group>
   )
 }
