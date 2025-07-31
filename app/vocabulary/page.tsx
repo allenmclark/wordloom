@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useMemo } from "react"
-import { Search, BookOpen, List, Plus, Grid, FolderPlus, ChevronDown, Folder } from "lucide-react"
+import { Search, BookOpen, List, Plus, Grid, FolderPlus, ChevronDown, Folder, Sparkles } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -283,7 +283,7 @@ export default function VocabularyPage() {
           </div>
 
           {/* Search Section */}
-          <Card className="shadow-sm mb-8">
+          <Card className="mb-8 border-2 border-orange-300/50 bg-gradient-to-br from-white to-orange-50 shadow-lg shadow-orange-500/10">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Search className="h-5 w-5" />
@@ -307,12 +307,29 @@ export default function VocabularyPage() {
                   />
                 </div>
                 <Select value={searchMode} onValueChange={(value: SearchMode) => setSearchMode(value)}>
-                  <SelectTrigger className="w-full md:w-48 h-11">
-                    <SelectValue />
+                  <SelectTrigger className="w-full md:w-52 h-11">
+                    <div className="flex items-center gap-2">
+                      {searchMode === "standard" ? (
+                        <Search className="h-4 w-4 text-muted-foreground" />
+                      ) : (
+                        <Sparkles className="h-4 w-4 text-orange-500" />
+                      )}
+                      <SelectValue />
+                    </div>
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="standard">Standard Search</SelectItem>
-                    <SelectItem value="vector">Semantic Search</SelectItem>
+                    <SelectItem value="standard">
+                      <div className="flex items-center gap-2">
+                        <Search className="h-4 w-4 text-muted-foreground" />
+                        <span>Standard Search</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="vector">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="h-4 w-4 text-orange-500" />
+                        <span>Semantic Search</span>
+                      </div>
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
