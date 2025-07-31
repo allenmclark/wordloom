@@ -21,7 +21,7 @@ export function WordNode({ word, translation, mastery, position }: WordNodeProps
   }, [mastery])
 
   return (
-    <group position={position} onClick={() => setActive(!active)}>
+    <group position={position} onClick={(e) => (e.stopPropagation(), setActive(!active))}>
       <Text
         fontSize={active ? 0.8 : 0.5}
         color={active ? "white" : color}
