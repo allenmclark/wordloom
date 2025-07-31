@@ -2,188 +2,96 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookOpen, Menu, X, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
 import {
   DropdownMenu,
+  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { languages } from "@/lib/languages"
+import { Menu, Mountain, User, Flag } from "lucide-react"
+import { cn } from "@/lib/utils"
+
+const navLinks = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/word-groups", label: "Word Groups" },
+  { href: "/leaderboard", label: "Leaderboard" },
+  { href: "/portfolio-map", label: "Portfolio Map" },
+]
 
 export function Header() {
   const pathname = usePathname()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const isActive = (path: string) => pathname === path
-
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/practice", label: "Practice" },
-    { href: "/word-groups", label: "Word Groups" },
-    { href: "/portfolio-map", label: "Portfolio Map" },
-    { href: "/spanish-english", label: "Spanish-English" },
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "/leaderboard", label: "Leaderboard" },
-    { href: "/blog", label: "Blog" },
-    { href: "/pricing", label: "Pricing" },
-  ]
-
-  // Mock authentication state and user data
-  const isAuthenticated = true
-  const user = {
-    initials: "JL",
-    defaultLanguage: "es",
-  }
-  const currentLanguage = languages.find((lang) => lang.code === user.defaultLanguage)
+  const NavLink = ({ href, label }: { href: string; label: string }) => (
+    <Link
+      href={href}
+      className={cn(
+        "text-sm font-medium transition-colors hover:text-primary",
+        pathname === href ? "text-primary" : "text-muted-foreground",
+      )}
+    >
+      {label}
+    </Link>
+  )
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-fade">
-      <div className="container flex h-16 items-center justify-between py-4">
-        <div className="flex items-center gap-2">
-          <BookOpen className="h-6 w-6 text-orange-500 no-fade" />
-          <span className="text-xl font-display font-bold text-orange-500 no-fade">VocabMarket</span>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center">
+        <Link href="/" className="mr-6 flex items-center gap-2">
+          <Mountain className="h-6 w-6" />
+          <span className="font-bold">VocabMarket</span>
+        </Link>
+        <nav className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`text-sm font-medium transition-colors relative group no-fade ${
-                isActive(link.href) ? "text-orange-500 font-semibold" : "text-foreground hover:text-orange-500"
-              }`}
-            >
-              {link.label}
-              <span
-                className={`absolute -bottom-1 left-0 h-0.5 bg-orange-500 transition-all ${
-                  isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
-                }`}
-              ></span>
-            </Link>
+            <NavLink key={link.href} {...link} />
           ))}
         </nav>
-
-        {/* Desktop Auth Section */}
-        <div className="hidden md:flex items-center gap-2">
-          {isAuthenticated ? (
-            <>
-              {currentLanguage && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="flex items-center gap-2 text-foreground/80 hover:text-foreground hover:bg-accent"
-                >
-                  <span className="text-lg">{currentLanguage.flag}</span>
-                  <span className="hidden lg:inline text-sm font-medium">{currentLanguage.name}</span>
-                </Button>
-              )}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="rounded-full p-2">
-                    <div className="rounded-full bg-orange-100 h-8 w-8 flex items-center justify-center">
-                      <span className="text-sm font-medium text-orange-800">{user.initials}</span>
-                    </div>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuItem asChild>
-                    <Link href="/profile" className="flex items-center gap-2">
-                      <User className="h-4 w-4" />
-                      Profile Settings
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Sign Out</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </>
-          ) : (
-            <>
-              <Link href="/login">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full px-4 vibrant-button-outline no-fade hover:bg-transparent hover:text-orange-500 bg-transparent"
-                >
-                  Log in
-                </Button>
+        <div className="ml-auto flex items-center gap-4">
+          <div className="hidden items-center gap-2 md:flex">
+            <Flag className="h-5 w-5 text-muted-foreground" />
+            <span className="text-sm font-medium text-muted-foreground">ES</span>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" size="icon" className="rounded-full">
+                <User className="h-5 w-5" />
+                <span className="sr-only">Toggle user menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem asChild>
+                <Link href="/profile">Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard">Dashboard</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <Link href="/" className="mr-6 flex items-center gap-2">
+                <Mountain className="h-6 w-6" />
+                <span className="font-bold">VocabMarket</span>
               </Link>
-              <Link href="/signup">
-                <Button size="sm" className="rounded-full px-4 vibrant-button-primary no-fade">
-                  Sign up
-                </Button>
-              </Link>
-            </>
-          )}
+              <div className="mt-6 grid gap-4">
+                {navLinks.map((link) => (
+                  <NavLink key={link.href} {...link} />
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
-
-        {/* Mobile Menu Button */}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="md:hidden no-fade"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
       </div>
-
-      {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t bg-background/95 backdrop-blur no-fade">
-          <nav className="container py-4 space-y-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`block text-sm font-medium transition-colors no-fade ${
-                  isActive(link.href) ? "text-orange-500 font-semibold" : "text-foreground hover:text-orange-500"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <div className="flex flex-col gap-2 pt-4 border-t">
-              {isAuthenticated ? (
-                <>
-                  <Link href="/profile" onClick={() => setMobileMenuOpen(false)}>
-                    <Button variant="outline" size="sm" className="w-full justify-start gap-2 bg-transparent">
-                      <User className="h-4 w-4" />
-                      Profile Settings
-                    </Button>
-                  </Link>
-                  <Button variant="outline" size="sm" className="w-full bg-transparent">
-                    Sign Out
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full vibrant-button-outline no-fade bg-transparent"
-                    >
-                      Log in
-                    </Button>
-                  </Link>
-                  <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
-                    <Button size="sm" className="w-full vibrant-button-primary no-fade">
-                      Sign up
-                    </Button>
-                  </Link>
-                </>
-              )}
-            </div>
-          </nav>
-        </div>
-      )}
     </header>
   )
 }

@@ -1,16 +1,17 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Suspense } from "react"
+import { Loader } from "lucide-react"
 
 const WordCloud3D = dynamic(() => import("@/components/word-cloud-3d").then((mod) => mod.WordCloud3D), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[calc(100vh-4rem)] w-full items-center justify-center bg-background">
+    <div className="flex h-full w-full items-center justify-center bg-gray-900 text-white">
       <div className="flex flex-col items-center gap-4">
-        <Skeleton className="h-12 w-12 rounded-full" />
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[200px]" />
+        <Loader className="h-8 w-8 animate-spin" />
+        <p className="text-lg">Building Vocabulary Universe...</p>
+        <p className="text-sm text-muted-foreground">This may take a moment.</p>
       </div>
     </div>
   ),
@@ -18,8 +19,10 @@ const WordCloud3D = dynamic(() => import("@/components/word-cloud-3d").then((mod
 
 export default function PortfolioMapPage() {
   return (
-    <main className="h-[calc(100vh-4rem)] w-full bg-gray-900">
-      <WordCloud3D />
+    <main className="h-[calc(100vh-4rem)] w-full">
+      <Suspense fallback={null}>
+        <WordCloud3D />
+      </Suspense>
     </main>
   )
 }

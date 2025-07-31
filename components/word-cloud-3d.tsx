@@ -37,8 +37,9 @@ const mockWords = [
 export function WordCloud3D() {
   return (
     <Canvas camera={{ position: [0, 0, 10], fov: 25 }}>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
+      <color attach="background" args={["#111827"]} />
+      <ambientLight intensity={1} />
+      <pointLight position={[10, 10, 10]} intensity={0.5} />
 
       {mockWords.map((props) => (
         <WordNode key={props.id} {...props} />
