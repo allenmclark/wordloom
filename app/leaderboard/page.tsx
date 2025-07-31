@@ -1,4 +1,4 @@
-import { Award, Medal, Search, Trophy, Users, Flame, TrendingUp, TrendingDown, Star } from "lucide-react"
+import { Award, Medal, Search, Trophy, Users, Flame } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -97,46 +97,6 @@ export default function LeaderboardPage() {
             </Card>
           ))}
         </div>
-
-        <Card className="mb-8 border-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Star className="h-5 w-5 text-orange-500" />
-              Weekly Spotlight
-            </CardTitle>
-            <CardDescription>Users making the biggest moves on the leaderboard this week.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {weeklyMoversData.map((mover) => (
-                <div key={mover.id} className="flex items-center gap-4 rounded-lg bg-muted/50 p-3">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src={mover.profileImage || "/placeholder.svg"} alt={mover.name} />
-                    <AvatarFallback>
-                      {mover.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-semibold">{mover.name}</p>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      {mover.rankChange > 0 ? (
-                        <TrendingUp className="h-4 w-4 text-green-500" />
-                      ) : (
-                        <TrendingDown className="h-4 w-4 text-red-500" />
-                      )}
-                      <span className={cn(mover.rankChange > 0 ? "text-green-600" : "text-red-600")}>
-                        {mover.rankChange > 0 ? `+${mover.rankChange}` : mover.rankChange} ranks
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
 
         <div>
           <Tabs defaultValue="global">
@@ -356,30 +316,3 @@ const leaderboardData = [
 ]
 
 const friendsData = leaderboardData.filter((u) => ["user-2", "user-4", "user-6", "user-8"].includes(u.id))
-
-const weeklyMoversData = [
-  {
-    id: "user-9",
-    name: "James Taylor",
-    profileImage: "/placeholder.svg?height=40&width=40",
-    rankChange: 12,
-  },
-  {
-    id: "user-8",
-    name: "Lisa Garcia",
-    profileImage: "/placeholder.svg?height=40&width=40",
-    rankChange: 8,
-  },
-  {
-    id: "user-6",
-    name: "Jessica Wilson",
-    profileImage: "/placeholder.svg?height=40&width=40",
-    rankChange: 5,
-  },
-  {
-    id: "user-1",
-    name: "Sarah Lee",
-    profileImage: "/placeholder.svg?height=40&width=40",
-    rankChange: -1,
-  },
-]
