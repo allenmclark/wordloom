@@ -5,7 +5,7 @@ import { Search, BookOpen, List, Plus, Grid, FolderPlus, ChevronDown, Folder, Sp
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -24,6 +24,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { cn } from "@/lib/utils"
 
 type SearchMode = "standard" | "vector"
+type BadgeVariant = "default" | "secondary" | "destructive" | "outline"
 
 // Simulate vector search by calculating semantic similarity
 const calculateSemanticSimilarity = (query: string, word: any): number => {
@@ -48,6 +49,19 @@ const sampleWordGroups = [
   { id: 3, name: "Food & Cooking", wordCount: 56, isPublic: true, creator: "ChefCarlos" },
   { id: 4, name: "Family & Relationships", wordCount: 32, isPublic: false, creator: "You" },
 ]
+
+const getDifficultyBadge = (difficulty: string): { variant: BadgeVariant; className: string } => {
+  switch (difficulty?.toLowerCase()) {
+    case "beginner":
+      return { variant: "outline", className: "text-blue-600 border-blue-300 bg-blue-50" }
+    case "intermediate":
+      return { variant: "outline", className: "text-orange-600 border-orange-300 bg-orange-50" }
+    case "advanced":
+      return { variant: "outline", className: "text-red-600 border-red-300 bg-red-50" }
+    default:
+      return { variant: "outline", className: "" }
+  }
+}
 
 export default function VocabularyPage() {
   const [vocabularyData, setVocabularyData] = useState([])
@@ -409,26 +423,34 @@ export default function VocabularyPage() {
           {/* Word Display */}
           {viewMode === "cards" ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {filteredData.map((word: any) => (
-                <Card key={word.id} className="relative">
-                  <Checkbox
-                    className="absolute top-3 right-3 h-5 w-5"
-                    checked={selectedWords.has(word.id)}
-                    onCheckedChange={(checked) => handleWordSelection(word.id, checked as boolean)}
-                  />
-                  <CardHeader>
-                    <CardTitle>{word.from_source}</CardTitle>
-                    <CardDescription>{word.to_target}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-2">{word.definition}</p>
-                    <div className="flex gap-2">
-                      {word.part_of_speech && <Badge variant="outline">{word.part_of_speech}</Badge>}
-                      {word.difficulty && <Badge variant="outline">{word.difficulty}</Badge>}
+              {filteredData.map((word: any) => {
+                const difficultyBadge = getDifficultyBadge(word.difficulty)
+                return (
+                  <Card
+                    key={word.id}
+                    className="relative flex flex-col justify-between p-4 min-h-[200px] transition-all duration-200 ease-in-out hover:scale-[1.03] hover:shadow-lg hover:border-orange-300"
+                  >
+                    <Checkbox
+                      className="absolute top-3 right-3 h-5 w-5 z-10"
+                      checked={selectedWords.has(word.id)}
+                      onCheckedChange={(checked) => handleWordSelection(word.id, checked as boolean)}
+                    />
+                    <div>
+                      <p className="text-2xl font-semibold text-slate-800">{word.from_source}</p>
+                      <p className="text-lg text-slate-500">{word.to_target}</p>
+                      <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{word.definition}</p>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    <div className="flex gap-2 mt-4">
+                      {word.part_of_speech && <Badge variant="outline">{word.part_of_speech}</Badge>}
+                      {word.difficulty && (
+                        <Badge variant={difficultyBadge.variant} className={difficultyBadge.className}>
+                          {word.difficulty}
+                        </Badge>
+                      )}
+                    </div>
+                  </Card>
+                )
+              })}
             </div>
           ) : (
             <Card>
@@ -462,7 +484,16 @@ export default function VocabularyPage() {
                       <TableCell>
                         {word.part_of_speech && <Badge variant="outline">{word.part_of_speech}</Badge>}
                       </TableCell>
-                      <TableCell>{word.difficulty && <Badge variant="outline">{word.difficulty}</Badge>}</TableCell>
+                      <TableCell>
+                        {word.difficulty && (
+                          <Badge
+                            variant={getDifficultyBadge(word.difficulty).variant}
+                            className={getDifficultyBadge(word.difficulty).className}
+                          >
+                            {word.difficulty}
+                          </Badge>
+                        )}
+                      </TableCell>
                       <TableCell className="text-sm text-muted-foreground truncate max-w-xs">
                         {word.definition}
                       </TableCell>
