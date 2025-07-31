@@ -32,22 +32,20 @@ export function WordNode({ word, translation, mastery, position }: WordNodeProps
       >
         {word}
       </Text>
-      {active && (
-        <>
-          <Text
-            position={[0, -0.5, 0]}
-            fontSize={0.3}
-            color="#d1d5db" // gray-300
-            anchorX="center"
-            anchorY="middle"
-          >
-            "{translation}"
-          </Text>
-          <Text position={[0, -0.8, 0]} fontSize={0.25} color={color} anchorX="center" anchorY="middle">
-            Mastery: {Math.round(mastery * 100)}%
-          </Text>
-        </>
-      )}
+
+      <Text
+        position={[0, -0.5, 0]}
+        fontSize={0.3}
+        color="#d1d5db" // gray-300
+        anchorX="center"
+        anchorY="middle"
+        visible={active}
+      >
+        "{translation}"
+      </Text>
+      <Text position={[0, -0.8, 0]} fontSize={0.25} color={color} anchorX="center" anchorY="middle" visible={active}>
+        Mastery: {Math.round(mastery * 100)}%
+      </Text>
     </group>
   )
 }

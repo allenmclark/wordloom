@@ -1,189 +1,108 @@
-"use client"
-
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { BookOpen, Menu, X, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { languages } from "@/lib/languages"
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
+import { Menu } from "lucide-react"
+import Image from "next/image"
 
 export function Header() {
-  const pathname = usePathname()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  const isActive = (path: string) => pathname === path
-
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/practice", label: "Practice" },
-    { href: "/word-groups", label: "Word Groups" },
-    { href: "/portfolio-map", label: "Portfolio Map" },
-    { href: "/spanish-english", label: "Spanish-English" },
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "/leaderboard", label: "Leaderboard" },
-    { href: "/blog", label: "Blog" },
-    { href: "/pricing", label: "Pricing" },
-  ]
-
-  // Mock authentication state and user data
-  const isAuthenticated = true
-  const user = {
-    initials: "JL",
-    defaultLanguage: "es",
-  }
-  const currentLanguage = languages.find((lang) => lang.code === user.defaultLanguage)
-
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-fade">
-      <div className="container flex h-16 items-center justify-between py-4">
-        <div className="flex items-center gap-2">
-          <BookOpen className="h-6 w-6 text-orange-500 no-fade" />
-          <span className="text-xl font-display font-bold text-orange-500 no-fade">VocabMarket</span>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`text-sm font-medium transition-colors relative group no-fade ${
-                isActive(link.href) ? "text-orange-500 font-semibold" : "text-foreground hover:text-orange-500"
-              }`}
-            >
-              {link.label}
-              <span
-                className={`absolute -bottom-1 left-0 h-0.5 bg-orange-500 transition-all ${
-                  isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
-                }`}
-              ></span>
-            </Link>
-          ))}
-        </nav>
-
-        {/* Desktop Auth Section */}
-        <div className="hidden md:flex items-center gap-2">
-          {isAuthenticated ? (
-            <>
-              {currentLanguage && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="flex items-center gap-2 text-foreground/80 hover:text-foreground hover:bg-accent"
-                >
-                  <span className="text-lg">{currentLanguage.flag}</span>
-                  <span className="hidden lg:inline text-sm font-medium">{currentLanguage.name}</span>
-                </Button>
-              )}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="rounded-full p-2">
-                    <div className="rounded-full bg-orange-100 h-8 w-8 flex items-center justify-center">
-                      <span className="text-sm font-medium text-orange-800">{user.initials}</span>
-                    </div>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuItem asChild>
-                    <Link href="/profile" className="flex items-center gap-2">
-                      <User className="h-4 w-4" />
-                      Profile Settings
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Sign Out</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </>
-          ) : (
-            <>
-              <Link href="/login">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full px-4 vibrant-button-outline no-fade hover:bg-transparent hover:text-orange-500 bg-transparent"
-                >
-                  Log in
-                </Button>
-              </Link>
-              <Link href="/signup">
-                <Button size="sm" className="rounded-full px-4 vibrant-button-primary no-fade">
-                  Sign up
-                </Button>
-              </Link>
-            </>
-          )}
-        </div>
-
-        {/* Mobile Menu Button */}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="md:hidden no-fade"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+    <header className="flex h-16 w-full items-center justify-between bg-white px-4 shadow-sm dark:bg-gray-950 md:px-6">
+      <Link href="/" className="flex items-center gap-2" prefetch={false}>
+        <Image src="/placeholder-logo.png" alt="VocabMarket Logo" width={32} height={32} />
+        <span className="text-lg font-semibold text-gray-900 dark:text-gray-50">VocabMarket</span>
+      </Link>
+      <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+        <Link
+          href="/dashboard"
+          className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+          prefetch={false}
         >
-          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          Dashboard
+        </Link>
+        <Link
+          href="/practice"
+          className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+          prefetch={false}
+        >
+          Practice
+        </Link>
+        <Link
+          href="/leaderboard"
+          className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+          prefetch={false}
+        >
+          Leaderboard
+        </Link>
+        <Link
+          href="/portfolio-map"
+          className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+          prefetch={false}
+        >
+          Portfolio Map
+        </Link>
+        <Link
+          href="/pricing"
+          className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+          prefetch={false}
+        >
+          Pricing
+        </Link>
+      </nav>
+      <div className="flex items-center gap-4">
+        <Button variant="outline" size="sm" asChild>
+          <Link href="/login">Sign In</Link>
         </Button>
-      </div>
-
-      {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t bg-background/95 backdrop-blur no-fade">
-          <nav className="container py-4 space-y-4">
-            {navLinks.map((link) => (
+        <Button size="sm" asChild className="bg-orange-500 hover:bg-orange-600 text-white">
+          <Link href="/signup">Get Started</Link>
+        </Button>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon" className="md:hidden bg-transparent">
+              <Menu className="h-6 w-6" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right">
+            <div className="grid gap-4 p-4">
               <Link
-                key={link.href}
-                href={link.href}
-                className={`block text-sm font-medium transition-colors no-fade ${
-                  isActive(link.href) ? "text-orange-500 font-semibold" : "text-foreground hover:text-orange-500"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
+                href="/dashboard"
+                className="text-lg font-medium hover:text-gray-900 dark:hover:text-gray-50"
+                prefetch={false}
               >
-                {link.label}
+                Dashboard
               </Link>
-            ))}
-            <div className="flex flex-col gap-2 pt-4 border-t">
-              {isAuthenticated ? (
-                <>
-                  <Link href="/profile" onClick={() => setMobileMenuOpen(false)}>
-                    <Button variant="outline" size="sm" className="w-full justify-start gap-2 bg-transparent">
-                      <User className="h-4 w-4" />
-                      Profile Settings
-                    </Button>
-                  </Link>
-                  <Button variant="outline" size="sm" className="w-full bg-transparent">
-                    Sign Out
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full vibrant-button-outline no-fade bg-transparent"
-                    >
-                      Log in
-                    </Button>
-                  </Link>
-                  <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
-                    <Button size="sm" className="w-full vibrant-button-primary no-fade">
-                      Sign up
-                    </Button>
-                  </Link>
-                </>
-              )}
+              <Link
+                href="/practice"
+                className="text-lg font-medium hover:text-gray-900 dark:hover:text-gray-50"
+                prefetch={false}
+              >
+                Practice
+              </Link>
+              <Link
+                href="/leaderboard"
+                className="text-lg font-medium hover:text-gray-900 dark:hover:text-gray-50"
+                prefetch={false}
+              >
+                Leaderboard
+              </Link>
+              <Link
+                href="/portfolio-map"
+                className="text-lg font-medium hover:text-gray-900 dark:hover:text-gray-50"
+                prefetch={false}
+              >
+                Portfolio Map
+              </Link>
+              <Link
+                href="/pricing"
+                className="text-lg font-medium hover:text-gray-900 dark:hover:text-gray-50"
+                prefetch={false}
+              >
+                Pricing
+              </Link>
             </div>
-          </nav>
-        </div>
-      )}
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   )
 }

@@ -6,7 +6,6 @@ import { WordNode } from "./word-node"
 import * as THREE from "three"
 
 // Mock data with 3D positions from a dimensionality reduction (e.g., UMAP)
-// I've spread these out more to avoid clustering.
 const mockWords = [
   // Cluster 1: Animals
   { id: 1, word: "perro", translation: "dog", mastery: 0.95, position: new THREE.Vector3(-6, 4, -5) },
