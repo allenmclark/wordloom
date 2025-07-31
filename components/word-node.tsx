@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useMemo } from "react"
-import { useThree } from "@react-three/fiber"
-import { Text, Html } from "@react-three/drei"
 import * as THREE from "three"
+import { useState, useMemo } from "react"
+import { Text, Html } from "@react-three/drei"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
 
 type WordNodeProps = {
-  id: number
   word: string
   translation: string
   mastery: number
@@ -15,46 +15,53 @@ type WordNodeProps = {
 
 export function WordNode({ word, translation, mastery, position }: WordNodeProps) {
   const [hovered, setHovered] = useState(false)
-  const [clicked, setClicked] = useState(false)
-  const { viewport } = useThree()
+  const [active, setActive] = useState(false)
 
   const color = useMemo(() => {
-    if (mastery > 0.9) return new THREE.Color("#4ade80") // Green (Mastered)
-    if (mastery > 0.6) return new THREE.Color("#facc15") // Yellow (Learning)
-    return new THREE.Color("#60a5fa") // Blue (New)
-  }, [mastery])
-
-  const scale = viewport.width / 20
+    if (hovered) return new THREE.Color("white")
+    if (mastery >= 0.9) return new THREE.Color("#4ade80") // green-400
+    if (mastery >= 0.5) return new THREE.Color("#facc15") // yellow-400
+    return new THREE.Color("#60a5fa") // blue-400
+  }, [mastery, hovered])
 
   return (
     <group position={position}>
+      <mesh
+        onPointerOver={(e) => (e.stopPropagation(), setHovered(true))}
+        onPointerOut={() => setHovered(false)}
+        onClick={(e) => (e.stopPropagation(), setActive(!active))}
+      >
+        <sphereGeometry args={[0.1, 32, 32]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={hovered ? 0.5 : 0.1}
+          roughness={0.2}
+          metalness={0.1}
+        />
+      </mesh>
       <Text
-        fontSize={0.25 * scale}
-        color={hovered ? "white" : color}
+        position={[0, 0.2, 0]}
+        fontSize={0.1}
+        color="white"
         anchorX="center"
         anchorY="middle"
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-        onClick={() => setClicked(!clicked)}
+        visible={hovered || active}
       >
         {word}
       </Text>
-      {clicked && (
-        <Html position={[0, 0.15 * scale, 0]} center>
-          <div
-            className="bg-gray-800/80 text-white p-2 rounded-md text-xs backdrop-blur-sm"
-            style={{ minWidth: "120px" }}
-          >
-            <p className="font-bold text-sm">{word}</p>
-            <p className="text-gray-300 italic">"{translation}"</p>
-            <div className="w-full bg-gray-600 rounded-full h-1.5 mt-2">
-              <div
-                className="bg-gradient-to-r from-blue-400 to-green-400 h-1.5 rounded-full"
-                style={{ width: `${mastery * 100}%` }}
-              />
-            </div>
-            <p className="text-right text-gray-400 text-[10px] mt-1">Mastery: {Math.round(mastery * 100)}%</p>
-          </div>
+      {active && (
+        <Html position={[0.2, 0.2, 0]} center>
+          <Card className="w-48 bg-background/80 backdrop-blur-sm border-white/20 text-white">
+            <CardHeader className="p-3">
+              <CardTitle className="text-base">{word}</CardTitle>
+            </CardHeader>
+            <CardContent className="p-3 pt-0">
+              <p className="text-sm text-slate-300 mb-2">{translation}</p>
+              <Progress value={mastery * 100} className="h-2" />
+              <p className="text-xs text-slate-400 mt-1">Mastery: {Math.round(mastery * 100)}%</p>
+            </CardContent>
+          </Card>
         </Html>
       )}
     </group>

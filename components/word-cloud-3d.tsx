@@ -1,7 +1,6 @@
 "use client"
 
 import * as THREE from "three"
-import { useMemo } from "react"
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Stars } from "@react-three/drei"
 import { WordNode } from "./word-node"
@@ -36,14 +35,14 @@ const mockWords = [
 ]
 
 export function WordCloud3D() {
-  const nodes = useMemo(() => mockWords.map((props) => <WordNode key={props.id} {...props} />), [])
-
   return (
     <Canvas camera={{ position: [0, 0, 10], fov: 25 }}>
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} />
 
-      {nodes}
+      {mockWords.map((props) => (
+        <WordNode key={props.id} {...props} />
+      ))}
 
       <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
       <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
