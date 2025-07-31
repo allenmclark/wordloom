@@ -1,9 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Html } from "@react-three/drei"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
+import { Text } from "@react-three/drei"
 import type { Vector3 } from "three"
 
 type WordNodeProps = {
@@ -14,7 +12,6 @@ type WordNodeProps = {
 }
 
 export function WordNode({ word, translation, mastery, position }: WordNodeProps) {
-  const [hovered, setHovered] = useState(false)
   const [active, setActive] = useState(false)
 
   const color = useMemo(() => {
@@ -24,36 +21,33 @@ export function WordNode({ word, translation, mastery, position }: WordNodeProps
   }, [mastery])
 
   return (
-    <group position={position}>
-      <mesh
-        onPointerOver={(e) => (e.stopPropagation(), setHovered(true))}
-        onPointerOut={() => setHovered(false)}
-        onClick={(e) => (e.stopPropagation(), setActive(!active))}
-        scale={active ? 1.5 : 1}
+    <group position={position} onClick={() => setActive(!active)}>
+      <Text
+        fontSize={active ? 0.8 : 0.5}
+        color={active ? "white" : color}
+        anchorX="center"
+        anchorY="middle"
+        outlineWidth={active ? 0.02 : 0}
+        outlineColor="white"
       >
-        <sphereGeometry args={[0.05, 32, 32]} />
-        <meshStandardMaterial
-          color={hovered || active ? "white" : color}
-          emissive={hovered || active ? "white" : color}
-          emissiveIntensity={hovered || active ? 0.5 : 0.25}
-          toneMapped={false}
-          roughness={0.2}
-          metalness={0.1}
-        />
-      </mesh>
-
-      <Html position={[0, 0.1, 0]} wrapperClass="word-node-html" center distanceFactor={8} visible={active} transform>
-        <Card className="w-48 bg-background/80 backdrop-blur-sm border-white/20 text-white shadow-lg">
-          <CardHeader className="p-3">
-            <CardTitle className="text-base">{word}</CardTitle>
-          </CardHeader>
-          <CardContent className="p-3 pt-0">
-            <p className="text-sm text-slate-300 mb-2 italic">"{translation}"</p>
-            <Progress value={mastery * 100} className="h-2" />
-            <p className="text-xs text-slate-400 mt-1 text-right">Mastery: {Math.round(mastery * 100)}%</p>
-          </CardContent>
-        </Card>
-      </Html>
+        {word}
+      </Text>
+      {active && (
+        <>
+          <Text
+            position={[0, -0.5, 0]}
+            fontSize={0.3}
+            color="#d1d5db" // gray-300
+            anchorX="center"
+            anchorY="middle"
+          >
+            "{translation}"
+          </Text>
+          <Text position={[0, -0.8, 0]} fontSize={0.25} color={color} anchorX="center" anchorY="middle">
+            Mastery: {Math.round(mastery * 100)}%
+          </Text>
+        </>
+      )}
     </group>
   )
 }
