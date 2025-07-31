@@ -524,17 +524,17 @@ allow_headers=["*"],
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-slate-50">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-950">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center animate-in">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-orange-100 px-3 py-1 text-sm font-medium text-orange-700">
+                <div className="inline-block rounded-lg bg-orange-500/10 px-3 py-1 text-sm font-medium text-orange-400">
                   How It Works
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-slate-900">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-slate-50">
                   A Smarter Way to Learn
                 </h2>
-                <p className="max-w-[900px] text-slate-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[900px] text-slate-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Our platform is built on three core principles: active learning, intelligent practice, and measurable
                   progress.
                 </p>
@@ -544,14 +544,15 @@ allow_headers=["*"],
               {features.map((feature, index) => (
                 <div key={index} className="animate-in" style={{ animationDelay: `${0.1 * (index + 1)}s` }}>
                   <Card
-                    className={`relative h-full overflow-hidden rounded-2xl border-l-4 bg-white/80 backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${feature.borderColor}`}
+                    className={`relative h-full overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/80 backdrop-blur-sm transition-all duration-300 hover:border-slate-700 hover:-translate-y-1`}
                   >
-                    <CardHeader className="p-6">
+                    <div className={`absolute top-0 left-0 h-full w-1 ${feature.accentColor}`}></div>
+                    <CardHeader className="p-6 pl-8">
                       <div className="mb-4">{feature.icon}</div>
-                      <CardTitle className="text-xl font-bold text-slate-800">{feature.title}</CardTitle>
+                      <CardTitle className="text-xl font-bold text-slate-100">{feature.title}</CardTitle>
                     </CardHeader>
-                    <CardContent className="p-6 pt-0">
-                      <CardDescription className="text-base text-slate-600 leading-relaxed">
+                    <CardContent className="p-6 pt-0 pl-8">
+                      <CardDescription className="text-base text-slate-400 leading-relaxed">
                         {feature.description}
                       </CardDescription>
                     </CardContent>
@@ -600,20 +601,20 @@ const features = [
   {
     title: "Learn",
     description: "Discover new words daily with our curated vocabulary lists tailored to your level.",
-    icon: <BookOpen className="h-8 w-8 text-orange-500" />,
-    borderColor: "border-orange-500",
+    icon: <BookOpen className="h-8 w-8 text-orange-400" />,
+    accentColor: "bg-orange-500",
   },
   {
     title: "Practice",
     description: "Test your knowledge with interactive exercises and spaced repetition techniques.",
-    icon: <Brain className="h-8 w-8 text-emerald-500" />,
-    borderColor: "border-emerald-500",
+    icon: <Brain className="h-8 w-8 text-emerald-400" />,
+    accentColor: "bg-emerald-500",
   },
   {
     title: "Track",
     description: "Monitor your progress and see your vocabulary knowledge grow over time.",
-    icon: <TrendingUp className="h-8 w-8 text-slate-500" />,
-    borderColor: "border-slate-500",
+    icon: <TrendingUp className="h-8 w-8 text-slate-400" />,
+    accentColor: "bg-slate-500",
   },
 ]
 
