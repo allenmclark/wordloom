@@ -15,9 +15,9 @@ export function WordNode({ word, translation, mastery, position }: WordNodeProps
   const [active, setActive] = useState(false)
 
   const color = useMemo(() => {
-    if (mastery >= 0.9) return "#4ade80" // green-400
-    if (mastery >= 0.5) return "#facc15" // yellow-400
-    return "#60a5fa" // blue-400
+    if (mastery >= 0.9) return "#fc4c02" // orange-500 (High Mastery)
+    if (mastery >= 0.5) return "#fb923c" // orange-400 (Medium Mastery)
+    return "#94a3b8" // slate-400 (Low Mastery)
   }, [mastery])
 
   return (
@@ -32,6 +32,15 @@ export function WordNode({ word, translation, mastery, position }: WordNodeProps
       >
         {word}
       </Text>
+
+      {/* Show mastery % when not active */}
+      {!active && (
+        <Text position={[0, -0.35, 0]} fontSize={0.25} color={color} anchorX="center" anchorY="middle">
+          {`${Math.round(mastery * 100)}%`}
+        </Text>
+      )}
+
+      {/* Show details when active */}
       {active && (
         <>
           <Text
