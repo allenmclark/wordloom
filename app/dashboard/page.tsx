@@ -4,17 +4,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { HeatmapVisualization } from "@/components/heatmap-visualization"
 import { WordKnowledgeChart } from "@/components/word-knowledge-chart"
+import { PortfolioAnalysis } from "@/components/portfolio-analysis"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { ArrowRight, TrendingUp, Target, BookOpen, Clock, Award, Brain, Zap, Activity, BarChart3 } from "lucide-react"
 import {
-  LineChart,
-  Line,
+  ArrowRight,
+  TrendingUp,
+  Target,
+  BookOpen,
+  Clock,
+  Award,
+  Brain,
+  Zap,
+  Activity,
+  BarChart3,
+  Wallet,
+} from "lucide-react"
+import {
   AreaChart,
   Area,
-  BarChart,
-  Bar,
   PieChart,
   Pie,
   Cell,
@@ -80,25 +89,25 @@ export default function DashboardPage() {
               <Activity className="h-4 w-4" />
               Overview
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" />
-              Analytics
+            <TabsTrigger value="portfolio" className="flex items-center gap-2">
+              <Wallet className="h-4 w-4" />
+              Portfolio Analysis
             </TabsTrigger>
             <TabsTrigger value="trends" className="flex items-center gap-2">
               <TrendingUp className="h-4 w-4" />
-              Trends
+              Market Trends
             </TabsTrigger>
             <TabsTrigger value="heatmap" className="flex items-center gap-2">
-              <Activity className="h-4 w-4" />
-              Heatmap
+              <BarChart3 className="h-4 w-4" />
+              Activity Log
             </TabsTrigger>
             <TabsTrigger value="knowledge" className="flex items-center gap-2">
               <Brain className="h-4 w-4" />
-              Knowledge
+              Deep Dive
             </TabsTrigger>
             <TabsTrigger value="insights" className="flex items-center gap-2">
               <Zap className="h-4 w-4" />
-              Insights
+              AI Advisor
             </TabsTrigger>
           </TabsList>
 
@@ -308,69 +317,9 @@ export default function DashboardPage() {
             </div>
           </TabsContent>
 
-          {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle>Accuracy Trends</CardTitle>
-                  <CardDescription>Your performance accuracy over time</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={weeklyProgressData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="day" />
-                        <YAxis />
-                        <Tooltip />
-                        <Line type="monotone" dataKey="accuracy" stroke="#10b981" strokeWidth={2} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle>Study Time Distribution</CardTitle>
-                  <CardDescription>Daily study time patterns</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={weeklyProgressData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="day" />
-                        <YAxis />
-                        <Tooltip />
-                        <Bar dataKey="time" fill="#8b5cf6" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-              <CardHeader>
-                <CardTitle>Retention Analysis</CardTitle>
-                <CardDescription>How well you remember words over time</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={retentionData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="period" />
-                      <YAxis />
-                      <Tooltip />
-                      <Line type="monotone" dataKey="retention" stroke="#ef4444" strokeWidth={2} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Portfolio Analysis Tab */}
+          <TabsContent value="portfolio">
+            <PortfolioAnalysis />
           </TabsContent>
 
           {/* Trends Tab */}
