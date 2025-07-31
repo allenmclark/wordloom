@@ -52,65 +52,83 @@ export default function HowItWorksPage() {
             <p>
               Ready to make your first trade? Here’s how to get set up and start building your portfolio in minutes.
             </p>
-            <Card className="my-8 bg-white shadow-md">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <ClipboardList className="h-6 w-6 text-orange-500" />
-                  <span>Step 1: Create Your Account & Set Up Your Profile</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p>
-                  Signing up is your ticket to the trading floor. Once you're in, head to your{" "}
-                  <Link href="/profile">Profile</Link>. Here you can add a profile picture, set your location, and most
-                  importantly, decide if you want to appear on the public leaderboards. We respect your privacy, so
-                  you're always in control of your visibility.
-                </p>
-              </CardContent>
+            <Card className="my-8 bg-white/50 backdrop-blur-sm border border-slate-200 shadow-lg rounded-xl overflow-hidden transition-all hover:shadow-xl">
+              <div className="relative p-6 border-l-4 border-orange-500">
+                <CardHeader className="p-0 mb-4">
+                  <CardTitle className="flex items-center gap-3 text-slate-800">
+                    <ClipboardList className="h-6 w-6 text-orange-500" />
+                    <span>Step 1: Create Your Account & Set Up Your Profile</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <p className="text-slate-600">
+                    Signing up is your ticket to the trading floor. Once you're in, head to your{" "}
+                    <Link href="/profile" className="font-semibold">
+                      Profile
+                    </Link>
+                    . Here you can add a profile picture, set your location, and most importantly, decide if you want to
+                    appear on the public leaderboards. We respect your privacy, so you're always in control of your
+                    visibility.
+                  </p>
+                </CardContent>
+              </div>
             </Card>
-            <Card className="my-8 bg-white shadow-md">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <LineChart className="h-6 w-6 text-blue-500" />
-                  <span>Step 2: Understand Your Dashboard</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p>
-                  Your <Link href="/dashboard">Dashboard</Link> is your mission control. It gives you a real-time
-                  overview of your portfolio's performance. Key metrics include:
-                </p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>
-                    <strong>Portfolio Value:</strong> A composite score reflecting the number of words you're learning
-                    and your mastery of them.
-                  </li>
-                  <li>
-                    <strong>Words Mastered:</strong> The total number of words you've successfully moved to your
-                    long-term memory.
-                  </li>
-                  <li>
-                    <strong>Learning Activity:</strong> A heatmap showing your practice consistency. Green is good!
-                  </li>
-                </ul>
-                <p>Don't worry about understanding everything at once. It will become clearer as you start learning.</p>
-              </CardContent>
+            <Card className="my-8 bg-white/50 backdrop-blur-sm border border-slate-200 shadow-lg rounded-xl overflow-hidden transition-all hover:shadow-xl">
+              <div className="relative p-6 border-l-4 border-blue-500">
+                <CardHeader className="p-0 mb-4">
+                  <CardTitle className="flex items-center gap-3 text-slate-800">
+                    <LineChart className="h-6 w-6 text-blue-500" />
+                    <span>Step 2: Understand Your Dashboard</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0 space-y-4">
+                  <p className="text-slate-600">
+                    Your{" "}
+                    <Link href="/dashboard" className="font-semibold">
+                      Dashboard
+                    </Link>{" "}
+                    is your mission control. It gives you a real-time overview of your portfolio's performance. Key
+                    metrics include:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2 text-slate-600">
+                    <li>
+                      <strong>Portfolio Value:</strong> A composite score reflecting the number of words you're learning
+                      and your mastery of them.
+                    </li>
+                    <li>
+                      <strong>Words Mastered:</strong> The total number of words you've successfully moved to your
+                      long-term memory.
+                    </li>
+                    <li>
+                      <strong>Learning Activity:</strong> A heatmap showing your practice consistency. Green is good!
+                    </li>
+                  </ul>
+                  <p className="text-slate-600">
+                    Don't worry about understanding everything at once. It will become clearer as you start learning.
+                  </p>
+                </CardContent>
+              </div>
             </Card>
-            <Card className="my-8 bg-white shadow-md">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <BookOpen className="h-6 w-6 text-green-500" />
-                  <span>Step 3: Make Your First Word Investment</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p>
-                  You can't grow a portfolio without assets. Head over to the{" "}
-                  <Link href="/word-groups">Word Groups</Link> page. Think of these as different sectors of the market
-                  (e.g., "Business Spanish," "Travel Vocabulary"). Browse the lists, find one that interests you, and
-                  start adding words to your portfolio. This is the equivalent of buying your first stocks.
-                </p>
-              </CardContent>
+            <Card className="my-8 bg-white/50 backdrop-blur-sm border border-slate-200 shadow-lg rounded-xl overflow-hidden transition-all hover:shadow-xl">
+              <div className="relative p-6 border-l-4 border-green-500">
+                <CardHeader className="p-0 mb-4">
+                  <CardTitle className="flex items-center gap-3 text-slate-800">
+                    <BookOpen className="h-6 w-6 text-green-500" />
+                    <span>Step 3: Make Your First Word Investment</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <p className="text-slate-600">
+                    You can't grow a portfolio without assets. Head over to the{" "}
+                    <Link href="/vocabulary" className="font-semibold">
+                      Vocabulary
+                    </Link>{" "}
+                    page. Think of these as different sectors of the market (e.g., "Business Spanish," "Travel
+                    Vocabulary"). Browse the lists, find one that interests you, and start adding words to your
+                    portfolio. This is the equivalent of buying your first stocks.
+                  </p>
+                </CardContent>
+              </div>
             </Card>
           </section>
 
@@ -129,9 +147,9 @@ export default function HowItWorksPage() {
             />
             <ol className="list-decimal pl-6 space-y-4">
               <li>
-                <strong>Discover & Acquire:</strong> Continuously explore <Link href="/word-groups">Word Groups</Link>{" "}
-                to find new vocabulary. Diversifying your portfolio by learning words from different topics keeps your
-                learning balanced and interesting.
+                <strong>Discover & Acquire:</strong> Continuously explore the <Link href="/vocabulary">Vocabulary</Link>{" "}
+                page to find new vocabulary. Diversifying your portfolio by learning words from different topics keeps
+                your learning balanced and interesting.
               </li>
               <li>
                 <strong>Practice & Grow:</strong> This is where the magic happens. The{" "}
@@ -150,26 +168,33 @@ export default function HowItWorksPage() {
           <section id="advanced">
             <h2>Advanced Trading: Becoming a Power User</h2>
             <p>Once you've mastered the basics, use these features to take your learning to the next level.</p>
-            <div className="grid md:grid-cols-2 gap-6 my-8">
-              <div className="p-6 bg-white rounded-lg shadow-md">
-                <h4 className="font-bold text-xl flex items-center gap-3">
+            <div className="grid md:grid-cols-2 gap-8 my-8">
+              <div className="p-6 bg-white/50 backdrop-blur-sm border border-slate-200 shadow-lg rounded-xl transition-all hover:shadow-xl">
+                <h4 className="font-bold text-xl flex items-center gap-3 text-slate-800">
                   <Sparkles className="h-6 w-6 text-orange-500" />
-                  Create Custom Word Groups
+                  Create Custom Word Decks
                 </h4>
-                <p className="mt-2">
-                  Don't see a list that fits your needs? Create your own! On the Word Groups page, you can build custom
-                  lists from scratch. This is perfect for specific subjects, textbook chapters, or personal interests.
+                <p className="mt-2 text-slate-600">
+                  Don't see a list that fits your needs? Create your own! On the{" "}
+                  <Link href="/vocabulary" className="font-semibold">
+                    Vocabulary
+                  </Link>{" "}
+                  page, you can build custom decks from scratch. This is perfect for specific subjects, textbook
+                  chapters, or personal interests.
                 </p>
               </div>
-              <div className="p-6 bg-white rounded-lg shadow-md">
-                <h4 className="font-bold text-xl flex items-center gap-3">
+              <div className="p-6 bg-white/50 backdrop-blur-sm border border-slate-200 shadow-lg rounded-xl transition-all hover:shadow-xl">
+                <h4 className="font-bold text-xl flex items-center gap-3 text-slate-800">
                   <Users className="h-6 w-6 text-blue-500" />
                   Compete on the Leaderboard
                 </h4>
-                <p className="mt-2">
-                  Check your rank on the <Link href="/leaderboard">Leaderboard</Link>. Healthy competition can be a
-                  powerful motivator. You can also switch to the "Friends" tab to create a more personal competition
-                  with people you know.
+                <p className="mt-2 text-slate-600">
+                  Check your rank on the{" "}
+                  <Link href="/leaderboard" className="font-semibold">
+                    Leaderboard
+                  </Link>
+                  . Healthy competition can be a powerful motivator. You can also switch to the "Friends" tab to create
+                  a more personal competition with people you know.
                 </p>
               </div>
             </div>
