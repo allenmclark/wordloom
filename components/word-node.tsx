@@ -1,16 +1,16 @@
 "use client"
 
-import * as THREE from "three"
 import { useState, useMemo } from "react"
 import { Html } from "@react-three/drei"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+import type { Vector3 } from "three"
 
 type WordNodeProps = {
   word: string
   translation: string
   mastery: number
-  position: THREE.Vector3
+  position: Vector3 | [number, number, number]
 }
 
 export function WordNode({ word, translation, mastery, position }: WordNodeProps) {
@@ -18,9 +18,9 @@ export function WordNode({ word, translation, mastery, position }: WordNodeProps
   const [active, setActive] = useState(false)
 
   const color = useMemo(() => {
-    if (mastery >= 0.9) return new THREE.Color("#4ade80") // green-400
-    if (mastery >= 0.5) return new THREE.Color("#facc15") // yellow-400
-    return new THREE.Color("#60a5fa") // blue-400
+    if (mastery >= 0.9) return "#4ade80" // green-400
+    if (mastery >= 0.5) return "#facc15" // yellow-400
+    return "#60a5fa" // blue-400
   }, [mastery])
 
   return (
@@ -33,9 +33,9 @@ export function WordNode({ word, translation, mastery, position }: WordNodeProps
       >
         <sphereGeometry args={[0.05, 32, 32]} />
         <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={hovered || active ? 1 : 0.5}
+          color={hovered || active ? "white" : color}
+          emissive={hovered || active ? "white" : color}
+          emissiveIntensity={hovered || active ? 0.5 : 0.25}
           toneMapped={false}
           roughness={0.2}
           metalness={0.1}
