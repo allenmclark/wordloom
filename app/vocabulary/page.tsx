@@ -428,26 +428,31 @@ export default function VocabularyPage() {
                 return (
                   <Card
                     key={word.id}
-                    className="relative flex flex-col justify-between p-4 min-h-[200px] transition-all duration-200 ease-in-out hover:scale-[1.03] hover:shadow-lg hover:border-orange-300"
+                    className="relative group cursor-pointer bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                   >
                     <Checkbox
-                      className="absolute top-3 right-3 h-5 w-5 z-10"
+                      className="absolute top-4 right-4 h-5 w-5 z-10 opacity-0 group-hover:opacity-100 checked:opacity-100 transition-opacity"
                       checked={selectedWords.has(word.id)}
                       onCheckedChange={(checked) => handleWordSelection(word.id, checked as boolean)}
                     />
-                    <div>
-                      <p className="text-2xl font-semibold text-slate-800">{word.from_source}</p>
-                      <p className="text-lg text-slate-500">{word.to_target}</p>
-                      <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{word.definition}</p>
-                    </div>
-                    <div className="flex gap-2 mt-4">
-                      {word.part_of_speech && <Badge variant="outline">{word.part_of_speech}</Badge>}
-                      {word.difficulty && (
-                        <Badge variant={difficultyBadge.variant} className={difficultyBadge.className}>
-                          {word.difficulty}
-                        </Badge>
-                      )}
-                    </div>
+                    <CardContent className="p-6 flex flex-col justify-between h-full">
+                      <div>
+                        <p className="text-2xl font-bold text-slate-800">{word.from_source}</p>
+                        <p className="text-lg text-slate-600">{word.to_target}</p>
+                        <p className="text-sm text-slate-500 mt-4 line-clamp-3">{word.definition}</p>
+                      </div>
+                      <div className="flex gap-2 mt-4">
+                        {word.part_of_speech && <Badge variant="outline">{word.part_of_speech}</Badge>}
+                        {word.difficulty && (
+                          <Badge
+                            variant={difficultyBadge.variant}
+                            className={cn("font-medium", difficultyBadge.className)}
+                          >
+                            {word.difficulty}
+                          </Badge>
+                        )}
+                      </div>
+                    </CardContent>
                   </Card>
                 )
               })}
